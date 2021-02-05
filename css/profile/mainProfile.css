@@ -1,0 +1,206 @@
+* {
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+ul {
+    list-style: none;
+}
+li {
+    display: inline;
+}
+.container {
+    background-color: #F5F5F5;
+    width: 1300px;
+    margin: 0 auto;
+    font-family: 'Quicksand', sans-serif;
+}
+.header__inner {
+    display: flex;
+    justify-content: space-between;
+}
+.logo {
+    margin-top: 35px;
+    margin-left: 90px;
+    font-size: 34px;
+}
+.header__list-wrapper {
+    margin-right: 90px;
+}
+.header__list {
+    font-size: 22px;
+    margin-top: 46px;
+}
+.header__list li {
+    margin-right: 35px;
+}
+.header__line {
+    display: block;
+    width: 1220px;
+    height: 1px;
+    border: 0;
+    padding-right: 100px;
+    border-top: 1px solid #308CBF;
+}
+.profile-info {
+    margin-top: 50px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.profile-info__inner {
+    display: flex;
+    justify-content: space-between;
+}
+.profile-info__summary {
+    font-size: 20px;
+    margin-right: 155px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.profile-info__summary-wrapper1 {
+    margin-left: 20px;
+    position: relative;
+}
+.profile-info__name {
+    margin-left: 12px;
+    white-space: nowrap;
+    position: absolute;
+}
+.profile-info__picture-wrapper {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+.profile-info__picture {
+    border-radius: 50%;
+    overflow: hidden;
+}
+.profile-info__picture img {
+    display: block;
+    width: 138px;
+    height: 138px;
+    padding-bottom: -5px;
+}
+.profile-info__edit {
+    font-size: 18px;
+    margin-left: 3px;
+    margin-top: 25px;
+}
+.profile-info__edit a {
+    padding: 2px 50px;
+    border: #308CBF 1px solid;
+    transition: background-color .4s ease-out,
+                color .1s ease-out;
+}
+.profile-info__edit a:hover{
+    background-color: #308CBF;
+    border: grey 1px solid;
+    color: #fff;
+    transition: background-color .5s ease-out,
+                color .1s ease-out,
+                border .4s ease-out;
+}
+.profile-info__edit a:active{
+    background-color: #F5F5F5;
+    color: #000;
+    border: #308CBF 1px solid;
+    transition: background-color .1s ease-out,
+                color .4s ease-out;
+}
+.profile-info__summary-wrapper2 {
+    margin-left: 40px;
+    padding-top: 20px;
+}
+.profile-info__followers {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.profile-info__followers span {
+    margin-left: 10px;
+    font-weight: bold;
+}
+.profile-info__following {
+    display: flex;
+}
+.profile-info__following span {
+    margin-left: 10px;
+    font-weight: bold;
+}
+.profile-info__about {
+    margin-right: 40px;
+}
+.profile-info__title {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.profile-info__text {
+    font-size: 18px;
+}
+.profile-info__line {
+    display: block;
+    width: 1220px;
+    height: 1px;
+    border: 0;
+    margin-top: 50px;
+    border-top: 1px solid #308CBF;
+}
+.profile-slider {
+    margin-top: 70px;
+    padding-bottom: 40px;
+}
+.profile-slider__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile-slider__button-left {
+    border-radius: 50%;
+    display: inline-block;
+    border: #308CBF 1px solid;
+    width: 55px;
+    height: 55px;
+    margin-left: 90px;
+}
+.profile-slider__button-left a {
+    display: inline-block;
+}
+.profile-slider__button-left img {
+    display: block;
+    margin: 18px 10px;
+}
+.profile-slider__button-right {
+    border-radius: 50%;
+    display: inline-block;
+    border: #308CBF 1px solid;
+    width: 55px;
+    height: 55px;
+    margin-right: 90px;
+}
+.profile-slider__button-right a {
+    display: inline-block;
+}
+.profile-slider__button-right img {
+    display: block;
+    margin: 18px 10px;
+}
+.profile-slider__content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 900px;
+}
+.profile-slider__content-item {
+    margin-bottom: 10px;
+}
+.profile-slider__content-item img {
+    width: 294px;
+    height: 200px;
+    display: block;
+}
+
+
