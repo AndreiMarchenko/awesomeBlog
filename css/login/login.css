@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin-top: 0;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+ul {
+    list-style: none;
+}
+li {
+    display: inline;
+}
+.text-input {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+    width: 401px;
+    height: 37px;
+    border: 1px #308CBF solid;
+    background-color: #F5F5F5;
+    cursor: pointer;
+}
+.submit-input {
+    padding: 2px 50px;
+    height: 37px;
+    background-color: #F5F5F5;
+    color: #308CBF;
+    border: #308CBF 1px solid;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color .4s ease-out,
+    color .1s ease-out;
+}
+.submit-input:hover {
+    background-color: #308CBF;
+    border: grey 1px solid;
+    color: #fff;
+    transition: background-color .5s ease-out,
+    color .1s ease-out,
+    border .4s ease-out;
+}
+.submit-input:active {
+    background-color: #F5F5F5;
+    color: #308CBF;
+    border: #308CBF 1px solid;
+    transition: background-color .1s ease-out,
+    color .4s ease-out;
+}
+.submit-input:focus {
+    outline: none;
+}
+.container {
+    background-color: #F5F5F5;
+    width: 1300px;
+    margin: 0 auto;
+    padding-top: 150px;
+    font-family: 'Quicksand', sans-serif;
+}
+.header {
+    width: 1300px;
+    margin-top: -150px;
+    background-color: #F5F5F5;
+    position: fixed;
+    z-index: 10;
+}
+.header__content {
+    display: flex;
+    justify-content: space-between;
+}
+.logo {
+    margin-top: 35px;
+    margin-left: 90px;
+    font-size: 34px;
+}
+.header__list-wrapper {
+    margin-right: 90px;
+}
+.header__list {
+    font-size: 22px;
+    margin-top: 46px;
+}
+.header__list li {
+    margin-right: 35px;
+}
+.header__line {
+     display: block;
+     width: 1220px;
+     height: 1px;
+     border: 0;
+     padding-right: 100px;
+     border-top: 1px solid #308CBF;
+ }
+.login {
+    padding-bottom: 530px;
+}
+.login__form {
+    margin-left: 90px;
+    font-size: 18px;
+}
+.login__title {
+    font-size: 22px;
+    margin-left: 100px;
+}
+.login__email-label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+}
+.login__email-input {
+    margin-top: 17px;
+}
+.login__password-label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+}
+.login__password-input {
+    margin-top: 17px;
+}
+.login__submit-wrapper {
+    display: flex;
+    margin-top: 30px;
+
+}
+.login__forgot-password-wrapper {
+    margin-top: 4px;
+    margin-left: 30px;
+}
+.login__forgot-password-ref {
+    font-size: 14px;
+    color: #308CBF;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
