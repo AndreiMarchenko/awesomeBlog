@@ -2,30 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/login/login.css">
+    <script defer src="../../js/profile/burger.js"></script>
     <title>Title</title>
 </head>
 <body>
-<div class="container">
 
-    <header class="header">
+<header class="header">
+    <div class="container">
         <div class="header__content">
             <div class="logo">
-                <a href="#">Awesome Blog</a>
+                <a class="logo__ref" href="#">Awesome Blog</a>
             </div>
             <div class="header__list-wrapper">
                 <ul class="header__list">
                     <li><a href="#">Sign up</a></li>
                 </ul>
             </div>
+            <div class="burger">
+                <span></span>
+            </div>
         </div>
         <hr class="header__line">
-    </header>
+    </div>
+</header>
 
-    <div class="login">
-
+<div class="login">
+    <div class="container">
         <div class="login__title">
             Login
         </div>
@@ -48,9 +54,9 @@
             </div>
         </form>
     </div>
-
-
 </div>
+
+
 
 </body>
 </html>

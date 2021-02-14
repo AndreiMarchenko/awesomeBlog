@@ -93,31 +93,31 @@ li {
     height: 138px;
     padding-bottom: -5px;
 }
-.profile-info__edit {
+.profile-info__follow {
     font-size: 18px;
     margin-left: 3px;
     margin-top: 25px;
 }
-.profile-info__edit-ref {
+.profile-info__follow-ref {
     height: 37px;
     padding: 2px 50px;
-    color: #308CBF;
-    border: #308CBF 1px solid;
+    color: #BF3075;
+    border: #BF3075 1px solid;
     transition: background-color .4s ease-out,
     color .1s ease-out;
 }
-.profile-info__edit a:hover{
-    background-color: #308CBF;
+.profile-info__follow a:hover{
+    background-color: #BF3075;
     border: grey 1px solid;
     color: #fff;
     transition: background-color .5s ease-out,
     color .1s ease-out,
     border .4s ease-out;
 }
-.profile-info__edit a:active{
+.profile-info__follow a:active{
     background-color: #F5F5F5;
-    color: #308CBF;
-    border: #308CBF 1px solid;
+    color: #BF3075;
+    border: #BF3075 1px solid;
     transition: background-color .1s ease-out,
     color .4s ease-out;
 }
@@ -565,11 +565,11 @@ li {
         position: static;
         text-align: center;
     }
-    .profile-info__edit {
+    .profile-info__follow {
         display: flex;
         justify-content: center;
     }
-    .profile-info__edit-ref {
+    .profile-info__follow-ref {
         height: 29px;
     }
     .profile-info__followers {
