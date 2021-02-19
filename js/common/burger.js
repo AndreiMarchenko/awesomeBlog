@@ -16,7 +16,7 @@
         logoRef.classList.toggle("logo__ref_active");
         body.classList.toggle("body_lock");
 
-        if (searchPanel !== undefined) {
+        if (searchPanel !== null) {
             searchPanel.classList.toggle("search__wrapper_active");
         }
     });

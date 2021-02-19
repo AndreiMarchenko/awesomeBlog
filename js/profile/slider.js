@@ -9,13 +9,13 @@
     let contentPairNumber = sliderContentPairs.length;
 
     let sliderImg = document.querySelector(".profile-slider__content-item-img");
-    let sliderImgWidth = Number(window.getComputedStyle(sliderImg).width.replace(/px/, ''));
+    let sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
 
-    let sliderMargin = Number(window.getComputedStyle(sliderContentPairs[0]).marginRight.replace(/px/, ''));
+    let sliderMargin = parseInt(window.getComputedStyle(sliderContentPairs[0]).marginRight);
 
     let sliderContentVisible = document.querySelector(".profile-slider__content_visible");
     let sliderPairsVisibleNumber = Math.round(
-        Number(window.getComputedStyle(sliderContentVisible).maxWidth.replace(/px/, '')) / sliderImgWidth
+        parseInt(window.getComputedStyle(sliderContentVisible).maxWidth) / sliderImgWidth
     );
 
     sliderContent.style.width = contentPairNumber * (sliderImgWidth + sliderMargin) - sliderMargin + "px";

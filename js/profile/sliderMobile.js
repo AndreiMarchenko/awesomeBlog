@@ -9,13 +9,13 @@
     let contentItemsNumber = sliderContentItems.length;
 
     let sliderImg = document.querySelector(".profile-slider__content-item-img_mobile");
-    let sliderImgWidth = Number(window.getComputedStyle(sliderImg).width.replace(/px/, ''));
+    let sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
 
-    let sliderMargin = Number(window.getComputedStyle(sliderContentItems[0]).marginRight.replace(/px/, ''));
+    let sliderMargin = parseInt(window.getComputedStyle(sliderContentItems[0]).marginRight);
 
     let sliderContentVisible = document.querySelector(".profile-slider__content_visible_mobile");
     let sliderItemsVisibleNumber = Math.round(
-        Number(window.getComputedStyle(sliderContentVisible).maxWidth.replace(/px/, '')) / sliderImgWidth
+        parseInt(window.getComputedStyle(sliderContentVisible).maxWidth) / sliderImgWidth
     );
 
     leftButton.addEventListener("click", () => {
