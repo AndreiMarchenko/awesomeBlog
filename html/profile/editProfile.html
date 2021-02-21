@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/profile/editProfile.css">
     <script defer src="../../js/common/burger.js"></script>
+    <script defer src="../../js/editProfile/pictureEditor.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -39,14 +40,15 @@
                 <div class="profile-editor__picture-content">
                     <img class="profile-editor__picture" src="../../images/profile/profilePicture.jpg" alt="">
                 </div>
-                <form class="profile-editor__picture-form_hidden" action="#" enctype="multipart/form-data" hidden>
-                    <input class="profile-editor__picture-submit" type="file" >
+                <form class="profile-editor__picture-form">
+                    <label>
+                        <span class="profile-editor__picture-ref submit-input">
+                            Edit profile picture
+                        </span>
+                        <input class="profile-editor__picture-input_hidden" type="file">
+                    </label>
+                    <input class="profile-editor__picture-submit_hidden" type="submit">
                 </form>
-                <div class="profile-editor__picture-btn">
-                    <a class="profile-editor__picture-ref submit-input" href="#">
-                        Edit profile picture
-                    </a>
-                </div>
             </div>
             <div class="profile-editor-info">
                 <div class="profile-editor-info__titles">

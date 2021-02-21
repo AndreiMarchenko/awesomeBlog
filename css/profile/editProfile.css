@@ -110,7 +110,7 @@ li {
     width: 320px;
     height: 331px;
 }
-.profile-editor__picture-btn {
+.profile-editor__picture-form {
     margin-left: 32px;
     margin-top:  15px;
     height: 37px;
@@ -118,6 +118,12 @@ li {
 .profile-editor__picture-ref {
     display: inline-block;
     padding-top: 7px;
+}
+.profile-editor__picture-input_hidden {
+    display: none;
+}
+.profile-editor__picture-submit_hidden {
+    display: none;
 }
 .profile-editor-info {
     padding-top: 150px;
@@ -240,7 +246,7 @@ li {
         padding-top: 130px;
         margin: 0;
     }
-    .profile-editor__picture-btn {
+    .profile-editor__picture-form {
         margin-left: 0;
     }
     .profile-editor-info {
