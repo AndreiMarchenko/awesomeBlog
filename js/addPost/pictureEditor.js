@@ -14,9 +14,10 @@
         let selectedFile = pictureInput.files[0];
         let reader = new FileReader();
 
-        reader.onload = function () {
+        reader.addEventListener("load", () => {
             picture.setAttribute("src", reader.result);
-        };
+        });
+
         reader.readAsDataURL(selectedFile);
     });
 }
