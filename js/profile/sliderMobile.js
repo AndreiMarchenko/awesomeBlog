@@ -1,20 +1,20 @@
 "use strict"
 
 {
-    let leftButton = document.querySelector(".profile-slider__button-left_mobile");
-    let rightButton = document.querySelector(".profile-slider__button-right_mobile");
-    let sliderContent = document.querySelector(".profile-slider__content_mobile");
+    const leftButton = document.querySelector(".profile-slider__button-left_mobile");
+    const rightButton = document.querySelector(".profile-slider__button-right_mobile");
+    const sliderContent = document.querySelector(".profile-slider__content_mobile");
 
-    let sliderContentItems = document.querySelectorAll(".profile-slider__content-item_mobile");
-    let contentItemsNumber = sliderContentItems.length;
+    const sliderContentItems = document.querySelectorAll(".profile-slider__content-item_mobile");
+    const contentItemsNumber = sliderContentItems.length;
 
-    let sliderImg = document.querySelector(".profile-slider__content-item-img_mobile");
-    let sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
+    const sliderImg = document.querySelector(".profile-slider__content-item-img_mobile");
+    const sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
 
-    let sliderMargin = parseInt(window.getComputedStyle(sliderContentItems[0]).marginRight);
+    const sliderMargin = parseInt(window.getComputedStyle(sliderContentItems[0]).marginRight);
 
-    let sliderContentVisible = document.querySelector(".profile-slider__content_visible_mobile");
-    let sliderItemsVisibleNumber = Math.round(
+    const sliderContentVisible = document.querySelector(".profile-slider__content_visible_mobile");
+    const sliderItemsVisibleNumber = Math.round(
         parseInt(window.getComputedStyle(sliderContentVisible).maxWidth) / sliderImgWidth
     );
 

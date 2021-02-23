@@ -1,7 +1,7 @@
 "use strict"
 
 {
-    let likeIcons = document.querySelectorAll(".like__icon");
+    const likeIcons = document.querySelectorAll(".like__icon");
 
     likeIcons.forEach((likeIcon) => {
         likeIcon.addEventListener("click", () => {

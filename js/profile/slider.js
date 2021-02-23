@@ -1,20 +1,20 @@
 "use strict"
 
 {
-    let leftButton = document.querySelector(".profile-slider__button-left");
-    let rightButton = document.querySelector(".profile-slider__button-right");
-    let sliderContent = document.querySelector(".profile-slider__content");
+    const leftButton = document.querySelector(".profile-slider__button-left");
+    const rightButton = document.querySelector(".profile-slider__button-right");
+    const sliderContent = document.querySelector(".profile-slider__content");
 
-    let sliderContentPairs = document.querySelectorAll(".profile-slider__content-pair");
-    let contentPairNumber = sliderContentPairs.length;
+    const sliderContentPairs = document.querySelectorAll(".profile-slider__content-pair");
+    const contentPairNumber = sliderContentPairs.length;
 
-    let sliderImg = document.querySelector(".profile-slider__content-item-img");
-    let sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
+    const sliderImg = document.querySelector(".profile-slider__content-item-img");
+    const sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
 
-    let sliderMargin = parseInt(window.getComputedStyle(sliderContentPairs[0]).marginRight);
+    const sliderMargin = parseInt(window.getComputedStyle(sliderContentPairs[0]).marginRight);
 
-    let sliderContentVisible = document.querySelector(".profile-slider__content_visible");
-    let sliderPairsVisibleNumber = Math.round(
+    const sliderContentVisible = document.querySelector(".profile-slider__content_visible");
+    const sliderPairsVisibleNumber = Math.round(
         parseInt(window.getComputedStyle(sliderContentVisible).maxWidth) / sliderImgWidth
     );
 

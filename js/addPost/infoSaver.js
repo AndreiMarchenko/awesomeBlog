@@ -1,7 +1,7 @@
 "use strict"
 
 {
-    let textArea = document.querySelector(".post-form__textarea");
+    const textArea = document.querySelector(".post-form__textarea");
     textArea.addEventListener("input", () => {
         localStorage.setItem("postText", textArea.value);
     });
@@ -10,9 +10,9 @@
         textArea.insertAdjacentText("afterbegin", localStorage.getItem("postText"));
     }
 
-    let pictureWrapper = document.querySelector(".post-form__picture-wrapper");
-    let picture = document.querySelector(".post-form__picture");
-    let pictureInput = document.querySelector(".post-form__picture-input_hidden");
+    const pictureWrapper = document.querySelector(".post-form__picture-wrapper");
+    const picture = document.querySelector(".post-form__picture");
+    const pictureInput = document.querySelector(".post-form__picture-input_hidden");
 
     pictureInput.addEventListener("change", () => {
         let selectedFile = pictureInput.files[0];

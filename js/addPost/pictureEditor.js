@@ -1,9 +1,9 @@
 "use strict"
 
 {
-    let pictureInput = document.querySelector(".post-form__picture-input_hidden");
-    let pictureWrapper = document.querySelector(".post-form__picture-wrapper");
-    let picture = document.querySelector(".post-form__picture");
+    const pictureInput = document.querySelector(".post-form__picture-input_hidden");
+    const pictureWrapper = document.querySelector(".post-form__picture-wrapper");
+    const picture = document.querySelector(".post-form__picture");
     pictureInput.addEventListener("change", () => {
         if (pictureInput.files[0] !== null) {
             pictureWrapper.classList.add("picture-wrapper_active");

@@ -1,15 +1,15 @@
 "use strict"
 
 {
-    let pageReferences = document.querySelectorAll("a");
+    const pageReferences = document.querySelectorAll("a");
     pageReferences.forEach((ref) => ref.ondragstart = () => false);
 
-    let SliderLeftButton = document.querySelector(".profile-slider__button-left");
-    let SliderRightButton = document.querySelector(".profile-slider__button-right");
+    const SliderLeftButton = document.querySelector(".profile-slider__button-left");
+    const SliderRightButton = document.querySelector(".profile-slider__button-right");
 
     function ButtonBeautifier(btn) {
         this.btn = btn;
-        let changeStyle = (backgroundColor, fill, borderColor, transition) => {
+        const changeStyle = (backgroundColor, fill, borderColor, transition) => {
             this.btn.style.backgroundColor = backgroundColor;
             this.btn.querySelector("svg").style.fill = fill;
             this.btn.style.borderColor = borderColor;
@@ -59,8 +59,8 @@
         };
     }
 
-    let leftButtonBeautifier = new ButtonBeautifier(SliderLeftButton);
-    let rightButtonBeautifier = new ButtonBeautifier(SliderRightButton);
+    const leftButtonBeautifier = new ButtonBeautifier(SliderLeftButton);
+    const rightButtonBeautifier = new ButtonBeautifier(SliderRightButton);
 
     leftButtonBeautifier.initListeners();
     rightButtonBeautifier.initListeners();

@@ -28,16 +28,16 @@
     }
 
 
-    let followersRef = document.querySelector(".profile-info__followers-ref");
-    let followersModal = document.querySelector(".followers-modal");
-    let darkBody = document.querySelector(".dark-body");
-    let body = document.body;
-    let followersModalItems = document.querySelectorAll(".followers-modal__items");
-    let followersModalItemsAll = document.querySelector(".followers-modal__items_all");
-    let followersModalItemsSame = document.querySelector(".followers-modal__items_same");
-    let followersAllTab = document.querySelector(".followers__all-tab");
-    let followersSameTab =  document.querySelector(".followers__same-tab");
-    let followersModalCross = document.querySelector(".followers-modal__close-cross");
+    const followersRef = document.querySelector(".profile-info__followers-ref");
+    const followersModal = document.querySelector(".followers-modal");
+    const darkBody = document.querySelector(".dark-body");
+    const body = document.body;
+    const followersModalItems = document.querySelectorAll(".followers-modal__items");
+    const followersModalItemsAll = document.querySelector(".followers-modal__items_all");
+    const followersModalItemsSame = document.querySelector(".followers-modal__items_same");
+    const followersAllTab = document.querySelector(".followers__all-tab");
+    const followersSameTab =  document.querySelector(".followers__same-tab");
+    const followersModalCross = document.querySelector(".followers-modal__close-cross");
 
 
     followersModalItems.forEach((modalItem) => {

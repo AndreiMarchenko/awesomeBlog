@@ -1,13 +1,13 @@
 "use strict"
 
 {
-    let burger = document.querySelector(".burger");
-    let header = document.querySelector(".header");
-    let headerList = document.querySelector(".header__list-wrapper");
-    let logoRef = document.querySelector(".logo__ref");
-    let body = document.querySelector("body");
+    const burger = document.querySelector(".burger");
+    const header = document.querySelector(".header");
+    const headerList = document.querySelector(".header__list-wrapper");
+    const logoRef = document.querySelector(".logo__ref");
+    const body = document.querySelector("body");
 
-    let searchPanel = document.querySelector(".search__wrapper");
+    const searchPanel = document.querySelector(".search__wrapper");
 
     burger.addEventListener("click", () => {
         burger.classList.toggle("burger_active");

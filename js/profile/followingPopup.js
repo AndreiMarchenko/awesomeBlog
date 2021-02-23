@@ -28,16 +28,16 @@
     }
 
 
-    let followingRef = document.querySelector(".profile-info__following-ref");
-    let followingModal = document.querySelector(".following-modal");
-    let darkBody = document.querySelector(".dark-body");
-    let body = document.body;
-    let followingModalItems = document.querySelectorAll(".following-modal__items");
-    let followingModalItemsAll = document.querySelector(".following-modal__items_all");
-    let followingModalItemsSame = document.querySelector(".following-modal__items_same");
-    let followingAllTab = document.querySelector(".following__all-tab");
-    let followingSameTab =  document.querySelector(".following__same-tab");
-    let followingModalCross = document.querySelector(".following-modal__close-cross");
+    const followingRef = document.querySelector(".profile-info__following-ref");
+    const followingModal = document.querySelector(".following-modal");
+    const darkBody = document.querySelector(".dark-body");
+    const body = document.body;
+    const followingModalItems = document.querySelectorAll(".following-modal__items");
+    const followingModalItemsAll = document.querySelector(".following-modal__items_all");
+    const followingModalItemsSame = document.querySelector(".following-modal__items_same");
+    const followingAllTab = document.querySelector(".following__all-tab");
+    const followingSameTab =  document.querySelector(".following__same-tab");
+    const followingModalCross = document.querySelector(".following-modal__close-cross");
 
 
     followingModalItems.forEach((modalItem) => {
