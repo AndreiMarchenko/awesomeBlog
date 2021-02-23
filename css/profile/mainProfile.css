@@ -162,6 +162,34 @@ li {
     margin: 50px auto 0;
     border-top: 1px solid #308CBF;
 }
+.profile-add-post__ref-wrapper {
+    padding-top: 30px;
+    text-align: center;
+}
+.profile-add-post__ref {
+    height: 37px;
+    padding: 2px 50px;
+    font-size: 18px;
+    color: #308CBF;
+    border: #308CBF 1px solid;
+    transition: background-color .4s ease-out,
+    color .1s ease-out;
+}
+.profile-add-post__ref:hover{
+    background-color: #308CBF;
+    border: grey 1px solid;
+    color: #fff;
+    transition: background-color .5s ease-out,
+    color .1s ease-out,
+    border .4s ease-out;
+}
+.profile-add-post__ref:active{
+    background-color: #F5F5F5;
+    color: #308CBF;
+    border: #308CBF 1px solid;
+    transition: background-color .1s ease-out,
+    color .4s ease-out;
+}
 .profile-slider_mobile {
     display: none;
 }
@@ -169,7 +197,7 @@ li {
     padding-bottom: 40px;
 }
 .profile-slider__wrapper {
-    padding-top: 70px;
+    padding-top: 50px;
     padding-bottom: 60px;
     position: relative;
     display: flex;

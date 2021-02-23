@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/profile/addPost.css">
+    <script defer src="../../js/profile/burger.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="header__content">
+            <div class="logo">
+                <a class="logo__ref" href="#">Awesome Blog</a>
+            </div>
+            <div class="header__list-wrapper">
+                <ul class="header__list">
+                    <li><a href="#">My page</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+            <div class="burger">
+                <span></span>
+            </div>
+        </div>
+        <hr class="header__line">
+    </div>
+</header>
+
+<div class="post-form__wrapper">
+    <div class="container">
+        <div class="post-form__content">
+            <div class="post-form__title">
+                New post
+            </div>
+            <form action="#" class="post-form">
+                <div class="post-form__textarea-wrapper">
+                    Enter post text:
+                    <label class="post-form__textarea-label">
+                        <textarea class="post-form__textarea"></textarea>
+                    </label>
+                </div>
+                <div class="post-form__picture-input-wrapper">
+                    <div class="post-form__picture-wrapper">
+                        <img class="post-form__picture" src="" alt="">
+                    </div>
+                    <label class="post-form__picture-label">
+                        <span class="post-form__picture-input submit-input">Choose post picture...</span>
+                        <input class="post-form__picture-input_hidden" type="file">
+                    </label>
+                </div>
+                <hr class="post-form__line">
+                <div class="post-form__submit-wrapper">
+                    <label class="post-form__submit-label">
+                        <input class="post-form__submit submit-input" type="submit" value="Post">
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
