@@ -1,33 +1,36 @@
 "use strict"
 
 {
-    const leftButton = document.querySelector(".profile-slider__button-left_mobile");
-    const rightButton = document.querySelector(".profile-slider__button-right_mobile");
-    const sliderContent = document.querySelector(".profile-slider__content_mobile");
+    const leftButtonSelector = ".profile-slider__button-left_mobile";
+    const rightButtonSelector = ".profile-slider__button-right_mobile";
+    const sliderContentSelector = ".profile-slider__content_mobile";
+    const sliderContentItemsSelector = ".profile-slider__content-item_mobile";
+    const sliderImgSelector = ".profile-slider__content-item-img_mobile";
+    const sliderContentVisibleSelector = ".profile-slider__content_visible_mobile";
 
-    const sliderContentItems = document.querySelectorAll(".profile-slider__content-item_mobile");
+    const leftButton = document.querySelector(leftButtonSelector);
+    const rightButton = document.querySelector(rightButtonSelector);
+    const sliderContent = document.querySelector(sliderContentSelector);
+    const sliderContentItems = document.querySelectorAll(sliderContentItemsSelector);
+    const sliderImg = document.querySelector(sliderImgSelector);
+    const sliderContentVisible = document.querySelector(sliderContentVisibleSelector);
+
     const contentItemsNumber = sliderContentItems.length;
-
-    const sliderImg = document.querySelector(".profile-slider__content-item-img_mobile");
     const sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
-
     const sliderMargin = parseInt(window.getComputedStyle(sliderContentItems[0]).marginRight);
-
-    const sliderContentVisible = document.querySelector(".profile-slider__content_visible_mobile");
-    const sliderItemsVisibleNumber = Math.round(
-        parseInt(window.getComputedStyle(sliderContentVisible).maxWidth) / sliderImgWidth
-    );
+    const sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(sliderContentVisible).maxWidth);
+    const sliderItemsVisibleNumber = Math.round(sliderContentVisibleMaxWidth / sliderImgWidth);
 
     leftButton.addEventListener("click", () => {
         let sliderContentStyles  = window.getComputedStyle(sliderContent);
-        let sliderContentMarginLeft = Number((sliderContentStyles.marginLeft).replace(/px/, ''));
+        let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
         if (sliderContentMarginLeft !== 0) {
             sliderContent.style.marginLeft =  (sliderContentMarginLeft + sliderImgWidth + sliderMargin) + "px";
         }
     });
     rightButton.addEventListener("click", () => {
         let sliderContentStyles  = window.getComputedStyle(sliderContent);
-        let sliderContentMarginLeft = Number((sliderContentStyles.marginLeft).replace(/px/, ''));
+        let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
         if (sliderContentMarginLeft !== -(contentItemsNumber - sliderItemsVisibleNumber)*(sliderImgWidth + sliderMargin)) {
             sliderContent.style.marginLeft =  (sliderContentMarginLeft - sliderImgWidth - sliderMargin) + "px";
         }

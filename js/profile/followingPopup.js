@@ -1,44 +1,58 @@
 "use strict"
 
 {
+    const followingRefSelector = ".profile-info__following-ref";
+    const followingModalSelector = ".following-modal";
+    const darkBodySelector = ".dark-body";
+    const followingModalItemsSelector = ".following-modal__items";
+    const followingModalItemsAllSelector = ".following-modal__items_all";
+    const followingModalItemsSameSelector = ".following-modal__items_same";
+    const followingAllTabSelector = ".following__all-tab";
+    const followingSameTabSelector = ".following__same-tab";
+    const followingModalCrossSelector = ".following-modal__close-cross";
+
+    const followingModalActiveClass = "following-modal_active";
+    const followingTabActiveClass = "following__tab_active";
+    const followingModalItemsActiveClass = "following-modal__items_active";
+    const darkBodyActiveClass = "dark-body_active";
+    const bodyLockClass = "body_lock";
+
+    const followingRef = document.querySelector(followingRefSelector);
+    const followingModal = document.querySelector(followingModalSelector);
+    const darkBody = document.querySelector(darkBodySelector);
+    const body = document.body;
+    const followingModalItems = document.querySelectorAll(followingModalItemsSelector);
+    const followingModalItemsAll = document.querySelector(followingModalItemsAllSelector);
+    const followingModalItemsSame = document.querySelector(followingModalItemsSameSelector);
+    const followingAllTab = document.querySelector(followingAllTabSelector);
+    const followingSameTab =  document.querySelector(followingSameTabSelector);
+    const followingModalCross = document.querySelector(followingModalCrossSelector);
+
     function openModal() {
-        followingModal.classList.add("following-modal_active");
+        followingModal.classList.add(followingModalActiveClass);
 
-        followingAllTab.classList.add("following__tab_active");
-        followingModalItemsAll.classList.add("following-modal__items_active");
-        followingModalItemsSame.classList.remove("following-modal__items_active");
-        followingSameTab.classList.remove("following__tab_active");
+        followingAllTab.classList.add(followingTabActiveClass);
+        followingModalItemsAll.classList.add(followingModalItemsActiveClass);
+        followingModalItemsSame.classList.remove(followingModalItemsActiveClass);
+        followingSameTab.classList.remove(followingTabActiveClass);
 
-        darkBody.classList.add("dark-body_active");
-        body.classList.add("body_lock");
+        darkBody.classList.add(darkBodyActiveClass);
+        body.classList.add(bodyLockClass);
     }
 
     function closeModal() {
-        followingModal.classList.remove("following-modal_active");
-        darkBody.classList.remove("dark-body_active");
-        body.classList.remove("body_lock");
+        followingModal.classList.remove(followingModalActiveClass);
+        darkBody.classList.remove(darkBodyActiveClass);
+        body.classList.remove(bodyLockClass);
     }
 
     function changeModalTab() {
-        followingAllTab.classList.toggle("following__tab_active");
-        followingSameTab.classList.toggle("following__tab_active");
+        followingAllTab.classList.toggle(followingTabActiveClass);
+        followingSameTab.classList.toggle(followingTabActiveClass);
 
-        followingModalItemsAll.classList.toggle("following-modal__items_active");
-        followingModalItemsSame.classList.toggle("following-modal__items_active");
+        followingModalItemsAll.classList.toggle(followingModalItemsActiveClass);
+        followingModalItemsSame.classList.toggle(followingModalItemsActiveClass);
     }
-
-
-    const followingRef = document.querySelector(".profile-info__following-ref");
-    const followingModal = document.querySelector(".following-modal");
-    const darkBody = document.querySelector(".dark-body");
-    const body = document.body;
-    const followingModalItems = document.querySelectorAll(".following-modal__items");
-    const followingModalItemsAll = document.querySelector(".following-modal__items_all");
-    const followingModalItemsSame = document.querySelector(".following-modal__items_same");
-    const followingAllTab = document.querySelector(".following__all-tab");
-    const followingSameTab =  document.querySelector(".following__same-tab");
-    const followingModalCross = document.querySelector(".following-modal__close-cross");
-
 
     followingModalItems.forEach((modalItem) => {
         modalItem.style.height = window.innerHeight/2 +  "px";
@@ -47,13 +61,13 @@
     followingRef.addEventListener("click", openModal);
 
     followingAllTab.addEventListener("click", () => {
-        if (!followingAllTab.classList.contains("following__tab_active")) {
+        if (!followingAllTab.classList.contains(followingTabActiveClass)) {
             changeModalTab();
         }
     });
 
     followingSameTab.addEventListener("click", () => {
-        if (!followingSameTab.classList.contains("following__tab_active")) {
+        if (!followingSameTab.classList.contains(followingTabActiveClass)) {
             changeModalTab();
         }
     });

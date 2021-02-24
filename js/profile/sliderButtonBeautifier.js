@@ -1,53 +1,54 @@
 "use strict"
 
 {
-    const pageReferences = document.querySelectorAll("a");
+    const pageReferenceSelector = "a";
+    const sliderLeftButtonSelector = ".profile-slider__button-left";
+    const sliderRightButtonSelector = ".profile-slider__button-right";
+    const svgSelector = "svg";
+
+    const pageReferences = document.querySelectorAll(pageReferenceSelector);
+
+
+    const sliderLeftButton = document.querySelector(sliderLeftButtonSelector);
+    const sliderRightButton = document.querySelector(sliderRightButtonSelector);
+
     pageReferences.forEach((ref) => ref.ondragstart = () => false);
 
-    const SliderLeftButton = document.querySelector(".profile-slider__button-left");
-    const SliderRightButton = document.querySelector(".profile-slider__button-right");
 
     function ButtonBeautifier(btn) {
+        const btnTransition = "background-color .5s ease-out," +
+                              "border .4s ease-out," +
+                              "fill .1s ease-out";
+        const btnMousedownTransition = "background-color .1s ease-out," +
+                                       "fill .1s ease-out";
+        const colorGrey = "grey";
+        const colorWhite = "#fff";
+        const colorLightGrey = "#F5F5F5";
+        const colorBlue = "#308CBF";
+
         this.btn = btn;
         const changeStyle = (backgroundColor, fill, borderColor, transition) => {
             this.btn.style.backgroundColor = backgroundColor;
-            this.btn.querySelector("svg").style.fill = fill;
+            this.btn.querySelector(svgSelector).style.fill = fill;
             this.btn.style.borderColor = borderColor;
             this.btn.style.transition = transition;
         };
+
         this.mouseoverProcessing = () => {
-            changeStyle("#308CBF",
-                "#fff",
-                "grey",
-                "background-color .5s ease-out," +
-                "border .4s ease-out," +
-                "fill .1s ease-out");
+            changeStyle(colorBlue, colorWhite, colorGrey, btnTransition);
         }
         this.mouseoutProcessing = () => {
-            changeStyle("#F5F5F5",
-                "#308CBF",
-                "#308CBF",
-                "background-color .5s ease-out," +
-                "border .4s ease-out," +
-                "fill .1s ease-out");
+            changeStyle(colorLightGrey, colorBlue, colorBlue, btnTransition);
         };
         this.mousedownProcessing =  () => {
-            changeStyle("#F5F5F5",
-                "#308CBF",
-                "#308CBF",
-                "background-color .1s ease-out," +
-                "fill .1s ease-out");
+            changeStyle(colorLightGrey, colorBlue, colorBlue, btnMousedownTransition);
             this.btn.removeEventListener("mouseover", this.mouseoverProcessing);
         };
         this.mouseupProcessing = () => {
-            changeStyle("#308CBF",
-                "#fff",
-                "grey",
-                "background-color .5s ease-out," +
-                "border .4s ease-out," +
-                "fill .1s ease-out");
+            changeStyle(colorBlue, colorWhite, colorGrey, btnTransition);
             this.btn.addEventListener("mouseover", this.mouseoverProcessing);
         };
+
         this.initListeners = () => {
             this.btn.addEventListener("mouseover", this.mouseoverProcessing);
             this.btn.addEventListener("mouseout", this.mouseoutProcessing);
@@ -59,8 +60,8 @@
         };
     }
 
-    const leftButtonBeautifier = new ButtonBeautifier(SliderLeftButton);
-    const rightButtonBeautifier = new ButtonBeautifier(SliderRightButton);
+    const leftButtonBeautifier = new ButtonBeautifier(sliderLeftButton);
+    const rightButtonBeautifier = new ButtonBeautifier(sliderRightButton);
 
     leftButtonBeautifier.initListeners();
     rightButtonBeautifier.initListeners();

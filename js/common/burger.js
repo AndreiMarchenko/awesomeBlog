@@ -1,23 +1,37 @@
 "use strict"
 
 {
-    const burger = document.querySelector(".burger");
-    const header = document.querySelector(".header");
-    const headerList = document.querySelector(".header__list-wrapper");
-    const logoRef = document.querySelector(".logo__ref");
-    const body = document.querySelector("body");
+    const burgerSelector = ".burger";
+    const headerSelector = ".header";
+    const headerListSelector = ".header__list-wrapper";
+    const logoRefSelector = ".logo__ref";
+    const bodySelector = "body";
+    const searchPanelSelector = ".search__wrapper";
 
-    const searchPanel = document.querySelector(".search__wrapper");
+    const burgerActiveClass = "burger_active";
+    const headerActiveClass = "header_active";
+    const headerListActiveCLass = "header__list_active";
+    const logoRefActiveClass = "logo__ref_active";
+    const bodyLockClass = "body_lock";
+    const searchPanelActiveClass = "search__wrapper_active";
+
+    const burger = document.querySelector(burgerSelector);
+    const header = document.querySelector(headerSelector);
+    const headerList = document.querySelector(headerListSelector);
+    const logoRef = document.querySelector(logoRefSelector);
+    const body = document.querySelector(bodySelector);
+
+    const searchPanel = document.querySelector(searchPanelSelector);
 
     burger.addEventListener("click", () => {
-        burger.classList.toggle("burger_active");
-        header.classList.toggle("header_active");
-        headerList.classList.toggle("header__list_active");
-        logoRef.classList.toggle("logo__ref_active");
-        body.classList.toggle("body_lock");
+        burger.classList.toggle(burgerActiveClass);
+        header.classList.toggle(headerActiveClass);
+        headerList.classList.toggle(headerListActiveCLass);
+        logoRef.classList.toggle(logoRefActiveClass);
+        body.classList.toggle(bodyLockClass);
 
         if (searchPanel !== null) {
-            searchPanel.classList.toggle("search__wrapper_active");
+            searchPanel.classList.toggle(searchPanelActiveClass);
         }
     });
 }

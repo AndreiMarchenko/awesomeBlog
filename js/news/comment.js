@@ -1,14 +1,20 @@
 "use strict"
 
 {
-    const commentIcons = document.querySelectorAll(".comment-icon");
+    const commentIconSelector = ".comment-icon";
+    const newsItemSelector = ".news-item";
+    const commentSelector = ".comment__wrapper";
+
+    const commentActiveClass = "comment__wrapper_active";
+
+    const commentIcons = document.querySelectorAll(commentIconSelector);
 
     commentIcons.forEach((commentIcon) => {
         commentIcon.addEventListener("click", () => {
-            const newsItem = commentIcon.closest(".news-item");
-            const comment = newsItem.querySelector(".comment__wrapper");
+            const newsItem = commentIcon.closest(newsItemSelector);
+            const comment = newsItem.querySelector(commentSelector);
 
-            comment.classList.toggle("comment__wrapper_active");
+            comment.classList.toggle(commentActiveClass);
         });
     });
 }

@@ -1,10 +1,13 @@
 "use strict"
 
 {
-    const profilePicture = document.querySelector(".profile-editor__picture");
+    const profilePictureSelector = ".profile-editor__picture";
+    const profilePictureInputSelector = ".profile-editor__picture-input_hidden";
+    const profilePictureFormSelector = ".profile-editor__picture-form";
 
-    const profilePictureInput = document.querySelector(".profile-editor__picture-input_hidden");
-    const profilePictureForm = document.querySelector(".profile-editor__picture-form");
+    const profilePicture = document.querySelector(profilePictureSelector);
+    const profilePictureInput = document.querySelector(profilePictureInputSelector);
+    const profilePictureForm = document.querySelector(profilePictureFormSelector);
 
     profilePictureInput.addEventListener("change", () => {
         let picture = profilePictureInput.files[0];

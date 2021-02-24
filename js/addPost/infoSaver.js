@@ -1,7 +1,18 @@
 "use strict"
 
 {
-    const textArea = document.querySelector(".post-form__textarea");
+    const textAreaSelector = ".post-form__textarea";
+    const pictureWrapperSelector = ".post-form__picture-wrapper";
+    const pictureSelector = ".post-form__picture";
+    const pictureInputSelector = ".post-form__picture-input_hidden";
+
+    const pictureWrapperActiveClass = "picture-wrapper_active";
+
+    const textArea = document.querySelector(textAreaSelector);
+    const pictureWrapper = document.querySelector(pictureWrapperSelector);
+    const picture = document.querySelector(pictureSelector);
+    const pictureInput = document.querySelector(pictureInputSelector);
+
     textArea.addEventListener("input", () => {
         localStorage.setItem("postText", textArea.value);
     });
@@ -9,10 +20,6 @@
     if (localStorage.getItem("postText")) {
         textArea.insertAdjacentText("afterbegin", localStorage.getItem("postText"));
     }
-
-    const pictureWrapper = document.querySelector(".post-form__picture-wrapper");
-    const picture = document.querySelector(".post-form__picture");
-    const pictureInput = document.querySelector(".post-form__picture-input_hidden");
 
     pictureInput.addEventListener("change", () => {
         let selectedFile = pictureInput.files[0];
@@ -26,7 +33,7 @@
     });
 
     if (localStorage.getItem("postPicture")) {
-        pictureWrapper.classList.add("picture-wrapper_active");
+        pictureWrapper.classList.add(pictureWrapperActiveClass);
         picture.setAttribute("src", localStorage.getItem("postPicture"));
     }
 
