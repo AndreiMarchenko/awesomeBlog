@@ -6,7 +6,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/news/news.css">
-    <script defer src="../../js/profile/burger.js"></script>
+    <script defer src="../../js/common/burger.js"></script>
+    <script defer src="../../js/news/like.js"></script>
+    <script defer src="../../js/news/comment.js"></script>
+    <script defer src="../../js/news/sort.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -94,9 +97,9 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="comment__wrapper">
-                                <a class="comment__ref" href="#">
-                                    <svg class="comment__icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <div class="comment-icon__wrapper">
+                                <a class="comment-icon__ref" href="#">
+                                    <svg class="comment-icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.0864 12.9785C2.07179 12.8115 2.06137 12.6451 2.05506 12.4794M2.05506 12.4794C1.85348 7.18625 5.84198 2.61178 11.1768 2.14504C16.6786 1.6637 21.5289 5.7336 22.0103 11.2354L25.2852 19.9833L12.3348 21.1166M2.05506 12.4794C2.77569 17.7271 7.49794 21.5395 12.8328 21.0727M2.05506 12.4794C2.0325 12.3151 2.01386 12.1494 1.99925 11.9824" stroke="black"/>
                                     </svg>
 
@@ -104,6 +107,124 @@
                                         7
                                     </div>
                                 </a>
+                            </div>
+                        </div>
+                        <div class="comment__wrapper">
+                            <hr class="news-item__line">
+                            <div class="comment-item">
+                                <div class="comment-item__header">
+                                    <div class="comment-item__picture-wrapper">
+                                        <a class="comment_item__picture-ref" href="">
+                                            <img class="comment-item__picture" src="../../images/profile/profilePicture.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="comment-item__author">
+                                        Andrei Marchenko
+                                    </div>
+                                </div>
+                                <div class="comment-item__text">
+                                    hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello
+                                </div>
+                                <div class="comment-item__time">
+                                    44 minutes ago
+                                </div>
+                            </div>
+                            <hr class="news-item__line">
+                            <div class="comment-item">
+                                <div class="comment-item__header">
+                                    <div class="comment-item__picture-wrapper">
+                                        <a class="comment_item__picture-ref" href="">
+                                            <img class="comment-item__picture" src="../../images/profile/profilePicture.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="comment-item__author">
+                                        Andrei Marchenko
+                                    </div>
+                                </div>
+                                <div class="comment-item__text">
+                                    hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello
+                                </div>
+                                <div class="comment-item__time">
+                                    44 minutes ago
+                                </div>
+                            </div>
+                            <hr class="news-item__line">
+                            <div class="comment-item">
+                                <div class="comment-item__header">
+                                    <div class="comment-item__picture-wrapper">
+                                        <a class="comment_item__picture-ref" href="">
+                                            <img class="comment-item__picture" src="../../images/profile/profilePicture.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="comment-item__author">
+                                        Andrei Marchenko
+                                    </div>
+                                </div>
+                                <div class="comment-item__text">
+                                    hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello
+                                </div>
+                                <div class="comment-item__time">
+                                    44 minutes ago
+                                </div>
+                            </div>
+                            <hr class="news-item__line">
+                        </div>
+                    </div>
+
+                    <div class="news-item">
+                        <div class="news-item__header">
+                            <div class="news-item__owner-picture-wrapper">
+                                <img src="../../images/profile/profilePicture.jpg" class="news-item__owner-picture">
+                            </div>
+                            <div class="news-item__info-wrapper">
+                                <div class="news-item__owner-name">
+                                    Profile name
+                                </div>
+                                <div class="news-item__time">
+                                    Two hours ago
+                                </div>
+                            </div>
+                        </div>
+                        <div class="news-item__text">
+                            text text text text text text text text text text text text text text text text
+                            text text text text text text text text text text text text text text text text
+                            text text text text text text text text text text text text text text text text
+                            text text text text text text text text text text text text text text text text
+                        </div>
+                        <div class="news-item__picture-wrapper">
+                            <img class="news-item__picture" src="../../images/news/beach.jpg" alt="">
+                        </div>
+                        <hr class="news-item__line">
+                        <div class="news-item__footer">
+                            <div class="like__wrapper">
+                                <a class="like__ref" href="#">
+                                    <svg class="like__icon" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.4204 8.86946L12.7739 9.22302L13.1275 8.86946C15.2838 6.71312 18.7799 6.71312 20.9363 8.86946C23.0926 11.0258 23.0926 14.5219 20.9363 16.6783L12.7739 24.8406L4.61157 16.6783C2.45523 14.5219 2.45523 11.0258 4.61157 8.86946C6.76791 6.71312 10.264 6.71312 12.4204 8.86946Z" stroke="black"/>
+                                    </svg>
+                                    <div class="like__count">
+                                        38
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="comment-icon__wrapper">
+                                <a class="comment-icon__ref" href="#">
+                                    <svg class="comment-icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.0864 12.9785C2.07179 12.8115 2.06137 12.6451 2.05506 12.4794M2.05506 12.4794C1.85348 7.18625 5.84198 2.61178 11.1768 2.14504C16.6786 1.6637 21.5289 5.7336 22.0103 11.2354L25.2852 19.9833L12.3348 21.1166M2.05506 12.4794C2.77569 17.7271 7.49794 21.5395 12.8328 21.0727M2.05506 12.4794C2.0325 12.3151 2.01386 12.1494 1.99925 11.9824" stroke="black"/>
+                                    </svg>
+
+                                    <div class="comment__count">
+                                        7
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="comment__wrapper">
+                            <hr class="news-item__line">
+                            <div class="comment-item">
+                                hello
+                            </div>
+                            <div class="comment-item">
+                                hi all
                             </div>
                         </div>
                     </div>
@@ -130,7 +251,7 @@
                             text text text text text text text text text text text text text text text text
                         </div>
                         <div class="news-item__picture-wrapper">
-                            <img class="news-item__picture" src="../../images/profile/profilePicture.jpg" alt="">
+                            <img class="news-item__picture" src="../../images/news/forest.jpeg" alt="">
                         </div>
                         <hr class="news-item__line">
                         <div class="news-item__footer">
@@ -144,9 +265,58 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="comment__wrapper">
-                                <a class="comment__ref" href="#">
-                                    <svg class="comment__icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <div class="comment-icon__wrapper">
+                                <a class="comment-icon__ref" href="#">
+                                    <svg class="comment-icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.0864 12.9785C2.07179 12.8115 2.06137 12.6451 2.05506 12.4794M2.05506 12.4794C1.85348 7.18625 5.84198 2.61178 11.1768 2.14504C16.6786 1.6637 21.5289 5.7336 22.0103 11.2354L25.2852 19.9833L12.3348 21.1166M2.05506 12.4794C2.77569 17.7271 7.49794 21.5395 12.8328 21.0727M2.05506 12.4794C2.0325 12.3151 2.01386 12.1494 1.99925 11.9824" stroke="black"/>
+                                    </svg>
+
+                                    <div class="comment__count">
+                                        7
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="news-item">
+                        <div class="news-item__header">
+                            <div class="news-item__owner-picture-wrapper">
+                                <img src="../../images/profile/profilePicture.jpg" class="news-item__owner-picture">
+                            </div>
+                            <div class="news-item__info-wrapper">
+                                <div class="news-item__owner-name">
+                                    Profile name
+                                </div>
+                                <div class="news-item__time">
+                                    Two hours ago
+                                </div>
+                            </div>
+                        </div>
+                        <div class="news-item__text">
+                            text text text text text text text text text text text text text text text text
+                            text text text text text text text text text text text text text text text text
+                            text text text text text text text text text text text text text text text text
+                            text text text text text text text text text text text text text text text text
+                        </div>
+                        <div class="news-item__picture-wrapper">
+                            <img class="news-item__picture" src="../../images/news/beach.jpg" alt="">
+                        </div>
+                        <hr class="news-item__line">
+                        <div class="news-item__footer">
+                            <div class="like__wrapper">
+                                <a class="like__ref" href="#">
+                                    <svg class="like__icon" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.4204 8.86946L12.7739 9.22302L13.1275 8.86946C15.2838 6.71312 18.7799 6.71312 20.9363 8.86946C23.0926 11.0258 23.0926 14.5219 20.9363 16.6783L12.7739 24.8406L4.61157 16.6783C2.45523 14.5219 2.45523 11.0258 4.61157 8.86946C6.76791 6.71312 10.264 6.71312 12.4204 8.86946Z" stroke="black"/>
+                                    </svg>
+                                    <div class="like__count">
+                                        38
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="comment-icon__wrapper">
+                                <a class="comment-icon__ref" href="#">
+                                    <svg class="comment-icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.0864 12.9785C2.07179 12.8115 2.06137 12.6451 2.05506 12.4794M2.05506 12.4794C1.85348 7.18625 5.84198 2.61178 11.1768 2.14504C16.6786 1.6637 21.5289 5.7336 22.0103 11.2354L25.2852 19.9833L12.3348 21.1166M2.05506 12.4794C2.77569 17.7271 7.49794 21.5395 12.8328 21.0727M2.05506 12.4794C2.0325 12.3151 2.01386 12.1494 1.99925 11.9824" stroke="black"/>
                                     </svg>
 
@@ -193,9 +363,9 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="comment__wrapper">
-                                <a class="comment__ref" href="#">
-                                    <svg class="comment__icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <div class="comment-icon__wrapper">
+                                <a class="comment-icon__ref" href="#">
+                                    <svg class="comment-icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.0864 12.9785C2.07179 12.8115 2.06137 12.6451 2.05506 12.4794M2.05506 12.4794C1.85348 7.18625 5.84198 2.61178 11.1768 2.14504C16.6786 1.6637 21.5289 5.7336 22.0103 11.2354L25.2852 19.9833L12.3348 21.1166M2.05506 12.4794C2.77569 17.7271 7.49794 21.5395 12.8328 21.0727M2.05506 12.4794C2.0325 12.3151 2.01386 12.1494 1.99925 11.9824" stroke="black"/>
                                     </svg>
 
@@ -228,7 +398,7 @@
                             text text text text text text text text text text text text text text text text
                         </div>
                         <div class="news-item__picture-wrapper">
-                            <img class="news-item__picture" src="../../images/news/forest.jpeg" alt="">
+                            <img class="news-item__picture" src="../../images/news/beach.jpg" alt="">
                         </div>
                         <hr class="news-item__line">
                         <div class="news-item__footer">
@@ -242,9 +412,9 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="comment__wrapper">
-                                <a class="comment__ref" href="#">
-                                    <svg class="comment__icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <div class="comment-icon__wrapper">
+                                <a class="comment-icon__ref" href="#">
+                                    <svg class="comment-icon" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.0864 12.9785C2.07179 12.8115 2.06137 12.6451 2.05506 12.4794M2.05506 12.4794C1.85348 7.18625 5.84198 2.61178 11.1768 2.14504C16.6786 1.6637 21.5289 5.7336 22.0103 11.2354L25.2852 19.9833L12.3348 21.1166M2.05506 12.4794C2.77569 17.7271 7.49794 21.5395 12.8328 21.0727M2.05506 12.4794C2.0325 12.3151 2.01386 12.1494 1.99925 11.9824" stroke="black"/>
                                     </svg>
 
