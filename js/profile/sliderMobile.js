@@ -1,19 +1,19 @@
 "use strict"
 
 {
-    const leftButtonSelector = ".profile-slider__button-left_mobile";
-    const rightButtonSelector = ".profile-slider__button-right_mobile";
-    const sliderContentSelector = ".profile-slider__content_mobile";
-    const sliderContentItemsSelector = ".profile-slider__content-item_mobile";
-    const sliderImgSelector = ".profile-slider__content-item-img_mobile";
-    const sliderContentVisibleSelector = ".profile-slider__content_visible_mobile";
+    const LEFT_BUTTON_SELECTOR = ".profile-slider__button-left_mobile";
+    const RIGHT_BUTTON_SELECTOR = ".profile-slider__button-right_mobile";
+    const SLIDER_CONTENT_SELECTOR = ".profile-slider__content_mobile";
+    const SLIDER_CONTENT_ITEMS_SELECTOR = ".profile-slider__content-item_mobile";
+    const SLIDER_IMG_SELECTOR = ".profile-slider__content-item-img_mobile";
+    const SLIDER_CONTENT_VISIBLE_SELECTOR = ".profile-slider__content_visible_mobile";
 
-    const leftButton = document.querySelector(leftButtonSelector);
-    const rightButton = document.querySelector(rightButtonSelector);
-    const sliderContent = document.querySelector(sliderContentSelector);
-    const sliderContentItems = document.querySelectorAll(sliderContentItemsSelector);
-    const sliderImg = document.querySelector(sliderImgSelector);
-    const sliderContentVisible = document.querySelector(sliderContentVisibleSelector);
+    const leftButton = document.querySelector(LEFT_BUTTON_SELECTOR);
+    const rightButton = document.querySelector(RIGHT_BUTTON_SELECTOR);
+    const sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
+    const sliderContentItems = document.querySelectorAll(SLIDER_CONTENT_ITEMS_SELECTOR);
+    const sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
+    const sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
 
     const contentItemsNumber = sliderContentItems.length;
     const sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);

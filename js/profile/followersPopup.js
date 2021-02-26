@@ -1,57 +1,57 @@
 "use strict"
 
 {
-    const followersRefSelector = ".profile-info__followers-ref";
-    const followersModalSelector = ".followers-modal";
-    const darkBodySelector = ".dark-body";
-    const followersModalItemsSelector = ".followers-modal__items";
-    const followersModalItemsAllSelector = ".followers-modal__items_all";
-    const followersModalItemsSameSelector = ".followers-modal__items_same";
-    const followersAllTabSelector = ".followers__all-tab";
-    const followersSameTabSelector = ".followers__same-tab";
-    const followersModalCrossSelector = ".followers-modal__close-cross";
+    const FOLLOWERS_REF_SELECTOR = ".profile-info__followers-ref";
+    const FOLLOWERS_MODAL_SELECTOR = ".followers-modal";
+    const DARK_BODY_SELECTOR = ".dark-body";
+    const FOLLOWERS_MODAL_ITEMS_SELECTOR = ".followers-modal__items";
+    const FOLLOWERS_MODAL_ITEMS_ALL_SELECTOR = ".followers-modal__items_all";
+    const FOLLOWERS_MODAL_ITEMS_SAME_SELECTOR = ".followers-modal__items_same";
+    const FOLLOWERS_ALL_TAB_SELECTOR = ".followers__all-tab";
+    const FOLLOWERS_SAME_TAB_SELECTOR = ".followers__same-tab";
+    const FOLLOWERS_MODAL_CROSS_SELECTOR = ".followers-modal__close-cross";
 
-    const followersModalActiveClass = "followers-modal_active";
-    const followersTabActiveClass = "followers__tab_active";
-    const followersModalItemsActiveClass = "followers-modal__items_active";
-    const darkBodyActiveClass = "dark-body_active";
-    const bodyLockClass = "body_lock";
+    const FOLLOWERS_MODAL_ACTIVE_CLASS = "followers-modal_active";
+    const FOLLOWERS_TAB_ACTIVE_CLASS = "followers__tab_active";
+    const FOLLOWERS_MODAL_ITEMS_ACTIVE_CLASS = "followers-modal__items_active";
+    const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
+    const BODY_LOCK_CLASS = "body_lock";
 
-    const followersRef = document.querySelector(followersRefSelector);
-    const followersModal = document.querySelector(followersModalSelector);
-    const darkBody = document.querySelector(darkBodySelector);
+    const followersRef = document.querySelector(FOLLOWERS_REF_SELECTOR);
+    const followersModal = document.querySelector(FOLLOWERS_MODAL_SELECTOR);
+    const darkBody = document.querySelector(DARK_BODY_SELECTOR);
     const body = document.body;
-    const followersModalItems = document.querySelectorAll(followersModalItemsSelector);
-    const followersModalItemsAll = document.querySelector(followersModalItemsAllSelector);
-    const followersModalItemsSame = document.querySelector(followersModalItemsSameSelector);
-    const followersAllTab = document.querySelector(followersAllTabSelector);
-    const followersSameTab =  document.querySelector(followersSameTabSelector);
-    const followersModalCross = document.querySelector(followersModalCrossSelector);
+    const followersModalItems = document.querySelectorAll(FOLLOWERS_MODAL_ITEMS_SELECTOR);
+    const followersModalItemsAll = document.querySelector(FOLLOWERS_MODAL_ITEMS_ALL_SELECTOR);
+    const followersModalItemsSame = document.querySelector(FOLLOWERS_MODAL_ITEMS_SAME_SELECTOR);
+    const followersAllTab = document.querySelector(FOLLOWERS_ALL_TAB_SELECTOR);
+    const followersSameTab =  document.querySelector(FOLLOWERS_SAME_TAB_SELECTOR);
+    const followersModalCross = document.querySelector(FOLLOWERS_MODAL_CROSS_SELECTOR);
 
     function openModal() {
-        followersModal.classList.add(followersModalActiveClass);
+        followersModal.classList.add(FOLLOWERS_MODAL_ACTIVE_CLASS);
 
-        followersAllTab.classList.add(followersTabActiveClass);
-        followersModalItemsAll.classList.add(followersModalItemsActiveClass);
-        followersModalItemsSame.classList.remove(followersModalItemsActiveClass);
-        followersSameTab.classList.remove(followersTabActiveClass);
+        followersAllTab.classList.add(FOLLOWERS_TAB_ACTIVE_CLASS);
+        followersModalItemsAll.classList.add(FOLLOWERS_MODAL_ITEMS_ACTIVE_CLASS);
+        followersModalItemsSame.classList.remove(FOLLOWERS_MODAL_ITEMS_ACTIVE_CLASS);
+        followersSameTab.classList.remove(FOLLOWERS_TAB_ACTIVE_CLASS);
 
-        darkBody.classList.add(darkBodyActiveClass);
-        body.classList.add(bodyLockClass);
+        darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
+        body.classList.add(BODY_LOCK_CLASS);
     }
 
     function closeModal() {
-        followersModal.classList.remove(followersModalActiveClass);
-        darkBody.classList.remove(darkBodyActiveClass);
-        body.classList.remove(bodyLockClass);
+        followersModal.classList.remove(FOLLOWERS_MODAL_ACTIVE_CLASS);
+        darkBody.classList.remove(DARK_BODY_ACTIVE_CLASS);
+        body.classList.remove(BODY_LOCK_CLASS);
     }
 
     function changeModalTab() {
-        followersAllTab.classList.toggle(followersTabActiveClass);
-        followersSameTab.classList.toggle(followersTabActiveClass);
+        followersAllTab.classList.toggle(FOLLOWERS_TAB_ACTIVE_CLASS);
+        followersSameTab.classList.toggle(FOLLOWERS_TAB_ACTIVE_CLASS);
 
-        followersModalItemsAll.classList.toggle(followersModalItemsActiveClass);
-        followersModalItemsSame.classList.toggle(followersModalItemsActiveClass);
+        followersModalItemsAll.classList.toggle(FOLLOWERS_MODAL_ITEMS_ACTIVE_CLASS);
+        followersModalItemsSame.classList.toggle(FOLLOWERS_MODAL_ITEMS_ACTIVE_CLASS);
     }
 
     followersModalItems.forEach((modalItem) => {
@@ -61,13 +61,13 @@
     followersRef.addEventListener("click", openModal);
 
     followersAllTab.addEventListener("click", () => {
-        if (!followersAllTab.classList.contains(followersTabActiveClass)) {
+        if (!followersAllTab.classList.contains(FOLLOWERS_TAB_ACTIVE_CLASS)) {
             changeModalTab();
         }
     });
 
     followersSameTab.addEventListener("click", () => {
-        if (!followersSameTab.classList.contains(followersTabActiveClass)) {
+        if (!followersSameTab.classList.contains(FOLLOWERS_TAB_ACTIVE_CLASS)) {
             changeModalTab();
         }
     });

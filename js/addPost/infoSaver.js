@@ -1,17 +1,17 @@
 "use strict"
 
 {
-    const textAreaSelector = ".post-form__textarea";
-    const pictureWrapperSelector = ".post-form__picture-wrapper";
-    const pictureSelector = ".post-form__picture";
-    const pictureInputSelector = ".post-form__picture-input_hidden";
+    const TEXT_AREA_SELECTOR = ".post-form__textarea";
+    const PICTURE_WRAPPER_SELECTOR = ".post-form__picture-wrapper";
+    const PICTURE_SELECTOR = ".post-form__picture";
+    const PICTURE_INPUT_SELECTOR = ".post-form__picture-input_hidden";
 
-    const pictureWrapperActiveClass = "picture-wrapper_active";
+    const PICTURE_WRAPPER_ACTIVE_CLASS = "picture-wrapper_active";
 
-    const textArea = document.querySelector(textAreaSelector);
-    const pictureWrapper = document.querySelector(pictureWrapperSelector);
-    const picture = document.querySelector(pictureSelector);
-    const pictureInput = document.querySelector(pictureInputSelector);
+    const textArea = document.querySelector(TEXT_AREA_SELECTOR);
+    const pictureWrapper = document.querySelector(PICTURE_WRAPPER_SELECTOR);
+    const picture = document.querySelector(PICTURE_SELECTOR);
+    const pictureInput = document.querySelector(PICTURE_INPUT_SELECTOR);
 
     textArea.addEventListener("input", () => {
         localStorage.setItem("postText", textArea.value);
@@ -33,7 +33,7 @@
     });
 
     if (localStorage.getItem("postPicture")) {
-        pictureWrapper.classList.add(pictureWrapperActiveClass);
+        pictureWrapper.classList.add(PICTURE_WRAPPER_ACTIVE_CLASS);
         picture.setAttribute("src", localStorage.getItem("postPicture"));
     }
 

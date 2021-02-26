@@ -1,19 +1,19 @@
 "use strict"
 
 {
-    const leftButtonSelector = ".profile-slider__button-left";
-    const rightButtonSelector = ".profile-slider__button-right";
-    const sliderContentSelector = ".profile-slider__content";
-    const sliderContentPairSelector = ".profile-slider__content-pair";
-    const sliderImgSelector = ".profile-slider__content-item-img";
-    const sliderContentVisibleSelector = ".profile-slider__content_visible";
+    const LEFT_BUTTON_SELECTOR = ".profile-slider__button-left";
+    const RIGHT_BUTTON_SELECTOR = ".profile-slider__button-right";
+    const SLIDER_CONTENT_SELECTOR = ".profile-slider__content";
+    const SLIDER_CONTENT_PAIR_SELECTOR = ".profile-slider__content-pair";
+    const SLIDER_IMG_SELECTOR = ".profile-slider__content-item-img";
+    const SLIDER_CONTENT_VISIBLE_SELECTOR = ".profile-slider__content_visible";
 
-    const leftButton = document.querySelector(leftButtonSelector);
-    const rightButton = document.querySelector(rightButtonSelector);
-    const sliderContent = document.querySelector(sliderContentSelector);
-    const sliderContentPairs = document.querySelectorAll(sliderContentPairSelector);
-    const sliderImg = document.querySelector(sliderImgSelector);
-    const sliderContentVisible = document.querySelector(sliderContentVisibleSelector);
+    const leftButton = document.querySelector(LEFT_BUTTON_SELECTOR);
+    const rightButton = document.querySelector(RIGHT_BUTTON_SELECTOR);
+    const sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
+    const sliderContentPairs = document.querySelectorAll(SLIDER_CONTENT_PAIR_SELECTOR);
+    const sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
+    const sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
 
     const contentPairNumber = sliderContentPairs.length;
     const sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);

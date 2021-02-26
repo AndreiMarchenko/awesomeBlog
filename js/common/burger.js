@@ -1,37 +1,37 @@
 "use strict"
 
 {
-    const burgerSelector = ".burger";
-    const headerSelector = ".header";
-    const headerListSelector = ".header__list-wrapper";
-    const logoRefSelector = ".logo__ref";
-    const bodySelector = "body";
-    const searchPanelSelector = ".search__wrapper";
+    const BURGER_SELECTOR = ".burger";
+    const HEADER_SELECTOR = ".header";
+    const HEADER_LIST_SELECTOR = ".header__list-wrapper";
+    const LOGO_REF_SELECTOR = ".logo__ref";
+    const BODY_SELECTOR = "body";
+    const SEARCH_PANEL_SELECTOR = ".search__wrapper";
 
-    const burgerActiveClass = "burger_active";
-    const headerActiveClass = "header_active";
-    const headerListActiveCLass = "header__list_active";
-    const logoRefActiveClass = "logo__ref_active";
-    const bodyLockClass = "body_lock";
-    const searchPanelActiveClass = "search__wrapper_active";
+    const BURGER_ACTIVE_CLASS = "burger_active";
+    const HEADER_ACTIVE_CLASS = "header_active";
+    const HEADER_LIST_ACTIVE_CLASS = "header__list_active";
+    const LOGO_REF_ACTIVE_CLASS = "logo__ref_active";
+    const BODY_LOCK_CLASS = "body_lock";
+    const SEARCH_PANEL_ACTIVE_CLASS = "search__wrapper_active";
 
-    const burger = document.querySelector(burgerSelector);
-    const header = document.querySelector(headerSelector);
-    const headerList = document.querySelector(headerListSelector);
-    const logoRef = document.querySelector(logoRefSelector);
-    const body = document.querySelector(bodySelector);
+    const burger = document.querySelector(BURGER_SELECTOR);
+    const header = document.querySelector(HEADER_SELECTOR);
+    const headerList = document.querySelector(HEADER_LIST_SELECTOR);
+    const logoRef = document.querySelector(LOGO_REF_SELECTOR);
+    const body = document.querySelector(BODY_SELECTOR);
 
-    const searchPanel = document.querySelector(searchPanelSelector);
+    const searchPanel = document.querySelector(SEARCH_PANEL_SELECTOR);
 
     burger.addEventListener("click", () => {
-        burger.classList.toggle(burgerActiveClass);
-        header.classList.toggle(headerActiveClass);
-        headerList.classList.toggle(headerListActiveCLass);
-        logoRef.classList.toggle(logoRefActiveClass);
-        body.classList.toggle(bodyLockClass);
+        burger.classList.toggle(BURGER_ACTIVE_CLASS);
+        header.classList.toggle(HEADER_ACTIVE_CLASS);
+        headerList.classList.toggle(HEADER_LIST_ACTIVE_CLASS);
+        logoRef.classList.toggle(LOGO_REF_ACTIVE_CLASS);
+        body.classList.toggle(BODY_LOCK_CLASS);
 
         if (searchPanel !== null) {
-            searchPanel.classList.toggle(searchPanelActiveClass);
+            searchPanel.classList.toggle(SEARCH_PANEL_ACTIVE_CLASS);
         }
     });
 }
