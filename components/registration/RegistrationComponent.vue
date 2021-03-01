@@ -1,0 +1,98 @@
+<template>
+  <section class="registration">
+    <div class="container">
+      <div class="registration__title">
+        Registration
+      </div>
+      <form action="#" class="registration__form">
+        <label class="registration__name-label">
+          Enter your name:
+          <input type="password" class="registration__name-input text-input">
+        </label>
+        <label class="registration__surname-label">
+          Enter your surname:
+          <input type="text" class="registration__surname-input text-input">
+        </label>
+        <label class="registration__email-label">
+          Enter your email:
+          <input type="text" class="registration__email-input text-input">
+        </label>
+        <div class="registration__submit-wrapper">
+          <input type="submit" value="Sign up" class="registration__submit submit-input">
+        </div>
+      </form>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  name: "RegistrationComponent"
+}
+</script>
+
+<style lang="scss" scoped>
+@import "../common";
+.registration {
+  &__form {
+    margin-left: 90px;
+    padding-bottom: 100px;
+    font-size: 18px;
+  }
+  &__title {
+    padding-top: 150px;
+    font-size: 22px;
+    margin-left: 100px;
+  }
+  &__name-label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+  }
+  &__name-input {
+    margin-top: 17px;
+  }
+  &__surname-label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+  }
+  &__surname-input {
+    margin-top: 17px;
+  }
+  &__email-label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+  }
+  &__email-input {
+    margin-top: 17px;
+  }
+  &__submit-wrapper {
+    display: flex;
+    margin-top: 30px;
+  }
+}
+@media(max-width: 768px) {
+  .registration__title {
+    padding-top: 100px;
+  }
+}
+@media (max-width: 600px) {
+  .registration__title {
+    margin-left: 40px;
+  }
+  .registration__form {
+    margin-left: 40px;
+  }
+}
+@media (max-width: 450px) {
+  .registration__title {
+    margin-left: 115px;
+  }
+  .registration__form {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+</style>
