@@ -5,18 +5,18 @@
         Registration
       </div>
       <form action="#" class="registration__form">
-        <label class="registration__name-label">
+        <div class="registration__name-wrapper">
           Enter your name:
           <input type="password" class="registration__name-input text-input">
-        </label>
-        <label class="registration__surname-label">
+        </div>
+        <div class="registration__surname-wrapper">
           Enter your surname:
           <input type="text" class="registration__surname-input text-input">
-        </label>
-        <label class="registration__email-label">
+        </div>
+        <div class="registration__email-wrapper">
           Enter your email:
           <input type="text" class="registration__email-input text-input">
-        </label>
+        </div>
         <div class="registration__submit-wrapper">
           <input type="submit" value="Sign up" class="registration__submit submit-input">
         </div>
@@ -36,7 +36,6 @@ export default {
 .registration {
   &__form {
     margin-left: 90px;
-    padding-bottom: 100px;
     font-size: 18px;
   }
   &__title {
@@ -44,7 +43,7 @@ export default {
     font-size: 22px;
     margin-left: 100px;
   }
-  &__name-label {
+  &__name-wrapper {
     display: flex;
     flex-direction: column;
     margin-top: 22px;
@@ -52,7 +51,7 @@ export default {
   &__name-input {
     margin-top: 17px;
   }
-  &__surname-label {
+  &__surname-wrapper {
     display: flex;
     flex-direction: column;
     margin-top: 22px;
@@ -60,7 +59,7 @@ export default {
   &__surname-input {
     margin-top: 17px;
   }
-  &__email-label {
+  &__email-wrapper {
     display: flex;
     flex-direction: column;
     margin-top: 22px;

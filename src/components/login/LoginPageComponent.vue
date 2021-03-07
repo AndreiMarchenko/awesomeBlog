@@ -1,6 +1,8 @@
 <template>
-  <header-component :nav-items="['Sign up']"></header-component>
-  <login-component></login-component>
+  <div>
+    <header-component :nav-items="navItems"></header-component>
+    <login-component></login-component>
+  </div>
 </template>
 
 <script>
@@ -8,6 +10,11 @@ import HeaderComponent from "../HeaderComponent.vue"
 import LoginComponent from "./LoginComponent.vue"
 
 export default {
+  data() {
+    return {
+      navItems: ['Sign up']
+    }
+  },
   components: {
     HeaderComponent,
     LoginComponent

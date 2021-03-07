@@ -32,8 +32,8 @@ name: "login"
 }
 </script>
 
-<style lang="scss" scoped>
-@import "components/common";
+<style lang="scss">
+@import "../common";
 .login {
   &__title {
     padding-top: 150px;

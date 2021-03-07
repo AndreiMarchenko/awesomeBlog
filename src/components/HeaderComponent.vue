@@ -7,7 +7,7 @@
         </div>
         <nav class="header__list-wrapper" :class="{'header__list_active': isBurgerActive}">
           <ul class="header__list">
-            <li v-for="item in navItems" class="header__list-item"><a href="#">{{ item }}</a></li>
+            <li v-for="item in navItems" class="header__list-item"><a href="#">{{item}}</a></li>
           </ul>
         </nav>
         <div @click="activateBurger" class="burger" :class="{'burger_active': isBurgerActive}">
@@ -26,23 +26,19 @@ export default {
       isBurgerActive: false
     }
   },
-  props: [
-      "navItems"
-  ],
+  props: {
+    navItems: Array
+  }
+  ,
   methods: {
     activateBurger() {
-      this.isBurgerActive = !this.isBurgerActive;
-
       const bodyLockClass = "body_lock";
-      const searchPanelActiveClass = "search__wrapper_active";
-
       const body = document.querySelector("body");
 
-      body.classList.toggle(bodyLockClass);
+      this.$emit("clicked-burger");
+      this.isBurgerActive = !this.isBurgerActive;
 
-      // if (searchPanel !== null) {
-      //   searchPanel.classList.toggle(searchPanelActiveClass);
-      // }
+      body.classList.toggle(bodyLockClass);
     }
   }
 }

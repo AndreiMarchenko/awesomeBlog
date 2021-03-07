@@ -3,6 +3,7 @@
 }
 body {
   margin: 0;
+  height: 100vh;
 }
 a {
   text-decoration: none;
@@ -23,6 +24,7 @@ li {
   border: 1px #308CBF solid;
   background-color: #F5F5F5;
   cursor: pointer;
+  border-radius: 5px;
 }
 .submit-input {
   padding: 2px 50px;
@@ -34,6 +36,7 @@ li {
   cursor: pointer;
   transition: background-color .4s ease-out,
   color .1s ease-out;
+  border-radius: 5px;
 }
 .submit-input:hover {
   background-color: #308CBF;
@@ -56,6 +59,7 @@ li {
 .container {
   background-color: #F5F5F5;
   max-width: 1300px;
+  height: 100%;
   margin: 0 auto;
   font-family: 'Quicksand', sans-serif;
 }
