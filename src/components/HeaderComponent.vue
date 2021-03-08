@@ -3,11 +3,11 @@
     <div class="container">
       <div class="header__content">
         <div class="logo">
-          <a class="logo__ref" :class="{'logo__ref_active': isBurgerActive}" href="#">Awesome Blog</a>
+          <router-link class="logo__ref" :class="{'logo__ref_active': isBurgerActive}" to="Friend">Awesome Blog</router-link>
         </div>
         <nav class="header__list-wrapper" :class="{'header__list_active': isBurgerActive}">
           <ul class="header__list">
-            <li v-for="item in navItems" class="header__list-item"><a href="#">{{item}}</a></li>
+            <li v-for="item in navItems" class="header__list-item"><router-link :to="toSlug(item)">{{ item }}</router-link></li>
           </ul>
         </nav>
         <div @click="activateBurger" class="burger" :class="{'burger_active': isBurgerActive}">
@@ -39,14 +39,15 @@ export default {
       this.isBurgerActive = !this.isBurgerActive;
 
       body.classList.toggle(bodyLockClass);
-    }
+    },
+     toSlug(str) {
+      return str.replace(' ', '-');
+     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "variables";
-@import "common";
 .burger {
   display: none;
 }
@@ -83,6 +84,11 @@ export default {
   margin-top: 35px;
   margin-left: 90px;
   font-size: 34px;
+}
+@media(max-width: 1000px) {
+  .header__list-wrapper {
+    margin-right: 10px;
+  }
 }
 @media(max-width: 768px) {
   .logo {

@@ -7,8 +7,12 @@
         info-type="friendPage"
         :profile-info="profileInfo"
     ></profile-info-component>
-    <profile-slider-component :slider-items="sliderItems"></profile-slider-component>
-    <profile-slider-mobile-component :slider-items="sliderItems"></profile-slider-mobile-component>
+    <profile-slider-component
+        :slider-items="sliderItems">
+    </profile-slider-component>
+    <profile-slider-mobile-component
+        :slider-items="sliderItems">
+    </profile-slider-mobile-component>
     <profile-list-modal-component
         modal-name="followers"
         :is-modal-active="followersModalState"
@@ -48,139 +52,139 @@ export default {
       followingModalState: false,
       sliderItems: [
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
       ],
       usersAllList: [
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
 
       ],
       usersSameList: [
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         }
       ],
       profileInfo: {
         name: "John Smith",
-        pictureSrc: "../../../images/profile/profilePicture.jpg",
+        pictureSrc: "../images/profile/profilePicture.jpg",
         followersNumber: 12,
         followingNumber: 33,
         text: "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text"
@@ -204,6 +208,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
 </style>

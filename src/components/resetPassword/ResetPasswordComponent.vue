@@ -24,12 +24,11 @@ export default {
 
 <style lang="scss" scoped>
 .reset-password {
-  padding-bottom: 100px;
+  height: 100%;
 
   &__form {
     margin-left: 90px;
     font-size: 18px;
-    padding-bottom: 100px;
   }
   &__title {
     padding-top: 150px;

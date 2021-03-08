@@ -20,7 +20,7 @@ export default {
       profileInfo: {
         name: "John Smith",
         email: "j.smith@gmail.com",
-        pictureSrc: "../../../images/profile/profilePicture.jpg",
+        pictureSrc: "../images/profile/profilePicture.jpg",
         text: "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text"
       }
     }

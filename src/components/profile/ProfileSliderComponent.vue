@@ -1,6 +1,6 @@
 <template>
   <section class="profile-slider">
-    <div class="container">
+    <div class="profile-slider__container container">
       <div class="profile-slider__wrapper">
         <div
             @click="moveLeft"
@@ -119,7 +119,6 @@ export default {
   },
   methods: {
     moveLeft() {
-      // console.log(window.getComputedStyle(sliderContent));
       let sliderContentStyles  = window.getComputedStyle(sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
       if (sliderContentMarginLeft !== 0) {
@@ -127,7 +126,6 @@ export default {
       }
     },
     moveRight() {
-      // console.log(window.getComputedStyle(sliderContent));
       let sliderContentStyles  = window.getComputedStyle(sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
       if (sliderContentMarginLeft !== -(contentPairNumber - sliderPairsVisibleNumber)*(sliderImgWidth + sliderMargin)) {
@@ -171,17 +169,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../common";
-@import "../variables";
 .profile-slider {
+  display: flex;
+  flex-grow: 1;
 
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+  }
   &__wrapper {
-    padding-top: 50px;
-    padding-bottom: 60px;
+    padding-top: 20px;
     position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
   }
   &__button-left {
     border-radius: 50%;
@@ -189,7 +191,9 @@ export default {
     border: $mainColor 1px solid;
     width: 55px;
     height: 55px;
-    margin-left: 90px;
+    margin-left: 80px;
+    margin-top: 177px;
+    margin-right: 40px;
   }
   &__button-left-ref {
     display: inline-block;
@@ -205,7 +209,9 @@ export default {
     border: $mainColor 1px solid;
     width: 55px;
     height: 55px;
-    margin-right: 90px;
+    margin-right: 80px;
+    margin-top: 177px;
+    margin-left: 40px;
   }
   &__button-right-ref {
     display: inline-block;
@@ -240,8 +246,10 @@ export default {
 @media (max-width: 1250px) {
   .profile-slider__button-left {
     margin-left: 20px;
+    margin-right: 20px;
   }
   .profile-slider__button-right {
+    margin-left: 20px;
     margin-right: 20px;
   }
 }

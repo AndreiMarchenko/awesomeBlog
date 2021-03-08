@@ -1,5 +1,6 @@
 const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -23,8 +24,13 @@ module.exports = {
                 use: [
                     "style-loader",
                     "css-loader",
-                    'sass-loader'
-                ]
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            additionalData: `@import "./src/scss/_variables.scss";`
+                        },
+                    }
+                ],
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
@@ -37,6 +43,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new HTMLWebpackPlugin({
+            template: "./src/index.html"
+        }),
     ],
 };

@@ -19,9 +19,9 @@ export default {
           id: 1,
           text: "text text text text text text text text text text text text text text text",
           ownerName: "valera",
-          ownerPictureSrc: "../../images/profile/profilePicture.jpg",
+          ownerPictureSrc: "../images/profile/profilePicture.jpg",
           time: "2 hours ago",
-          pictureSrc: "../../images/news/beach.jpg",
+          pictureSrc: "../images/news/beach.jpg",
           likeCount: 22,
           comments: [
             {
@@ -29,21 +29,21 @@ export default {
               author: "Andrei Marchenko",
               text: "text text text",
               time: "44 minutes ago",
-              pictureSrc: "../../images/profile/profilePicture.jpg"
+              pictureSrc: "../images/profile/profilePicture.jpg"
             },
             {
               id: 1,
               author: "And enko",
               text: "text text text text text text text text text",
               time: "44 minutes ago",
-              pictureSrc: "../../images/profile/profilePicture.jpg"
+              pictureSrc: "../images/profile/profilePicture.jpg"
             },
             {
               id: 1,
               author: "Andreiasdfasf Marchenkosdf",
               text: "text text text text text text text text text text text text text text text text text text text text text ",
               time: "44 minutes ago",
-              pictureSrc: "../../images/profile/profilePicture.jpg"
+              pictureSrc: "../images/profile/profilePicture.jpg"
             }
           ]
         },
@@ -51,9 +51,9 @@ export default {
           id: 2,
           text: "text text text text text text text text text text text text text text text",
           ownerName: "valera",
-          ownerPictureSrc: "../../images/profile/profilePicture.jpg",
+          ownerPictureSrc: "../images/profile/profilePicture.jpg",
           time: "2 hours ago",
-          pictureSrc: "../../images/news/beach.jpg",
+          pictureSrc: "../images/news/beach.jpg",
           likeCount: 22,
           comments: [
             {
@@ -61,7 +61,7 @@ export default {
               author: "Andrei Marchenko",
               text: "text text text",
               time: "44 minutes ago",
-              pictureSrc: "../../images/profile/profilePicture.jpg"
+              pictureSrc: "../images/profile/profilePicture.jpg"
             }
           ]
         }

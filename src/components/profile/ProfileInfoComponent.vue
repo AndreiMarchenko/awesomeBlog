@@ -12,7 +12,10 @@
                 <a href="#"><img :src="profileInfo.pictureSrc" alt=""></a>
               </div>
             </div>
-            <profile-info-btn-component :info-type="infoType"></profile-info-btn-component>
+            <profile-info-btn-component
+                class="profile-info__btn-comp"
+                :info-type="infoType">
+            </profile-info-btn-component>
           </div>
           <div class="profile-info__summary-wrapper_second">
             <div class="profile-info__followers">
@@ -62,8 +65,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../common";
-@import "../variables";
 .profile-info__content {
   display: flex;
   justify-content: space-between;
@@ -73,6 +74,7 @@ export default {
   font-size: 20px;
   margin-right: 155px;
   margin-left: 20px;
+  margin-bottom: 48px;
   display: flex;
   justify-content: space-between;
 }
@@ -99,6 +101,9 @@ export default {
   width: 138px;
   height: 138px;
   padding-bottom: -5px;
+}
+.profile-info__btn-comp {
+  position: absolute;
 }
 .profile-info__summary-wrapper_second {
   margin-left: 40px;
@@ -162,6 +167,11 @@ export default {
     margin-top: 30px;
   }
 }
+@media (max-width: 768px) {
+  .profile-info__content {
+    padding-top: 100px;
+  }
+}
 @media (max-width: 730px) {
   .profile-info__content {
     flex-direction: column;
@@ -198,9 +208,14 @@ export default {
 @media (max-width: 375px) {
   .profile-info__summary {
     flex-direction: column;
+    margin-bottom: 0;
   }
   .profile-info__summary-wrapper_first {
-    margin-left: 0px
+    margin-left: 0;
+    //padding-bottom: 55px;
+  }
+  .profile-info__btn-comp {
+    position: static;
   }
   .profile-info__name {
     margin-left: 0;

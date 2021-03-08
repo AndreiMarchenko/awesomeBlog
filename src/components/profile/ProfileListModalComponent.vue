@@ -104,8 +104,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../common";
-@import "../variables";
 .profile-list-modal {
   position: absolute;
   top: 50%;
