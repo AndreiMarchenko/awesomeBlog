@@ -7,7 +7,7 @@
       <form action="#" class="registration__form">
         <div class="registration__name-wrapper">
           Enter your name:
-          <input type="password" class="registration__name-input text-input">
+          <input type="text" class="registration__name-input text-input">
         </div>
         <div class="registration__surname-wrapper">
           Enter your surname:
@@ -27,7 +27,13 @@
 
 <script>
 export default {
-  name: "RegistrationComponent"
+  data() {
+    return {
+      name: "",
+      surname: "",
+      email: ""
+    }
+  }
 }
 </script>
 

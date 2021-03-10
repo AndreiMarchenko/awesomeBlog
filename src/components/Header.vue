@@ -20,6 +20,8 @@
 </template>
 
 <script>
+const bodyLockClass = "body_lock";
+
 export default {
   data() {
     return {
@@ -27,12 +29,13 @@ export default {
     }
   },
   props: {
-    navItems: Array
-  }
-  ,
+    navItems: {
+      type: Array,
+      default: []
+    }
+  },
   methods: {
     activateBurger() {
-      const bodyLockClass = "body_lock";
       const body = document.querySelector("body");
 
       this.$emit("clicked-burger");

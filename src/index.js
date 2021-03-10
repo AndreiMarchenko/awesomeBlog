@@ -1,14 +1,14 @@
 import Vue from './bootstrap';
 import App from './App.vue'
 
-import LoginPageComponent from "./components/login/LoginPageComponent.vue"
-import RegistrationPageComponent from "./components/registration/RegistrationPageComponent.vue";
-import ResetPasswordPageComponent from "./components/resetPassword/ResetPasswordPageComponent.vue";
-import NewsPageComponent from "./components/news/NewsPageComponent.vue";
-import MainProfilePageComponent from "./components/profile/main/MainProfilePageComponent.vue";
-import FriendProfilePageComponent from "./components/profile/friend/FriendProfilePageComponent.vue";
-import EditProfilePageComponent from "./components/profile/edit/EditProfilePageComponent.vue";
-import AddPostPageComponent from "./components/addPost/AddPostPageComponent.vue";
+import LoginPageComponent from "./components/login/Page.vue"
+import RegistrationPageComponent from "./components/registration/Page.vue";
+import ResetPasswordPageComponent from "./components/resetPassword/Page.vue";
+import NewsPageComponent from "./components/news/Page.vue";
+import MainProfilePageComponent from "./components/profile/main/Page.vue";
+import FriendProfilePageComponent from "./components/profile/friend/Page.vue";
+import EditProfilePageComponent from "./components/profile/edit/Page.vue";
+import AddPostPageComponent from "./components/addPost/Page.vue";
 
 // createApp(LoginPageComponent).mount("#login-page");
 // createApp(RegistrationPageComponent).mount("#registration-page");

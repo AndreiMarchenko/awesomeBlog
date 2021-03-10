@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderComponent from "../HeaderComponent.vue";
-import RegistrationComponent from "./RegistrationComponent.vue";
+import HeaderComponent from "../Header.vue";
+import RegistrationComponent from "./Main.vue";
 
 export default {
   data() {

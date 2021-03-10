@@ -4,9 +4,11 @@
     <profile-info-component
         @clicked-followers-btn="openFollowersModal"
         @clicked-following-btn="openFollowingModal"
-        info-type="friendPage"
+        info-type="mainPage"
         :profile-info="profileInfo"
-    ></profile-info-component>
+    >
+    </profile-info-component>
+    <profile-add-post-component></profile-add-post-component>
     <profile-slider-component :slider-items="sliderItems"></profile-slider-component>
     <profile-slider-mobile-component :slider-items="sliderItems"></profile-slider-mobile-component>
     <profile-list-modal-component
@@ -19,25 +21,25 @@
     <profile-list-modal-component
         modal-name="following"
         :is-modal-active="followingModalState"
-        @closed-following-modal="closeFollowingModal"
-        :users-all-list="usersAllList"
-        :users-same-list="usersSameList">>
+        @closed-following-modal="closeFollowingModal">
     </profile-list-modal-component>
     <div class="dark-body"></div>
   </div>
 </template>
 
 <script>
-import HeaderComponent from "../../HeaderComponent.vue";
-import ProfileInfoComponent from "../ProfileInfoComponent.vue";
-import ProfileSliderComponent from "../ProfileSliderComponent.vue";
-import ProfileSliderMobileComponent from "../ProfileSliderMobileComponent.vue";
-import ProfileListModalComponent from "../ProfileListModalComponent.vue";
+import HeaderComponent from "../../Header.vue";
+import ProfileInfoComponent from "../Info.vue";
+import ProfileAddPostComponent from "../AddPostBtn.vue";
+import ProfileSliderComponent from "../Slider.vue";
+import ProfileSliderMobileComponent from "../SliderMobile.vue";
+import ProfileListModalComponent from "../ListModal.vue";
 
 export default {
   components: {
     HeaderComponent,
     ProfileInfoComponent,
+    ProfileAddPostComponent,
     ProfileSliderComponent,
     ProfileSliderMobileComponent,
     ProfileListModalComponent
@@ -69,6 +71,7 @@ export default {
           pictureSrc: "../../../images/profile/profilePicture.jpg"
         },
       ],
+
       usersAllList: [
         {
           name: "Sam Johns",
@@ -164,6 +167,7 @@ export default {
         },
 
       ],
+
       usersSameList: [
         {
           name: "Sam Johns",
@@ -178,6 +182,7 @@ export default {
           pictureSrc: "../../../images/profile/profilePicture.jpg"
         }
       ],
+
       profileInfo: {
         name: "John Smith",
         pictureSrc: "../../../images/profile/profilePicture.jpg",
@@ -204,6 +209,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

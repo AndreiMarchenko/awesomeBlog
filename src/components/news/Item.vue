@@ -60,17 +60,38 @@
 </template>
 
 <script>
-import CommentItemComponent from "./CommentItemComponent.vue";
+import CommentItemComponent from "./CommentItem.vue";
 export default {
   components: {CommentItemComponent},
   props: {
-    text: String,
-    ownerName: String,
-    ownerPictureSrc: String,
-    time: String,
-    pictureSrc: String,
-    likeCount: Number,
-    comments: Array
+    text: {
+      type: String,
+      default: ""
+    },
+    ownerName: {
+      type: String,
+      required: true
+    },
+    ownerPictureSrc: {
+      type: String,
+      required: true
+    },
+    time: {
+      type: String,
+      required: true
+    },
+    pictureSrc: {
+      type: String,
+      required: true
+    },
+    likeCount: {
+      type: Number,
+      default: 0
+    },
+    comments: {
+      type: Array,
+      default: []
+    }
   },
   data() {
     return {
@@ -85,8 +106,7 @@ export default {
     like() {
       this.isLikeActive = !this.isLikeActive;
     }
-  },
-  name: "NewsItemComponent"
+  }
 }
 </script>
 

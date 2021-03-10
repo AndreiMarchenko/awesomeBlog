@@ -5,7 +5,7 @@
         <div
             @click="moveLeft"
             @mouseover="mouseoverStyle"
-            @mouseout="mouseoutStyle"
+            @mouseleave="mouseleaveStyle"
             @mousedown="mousedownStyle"
             @mouseup="mouseupStyle"
             class="profile-slider__button-left">
@@ -31,7 +31,7 @@
         <div
             @click="moveRight"
             @mouseover="mouseoverStyle"
-            @mouseout="mouseoutStyle"
+            @mouseleave="mouseleaveStyle"
             @mousedown="mousedownStyle"
             @mouseup="mouseupStyle"
             class="profile-slider__button-right">
@@ -53,32 +53,11 @@ const SLIDER_CONTENT_SELECTOR = ".profile-slider__content";
 const SLIDER_IMG_SELECTOR = ".profile-slider__content-item-img";
 const SLIDER_CONTENT_PAIR_SELECTOR = ".profile-slider__content-pair";
 const SLIDER_CONTENT_VISIBLE_SELECTOR = ".profile-slider__content_visible";
-const SVG_SELECTOR = "svg";
 const PAGE_REFERENCE_SELECTOR = "a";
 
-const BTN_TRANSITION = "background-color .5s ease-out," +
-    "border .4s ease-out," +
-    "fill .1s ease-out";
-const BTN_MOUSEDOWN_TRANSITION = "background-color .1s ease-out," +
-    "fill .1s ease-out";
-const COLOR_GREY = "grey";
-const COLOR_WHITE = "#fff";
-const COLOR_LIGHT_GREY = "#F5F5F5";
-const COLOR_BLUE = "#308CBF";
-
-let sliderLeftButton;
-let sliderRightButton;
-let sliderContent;
-let sliderImg;
-let sliderContentPairs;
-let sliderContentVisible;
-let pageReferences;
-
-let sliderImgWidth;
-let sliderMargin;
-let contentPairNumber;
-let sliderContentVisibleMaxWidth;
-let sliderPairsVisibleNumber;
+const MOUSEOVER_ACTIVE_CLASS = "profile-slider__button_mouseover_active";
+const MOUSELEAVE_ACTIVE_CLASS = "profile-slider__button_mouseleave_active";
+const MOUSEDOWN_ACTIVE_CLASS = "profile-slider__button_mousedown_active";
 
 
 export default {
@@ -86,86 +65,85 @@ export default {
     sliderItems: Array
   },
   mounted() {
-    sliderLeftButton = document.querySelector(SLIDER_LEFT_BUTTON_SELECTOR);
-    sliderRightButton = document.querySelector(SLIDER_RIGHT_BUTTON_SELECTOR);
+    this.sliderLeftButton = document.querySelector(SLIDER_LEFT_BUTTON_SELECTOR);
+    this.sliderRightButton = document.querySelector(SLIDER_RIGHT_BUTTON_SELECTOR);
 
-    sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
-    sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
-    sliderContentPairs = document.querySelectorAll(SLIDER_CONTENT_PAIR_SELECTOR);
-    sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
+    this.sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
+    this.sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
+    this.sliderContentPairs = document.querySelectorAll(SLIDER_CONTENT_PAIR_SELECTOR);
+    this.sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
 
-    sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
-    sliderMargin = parseInt(window.getComputedStyle(sliderContentPairs[0]).marginRight);
-    contentPairNumber = sliderContentPairs.length;
-    sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(sliderContentVisible).maxWidth);
-    sliderPairsVisibleNumber = Math.round(sliderContentVisibleMaxWidth / sliderImgWidth);
-    pageReferences = document.querySelectorAll(PAGE_REFERENCE_SELECTOR);
+    this.sliderImgWidth = parseInt(window.getComputedStyle(this.sliderImg).width);
+    this.sliderMargin = parseInt(window.getComputedStyle(this.sliderContentPairs[0]).marginRight);
+    this.contentPairNumber = this.sliderContentPairs.length;
+    this.sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(this.sliderContentVisible).maxWidth);
+    this.sliderPairsVisibleNumber = Math.round(this.sliderContentVisibleMaxWidth / this.sliderImgWidth);
+    this.pageReferences = document.querySelectorAll(PAGE_REFERENCE_SELECTOR);
 
 
 
-    pageReferences.forEach((ref) => ref.ondragstart = () => false);
-    sliderContent.style.width = contentPairNumber * (sliderImgWidth + sliderMargin) - sliderMargin + "px";
+    this.pageReferences.forEach((ref) => ref.ondragstart = () => false);
+    this.sliderContent.style.width = this.contentPairNumber * (this.sliderImgWidth + this.sliderMargin) - this.sliderMargin + "px";
 
     document.addEventListener("mouseup", () => {
-      this.isMouseDownBtn = false;
-      this.changeStyle(sliderLeftButton, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_BLUE, BTN_TRANSITION);
-      this.changeStyle(sliderRightButton, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_BLUE, BTN_TRANSITION);
+      this.sliderLeftButton.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
+      this.sliderRightButton.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
     });
   },
   data() {
     return {
-      isMouseDownBtn: false
+      sliderLeftButton: null,
+      sliderRightButton: null,
+      sliderContent: null,
+      sliderImg: null,
+      sliderContentPairs: null,
+      sliderContentVisible: null,
+      pageReferences: null,
+      sliderImgWidth: null,
+      sliderMargin: null,
+      contentPairNumber: null,
+      sliderContentVisibleMaxWidth: null,
+      sliderPairsVisibleNumber: null,
     }
   },
   methods: {
     moveLeft() {
-      // console.log(window.getComputedStyle(sliderContent));
-      let sliderContentStyles  = window.getComputedStyle(sliderContent);
+      let sliderContentStyles  = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
       if (sliderContentMarginLeft !== 0) {
-        sliderContent.style.marginLeft =  (sliderContentMarginLeft + sliderImgWidth + sliderMargin) + "px";
+        this.sliderContent.style.marginLeft =  (sliderContentMarginLeft + this.sliderImgWidth + this.sliderMargin) + "px";
       }
     },
     moveRight() {
-      // console.log(window.getComputedStyle(sliderContent));
-      let sliderContentStyles  = window.getComputedStyle(sliderContent);
+      let sliderContentStyles  = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
-      if (sliderContentMarginLeft !== -(contentPairNumber - sliderPairsVisibleNumber)*(sliderImgWidth + sliderMargin)) {
-        sliderContent.style.marginLeft =  (sliderContentMarginLeft - sliderImgWidth - sliderMargin) + "px";
+      if (sliderContentMarginLeft !== -(this.contentPairNumber - this.sliderPairsVisibleNumber)*(this.sliderImgWidth + this.sliderMargin)) {
+        this.sliderContent.style.marginLeft =  (sliderContentMarginLeft - this.sliderImgWidth - this.sliderMargin) + "px";
       }
-    },
-    changeStyle(btn, backgroundColor, fill, borderColor, transition) {
-      btn.style.backgroundColor = backgroundColor;
-      btn.querySelector(SVG_SELECTOR).style.fill = fill;
-      btn.style.borderColor = borderColor;
-      btn.style.transition = transition;
     },
     mouseoverStyle(e) {
-      if (this.isMouseDownBtn === false) {
-        let btn = e.currentTarget;
-        this.changeStyle(btn, COLOR_BLUE, COLOR_WHITE, COLOR_GREY, BTN_TRANSITION);
+      if (! e.currentTarget.classList.contains(MOUSEDOWN_ACTIVE_CLASS)) {
+        e.currentTarget.classList.add(MOUSEOVER_ACTIVE_CLASS);
+        e.currentTarget.classList.remove(MOUSELEAVE_ACTIVE_CLASS);
       }
     },
-    mouseoutStyle(e) {
-      let btn = e.currentTarget;
-      this.changeStyle(btn, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_BLUE, BTN_TRANSITION);
+    mouseleaveStyle(e) {
+      e.currentTarget.classList.add(MOUSELEAVE_ACTIVE_CLASS);
+      e.currentTarget.classList.remove(MOUSEOVER_ACTIVE_CLASS);
     },
     mousedownStyle(e) {
-      this.isMouseDownBtn = true;
-      let btn = e.currentTarget;
-      this.changeStyle(btn, COLOR_LIGHT_GREY, COLOR_BLUE, COLOR_BLUE, BTN_MOUSEDOWN_TRANSITION);
+      e.currentTarget.classList.add(MOUSEDOWN_ACTIVE_CLASS);
     },
     mouseupStyle(e) {
       e.stopPropagation();
-      this.isMouseDownBtn = false;
-      let btn = e.currentTarget;
-      this.changeStyle(btn, COLOR_BLUE, COLOR_WHITE, COLOR_GREY, BTN_TRANSITION);
+      e.currentTarget.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
+      e.currentTarget.classList.add(MOUSEOVER_ACTIVE_CLASS);
     }
   },
   computed: {
     pairNumber() {
       return Math.ceil(this.sliderItems.length/2);
-    },
+    }
   }
 }
 </script>
@@ -173,7 +151,38 @@ export default {
 <style lang="scss" scoped>
 @import "../common";
 @import "../variables";
+
 .profile-slider {
+
+  &__button_mouseover_active {
+    background-color: $mainColor;
+    border-color: $bgColor;
+    transition: background-color .5s ease-out,
+    border .4s ease-out,
+    fill .1s ease-out;
+    svg {
+      fill: $white;
+    }
+  }
+  &__button_mouseleave_active {
+    background-color: $bgColor;
+    border-color: grey;
+    transition: background-color .5s ease-out,
+    border .4s ease-out,
+    fill .1s ease-out;
+    svg {
+      fill: $mainColor;
+    }
+  }
+  &__button_mousedown_active {
+    background-color: $bgColor;
+    border-color: grey;
+    transition: background-color .1s ease-out,
+    fill .1s ease-out;
+    svg {
+      fill: $mainColor;
+    }
+  }
 
   &__wrapper {
     padding-top: 50px;
