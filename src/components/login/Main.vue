@@ -7,11 +7,11 @@
       <form action="#" class="login__form">
         <div class="login__email-wrapper">
           Enter your email:
-          <input type="text" class="login__email-input text-input">
+          <input v-model="email" type="text" class="login__email-input text-input">
         </div>
         <div class="login__password-wrapper">
           Enter your password:
-          <input type="password" class="login__password-input text-input">
+          <input v-model="password" type="password" class="login__password-input text-input">
         </div>
         <div class="login__submit-wrapper">
           <input type="submit" value="Login" class="login__submit submit-input">
@@ -28,7 +28,12 @@
 
 <script>
 export default {
-name: "login"
+  data() {
+    return {
+      email: "",
+      password: "",
+    }
+  }
 }
 </script>
 

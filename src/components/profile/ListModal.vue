@@ -39,18 +39,37 @@
 </template>
 
 <script>
+const DARK_BODY_SELECTOR = ".dark-body";
+const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
+const BODY_LOCK_CLASS = "body_lock";
+const PROFILE_LIST_MODAL_ITEMS_SELECTOR = ".profile-list-modal__items";
+
 export default {
   props: {
-    modalName: String,
-    isModalActive: Boolean,
-    usersAllList: Array,
-    usersSameList: Array
+    modalName: {
+      type: String,
+      required: true
+    },
+    isModalActive: {
+      type: Boolean,
+      required: true
+    },
+    usersAllList: {
+      type: Array,
+      default: []
+    },
+    usersSameList: {
+      type: Array,
+      default: []
+    }
   },
   mounted() {
-    const PROFILE_LIST_MODAL_ITEMS_SELECTOR = ".profile-list-modal__items";
     const profileListModalItems = document.querySelectorAll(PROFILE_LIST_MODAL_ITEMS_SELECTOR);
+    this.darkBody = document.querySelector(DARK_BODY_SELECTOR);
+    this.body = document.querySelector("body");
+
     profileListModalItems.forEach((modalItem) => {
-      modalItem.style.height = window.innerHeight/2 +  "px";
+      modalItem.style.height = window.innerHeight/2 + "px";
     });
   },
   watch: {
@@ -63,33 +82,22 @@ export default {
   data() {
     return {
       isAllTabActive: true,
+      darkBody: null,
+      body: null
     }
   },
   methods: {
     openModal() {
-      const DARK_BODY_SELECTOR = ".dark-body";
-      const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
-      const BODY_LOCK_CLASS = "body_lock";
-      const darkBody = document.querySelector(DARK_BODY_SELECTOR);
-      const body = document.querySelector("body");
-
-      darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
-      body.classList.add(BODY_LOCK_CLASS);
+      this.darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
+      this.classList.add(BODY_LOCK_CLASS);
 
       this.setAllTabActive();
 
-      darkBody.addEventListener("click", this.closeModal);
+      this.darkBody.addEventListener("click", this.closeModal);
     },
     closeModal() {
-      const DARK_BODY_SELECTOR = ".dark-body";
-      const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
-      const BODY_LOCK_CLASS = "body_lock";
-      const darkBody = document.querySelector(DARK_BODY_SELECTOR);
-      const body = document.querySelector("body");
-
-
-      darkBody.classList.remove(DARK_BODY_ACTIVE_CLASS);
-      body.classList.remove(BODY_LOCK_CLASS);
+      this.darkBody.classList.remove(DARK_BODY_ACTIVE_CLASS);
+      this.body.classList.remove(BODY_LOCK_CLASS);
 
       this.$emit(`closed-${this.modalName}-modal`);
     },

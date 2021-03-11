@@ -36,46 +36,52 @@ const SLIDER_CONTENT_ITEMS_SELECTOR = ".profile-slider__content-item_mobile";
 const SLIDER_IMG_SELECTOR = ".profile-slider__content-item-img_mobile";
 const SLIDER_CONTENT_VISIBLE_SELECTOR = ".profile-slider__content_visible_mobile";
 
-let sliderContent;
-let sliderContentItems;
-let sliderImg;
-let sliderContentVisible;
-
-let contentItemsNumber;
-let sliderImgWidth;
-let sliderMargin;
-let sliderContentVisibleMaxWidth;
-let sliderItemsVisibleNumber;
 
 export default {
   mounted() {
-    sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
-    sliderContentItems = document.querySelectorAll(SLIDER_CONTENT_ITEMS_SELECTOR);
-    sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
-    sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
+    this.sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
+    this.sliderContentItems = document.querySelectorAll(SLIDER_CONTENT_ITEMS_SELECTOR);
+    this.sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
+    this.sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
 
-    contentItemsNumber = sliderContentItems.length;
-    sliderImgWidth = parseInt(window.getComputedStyle(sliderImg).width);
-    sliderMargin = parseInt(window.getComputedStyle(sliderContentItems[0]).marginRight);
-    sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(sliderContentVisible).maxWidth);
-    sliderItemsVisibleNumber = Math.round(sliderContentVisibleMaxWidth / sliderImgWidth);
+    this.contentItemsNumber = this.sliderContentItems.length;
+    this.sliderImgWidth = parseInt(window.getComputedStyle(this.sliderImg).width);
+    this.sliderMargin = parseInt(window.getComputedStyle(this.sliderContentItems[0]).marginRight);
+    this.sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(this.sliderContentVisible).maxWidth);
+    this.sliderItemsVisibleNumber = Math.round(this.sliderContentVisibleMaxWidth / this.sliderImgWidth);
+  },
+  data() {
+    return {
+      sliderContent: null,
+      sliderContentItems: null,
+      sliderImg: null,
+      sliderContentVisible: null,
+      contentItemsNumber: null,
+      sliderImgWidth: null,
+      sliderMargin: null,
+      sliderContentVisibleMaxWidth: null,
+      sliderItemsVisibleNumber: null
+    }
   },
   props: {
-    sliderItems: Array
+    sliderItems: {
+      type: Array,
+      default: []
+    }
   },
   methods: {
     moveLeft() {
-      let sliderContentStyles  = window.getComputedStyle(sliderContent);
+      let sliderContentStyles  = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
       if (sliderContentMarginLeft !== 0) {
-        sliderContent.style.marginLeft =  (sliderContentMarginLeft + sliderImgWidth + sliderMargin) + "px";
+        this.sliderContent.style.marginLeft =  (sliderContentMarginLeft + this.sliderImgWidth + this.sliderMargin) + "px";
       }
     },
     moveRight() {
-      let sliderContentStyles  = window.getComputedStyle(sliderContent);
+      let sliderContentStyles  = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
-      if (sliderContentMarginLeft !== -(contentItemsNumber - sliderItemsVisibleNumber)*(sliderImgWidth + sliderMargin)) {
-        sliderContent.style.marginLeft =  (sliderContentMarginLeft - sliderImgWidth - sliderMargin) + "px";
+      if (sliderContentMarginLeft !== -(this.contentItemsNumber - this.sliderItemsVisibleNumber)*(this.sliderImgWidth + this.sliderMargin)) {
+        this.sliderContent.style.marginLeft =  (sliderContentMarginLeft - this.sliderImgWidth - this.sliderMargin) + "px";
       }
     }
   }

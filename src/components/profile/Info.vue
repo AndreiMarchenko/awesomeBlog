@@ -51,15 +51,23 @@
 </template>
 
 <script>
-import ProfileInfoBtnComponent from "./ProfileInfoBtnComponent.vue";
+import ProfileInfoBtnComponent from "./InfoBtn.vue";
 
 export default {
   components: {
     ProfileInfoBtnComponent
   },
   props: {
-    profileInfo: Object,
-    infoType: String
+    profileInfo: {
+      type: Object,
+      validator(profileInfo) {
+        return profileInfo.name !== undefined
+      }
+    },
+    infoType: {
+      type: String,
+      required: true
+    }
   },
 }
 </script>

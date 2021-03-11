@@ -22,16 +22,23 @@
 <script>
 export default {
   props: {
-    author: String,
-    text: String,
-    time: String,
-    pictureSrc: String
-  },
-  data() {
-    return {
-
-    }
-  },
+    author: {
+      type: String,
+      required: true
+    },
+    text:  {
+      type: String,
+      required: true
+    },
+    time:  {
+      type: String,
+      required: true
+    },
+    pictureSrc:  {
+      type: String,
+      required: true
+    },
+  }
 }
 </script>
 

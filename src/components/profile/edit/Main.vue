@@ -7,9 +7,9 @@
         </div>
         <form class="profile-editor__picture-form">
           <label>
-                        <span class="profile-editor__picture-ref submit-input">
-                            Edit profile picture
-                        </span>
+            <span class="profile-editor__picture-ref submit-input">
+              Edit profile picture
+            </span>
             <input @change="editPicture" class="profile-editor__picture-input_hidden" type="file">
           </label>
           <input class="profile-editor__picture-submit_hidden" type="submit">
@@ -90,7 +90,10 @@ const PROFILE_PICTURE_FORM_SELECTOR = ".profile-editor__picture-form";
 
 export default {
   props: {
-    profileInfo: Object
+    profileInfo: {
+      type: Object,
+      required: true
+    }
   },
   methods: {
     editPicture() {

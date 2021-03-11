@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderComponent from "../../HeaderComponent.vue";
-import EditProfileComponent from "./EditProfileComponent.vue";
+import HeaderComponent from "../../Header.vue";
+import EditProfileComponent from "./Main.vue";
 
 export default {
   components: {

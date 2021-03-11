@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderComponent from "../HeaderComponent.vue";
-import ResetPasswordComponent from "./ResetPasswordComponent.vue";
+import HeaderComponent from "../Header.vue";
+import ResetPasswordComponent from "./Main.vue";
 
 export default {
   data() {

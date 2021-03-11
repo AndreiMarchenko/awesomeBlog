@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderComponent from "../HeaderComponent.vue";
-import NewsComponent from "./NewsComponent.vue";
+import HeaderComponent from "../Header.vue";
+import NewsComponent from "./Main.vue";
 
 export default {
   data() {

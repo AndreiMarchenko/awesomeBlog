@@ -19,6 +19,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      email: ""
+    }
+  }
 }
 </script>
 

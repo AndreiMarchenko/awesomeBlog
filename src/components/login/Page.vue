@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderComponent from "../HeaderComponent.vue"
-import LoginComponent from "./LoginComponent.vue"
+import HeaderComponent from "../Header.vue"
+import LoginComponent from "./Main.vue"
 
 export default {
   data() {
@@ -21,7 +21,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
