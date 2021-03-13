@@ -11,6 +11,8 @@ import LoginPageComponent from "./components/login/LoginPageComponent.vue";
 import RegistrationPageComponent from "./components/registration/RegistrationPageComponent.vue";
 import ResetPasswordPageComponent from "./components/resetPassword/ResetPasswordPageComponent.vue";
 
+import NotFound from "./components/NotFound.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -60,6 +62,11 @@ export default new Router({
             path: "/Logout",
             name: "logout",
             component: LoginPageComponent
+        },
+        {
+            path: "*",
+            name: "notFound",
+            component: NotFound
         },
     ]
 });
