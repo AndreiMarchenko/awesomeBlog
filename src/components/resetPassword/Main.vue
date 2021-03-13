@@ -7,7 +7,7 @@
       <form action="#" class="reset-password__form">
         <div class="reset-password__email-wrapper">
           Enter your email:
-          <input type="text" class="reset-password__email-input text-input">
+          <input :value="userEmail" type="text" class="reset-password__email-input text-input">
         </div>
         <div class="reset-password__submit-wrapper">
           <input type="submit" value="Reset" class="reset-password__submit submit-input">
@@ -18,11 +18,18 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   data() {
     return {
       email: ""
     }
+  },
+  computed: {
+    ...mapState({
+      userEmail: state => state.user.email
+    })
   }
 }
 </script>

@@ -1,15 +1,15 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import MainProfilePageComponent from "./components/profile/main/MainProfilePageComponent.vue";
-import FriendProfilePageComponent from "./components/profile/friend/FriendProfilePageComponent.vue";
-import NewsPageComponent from "./components/news/NewsPageComponent.vue";
-import AddPostPageComponent from "./components/addPost/AddPostPageComponent.vue";
-import EditProfilePageComponent from "./components/profile/edit/EditProfilePageComponent.vue";
+import MainProfilePageComponent from "./components/profile/main/Page.vue";
+import FriendProfilePageComponent from "./components/profile/friend/Page.vue";
+import NewsPageComponent from "./components/news/Page.vue";
+import AddPostPageComponent from "./components/addPost/Page.vue";
+import EditProfilePageComponent from "./components/profile/edit/Page.vue";
 
-import LoginPageComponent from "./components/login/LoginPageComponent.vue";
-import RegistrationPageComponent from "./components/registration/RegistrationPageComponent.vue";
-import ResetPasswordPageComponent from "./components/resetPassword/ResetPasswordPageComponent.vue";
+import LoginPageComponent from "./components/login/Page.vue";
+import RegistrationPageComponent from "./components/registration/Page.vue";
+import ResetPasswordPageComponent from "./components/resetPassword/Page.vue";
 
 Vue.use(Router);
 
