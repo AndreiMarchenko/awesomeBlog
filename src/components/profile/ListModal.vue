@@ -1,5 +1,8 @@
 <template>
   <div class="profile-list-modal" :class="{'profile-list-modal_active': isModalActive}">
+    <div class="profile-list-modal__title">
+      {{this.capitalizedModalName}}
+    </div>
     <div class="profile-list-modal__header">
       <div @click="setAllTabActive" class="profile-list-modal__all-tab" :class="{'profile-list-modal__tab_active': isAllTabActive}">
         All
@@ -86,10 +89,20 @@ export default {
       body: null
     }
   },
+  computed: {
+    capitalizedModalName() {
+      return this.modalName.charAt(0).toUpperCase() + this.modalName.slice(1);
+    }
+  },
   methods: {
     openModal() {
+      if (this.usersAllList.length === 0) {
+        this.$emit(`closed-${this.modalName}-modal`);
+        return;
+      }
+
       this.darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
-      this.classList.add(BODY_LOCK_CLASS);
+      this.body.classList.add(BODY_LOCK_CLASS);
 
       this.setAllTabActive();
 
@@ -129,6 +142,11 @@ export default {
     display: block;
     opacity: 1;
   }
+  &__title {
+    text-align: center;
+    font-size: 26px;
+    margin-top: 10px;
+  }
   &__header {
     display: flex;
     margin-bottom: 2px;
@@ -139,7 +157,7 @@ export default {
     width: 30px;
     height: 30px;
     position: absolute;
-    top: 5px;
+    top: -27px;
     right: 0;
     cursor: pointer;
   }
@@ -214,9 +232,6 @@ export default {
     margin-left: 13px;
   }
 }
-.body_lock {
-  overflow: hidden;
-}
 </style>
 
 <style lang="scss">
@@ -233,5 +248,8 @@ export default {
   display: block;
   background-color: black;
   opacity: 0.5;
+}
+.body_lock {
+  overflow: hidden;
 }
 </style>
