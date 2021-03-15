@@ -1,5 +1,8 @@
 <template>
   <div class="profile-list-modal" :class="{'profile-list-modal_active': isModalActive}">
+    <div class="profile-list-modal__title">
+      {{this.capitalizedModalName}}
+    </div>
     <div class="profile-list-modal__header">
       <div @click="setAllTabActive" class="profile-list-modal__all-tab" :class="{'profile-list-modal__tab_active': isAllTabActive}">
         All
@@ -39,18 +42,37 @@
 </template>
 
 <script>
+const DARK_BODY_SELECTOR = ".dark-body";
+const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
+const BODY_LOCK_CLASS = "body_lock";
+const PROFILE_LIST_MODAL_ITEMS_SELECTOR = ".profile-list-modal__items";
+
 export default {
   props: {
-    modalName: String,
-    isModalActive: Boolean,
-    usersAllList: Array,
-    usersSameList: Array
+    modalName: {
+      type: String,
+      required: true
+    },
+    isModalActive: {
+      type: Boolean,
+      required: true
+    },
+    usersAllList: {
+      type: Array,
+      default: []
+    },
+    usersSameList: {
+      type: Array,
+      default: []
+    }
   },
   mounted() {
-    const PROFILE_LIST_MODAL_ITEMS_SELECTOR = ".profile-list-modal__items";
     const profileListModalItems = document.querySelectorAll(PROFILE_LIST_MODAL_ITEMS_SELECTOR);
+    this.darkBody = document.querySelector(DARK_BODY_SELECTOR);
+    this.body = document.querySelector("body");
+
     profileListModalItems.forEach((modalItem) => {
-      modalItem.style.height = window.innerHeight/2 +  "px";
+      modalItem.style.height = window.innerHeight/2 + "px";
     });
   },
   watch: {
@@ -63,33 +85,32 @@ export default {
   data() {
     return {
       isAllTabActive: true,
+      darkBody: null,
+      body: null
+    }
+  },
+  computed: {
+    capitalizedModalName() {
+      return this.modalName.charAt(0).toUpperCase() + this.modalName.slice(1);
     }
   },
   methods: {
     openModal() {
-      const DARK_BODY_SELECTOR = ".dark-body";
-      const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
-      const BODY_LOCK_CLASS = "body_lock";
-      const darkBody = document.querySelector(DARK_BODY_SELECTOR);
-      const body = document.querySelector("body");
+      if (this.usersAllList.length === 0) {
+        this.$emit(`closed-${this.modalName}-modal`);
+        return;
+      }
 
-      darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
-      body.classList.add(BODY_LOCK_CLASS);
+      this.darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
+      this.body.classList.add(BODY_LOCK_CLASS);
 
       this.setAllTabActive();
 
-      darkBody.addEventListener("click", this.closeModal);
+      this.darkBody.addEventListener("click", this.closeModal);
     },
     closeModal() {
-      const DARK_BODY_SELECTOR = ".dark-body";
-      const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
-      const BODY_LOCK_CLASS = "body_lock";
-      const darkBody = document.querySelector(DARK_BODY_SELECTOR);
-      const body = document.querySelector("body");
-
-
-      darkBody.classList.remove(DARK_BODY_ACTIVE_CLASS);
-      body.classList.remove(BODY_LOCK_CLASS);
+      this.darkBody.classList.remove(DARK_BODY_ACTIVE_CLASS);
+      this.body.classList.remove(BODY_LOCK_CLASS);
 
       this.$emit(`closed-${this.modalName}-modal`);
     },
@@ -119,6 +140,11 @@ export default {
     display: block;
     opacity: 1;
   }
+  &__title {
+    text-align: center;
+    font-size: 26px;
+    margin-top: 10px;
+  }
   &__header {
     display: flex;
     margin-bottom: 2px;
@@ -129,7 +155,7 @@ export default {
     width: 30px;
     height: 30px;
     position: absolute;
-    top: 5px;
+    top: -27px;
     right: 0;
     cursor: pointer;
   }
@@ -204,9 +230,6 @@ export default {
     margin-left: 13px;
   }
 }
-.body_lock {
-  overflow: hidden;
-}
 </style>
 
 <style lang="scss">
@@ -223,5 +246,8 @@ export default {
   display: block;
   background-color: black;
   opacity: 0.5;
+}
+.body_lock {
+  overflow: hidden;
 }
 </style>

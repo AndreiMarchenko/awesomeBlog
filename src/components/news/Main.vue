@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import NewsItemComponent from "./NewsItemComponent.vue";
+import NewsItemComponent from "./Item.vue";
 
 export default {
   props: {

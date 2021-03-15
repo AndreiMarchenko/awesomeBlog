@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderComponent from "../HeaderComponent.vue";
-import AddPostComponent from "./AddPostComponent.vue";
+import HeaderComponent from "../Header.vue";
+import AddPostComponent from "./Main.vue";
 
 export default {
   components: {
@@ -20,7 +20,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

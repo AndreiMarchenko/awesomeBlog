@@ -43,45 +43,45 @@ const TEXT_AREA_SELECTOR = ".post-form__textarea";
 
 const PICTURE_WRAPPER_ACTIVE_CLASS = "picture-wrapper_active";
 
-let pictureInput;
-let pictureWrapper;
-let picture;
-let textArea;
 
 export default {
   mounted() {
-    pictureInput = document.querySelector(PICTURE_INPUT_SELECTOR);
-    pictureWrapper = document.querySelector(PICTURE_WRAPPER_SELECTOR);
-    picture = document.querySelector(PICTURE_SELECTOR);
-    textArea = document.querySelector(TEXT_AREA_SELECTOR);
+    this.pictureInput = document.querySelector(PICTURE_INPUT_SELECTOR);
+    this.pictureWrapper = document.querySelector(PICTURE_WRAPPER_SELECTOR);
+    this.picture = document.querySelector(PICTURE_SELECTOR);
+    this.textArea = document.querySelector(TEXT_AREA_SELECTOR);
 
     if (localStorage.getItem("postText")) {
       this.textAreaValue = localStorage.getItem("postText");
     }
 
     if (localStorage.getItem("postPicture")) {
-      pictureWrapper.classList.add(PICTURE_WRAPPER_ACTIVE_CLASS);
-      picture.setAttribute("src", localStorage.getItem("postPicture"));
+      this.pictureWrapper.classList.add(PICTURE_WRAPPER_ACTIVE_CLASS);
+      this.picture.setAttribute("src", localStorage.getItem("postPicture"));
     }
   },
   data() {
     return {
-      textAreaValue: ""
+      textAreaValue: "",
+      pictureInput: null,
+      pictureWrapper: null,
+      picture: null,
+      textArea: null
     }
   },
   methods: {
     changePicture() {
-      if (pictureInput.files[0] !== null) {
-        pictureWrapper.classList.add(PICTURE_WRAPPER_ACTIVE_CLASS);
+      if (this.pictureInput.files[0] !== null) {
+        this.pictureWrapper.classList.add(PICTURE_WRAPPER_ACTIVE_CLASS);
       } else {
-        pictureWrapper.classList.remove(PICTURE_WRAPPER_ACTIVE_CLASS);
+        this.pictureWrapper.classList.remove(PICTURE_WRAPPER_ACTIVE_CLASS);
       }
 
-      let selectedFile = pictureInput.files[0];
+      let selectedFile = this.pictureInput.files[0];
       let reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        picture.setAttribute("src", reader.result);
+        this.picture.setAttribute("src", reader.result);
         this.storePicture(reader.result);
       });
 

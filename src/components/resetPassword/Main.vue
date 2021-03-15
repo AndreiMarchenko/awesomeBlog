@@ -7,7 +7,7 @@
       <form action="#" class="reset-password__form">
         <div class="reset-password__email-wrapper">
           Enter your email:
-          <input type="text" class="reset-password__email-input text-input">
+          <input v-model="email" type="text" class="reset-password__email-input text-input">
         </div>
         <div class="reset-password__submit-wrapper">
           <input type="submit" value="Reset" class="reset-password__submit submit-input">
@@ -19,6 +19,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      email: ""
+    }
+  }
 }
 </script>
 
