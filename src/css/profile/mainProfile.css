@@ -692,38 +692,6 @@ li {
         margin-right: 5px;
     }
 }
-@media (max-width: 600px) {
-    .profile-info__summary {
-        margin-right: 30px;
-    }
-    .profile-info__summary-wrapper_first {
-        margin-left: 40px
-    }
-    .profile-info__summary-wrapper_second {
-        margin-right: 40px;
-    }
-    .profile-slider__content_visible_mobile {
-        max-width: 350px;
-        overflow: hidden;
-    }
-    .profile-slider__content_mobile {
-        display: flex;
-    }
-    .profile-slider__content-item_mobile {
-        width: 350px;
-        height: 239px;
-    }
-    .profile-slider__content-item-img_mobile {
-        width: 350px;
-        height: 239px;
-    }
-    .profile-slider__button-right_mobile {
-        margin-top: 90px;
-    }
-    .profile-slider__button-left_mobile {
-        margin-top: 90px;
-    }
-}
 @media (max-width: 510px) {
     .profile-slider__content_visible_mobile {
         max-width: 270px;
