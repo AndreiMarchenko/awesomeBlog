@@ -5,6 +5,7 @@
 body {
   margin: 0;
   height: 100vh;
+  font-family: 'Quicksand', sans-serif;
 }
 body > div {
   height: 100%;
@@ -67,7 +68,6 @@ li {
   max-width: 1300px;
   height: 100%;
   margin: 0 auto;
-  font-family: 'Quicksand', sans-serif;
 }
 @media (max-width: 1250px) {
   body {
