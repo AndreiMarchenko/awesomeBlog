@@ -208,10 +208,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#test {
-  //display: flex;
-  //flex-direction: column;
-}
-</style>
