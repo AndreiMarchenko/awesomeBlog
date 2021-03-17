@@ -10,8 +10,9 @@ module.exports = {
         path: path.resolve(__dirname, 'src/dist'),
     },
     devServer: {
-        contentBase: './dist',
-        watchContentBase: true
+        contentBase: path.resolve(__dirname, 'src'),
+        watchContentBase: true,
+        historyApiFallback: true,
     },
     module: {
         rules: [

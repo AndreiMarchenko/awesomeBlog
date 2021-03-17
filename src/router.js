@@ -12,7 +12,7 @@ Vue.use(Router);
 
 const routes = [...authRoutes, ...profileRoutes];
 
-export default new Router({
+let router =  new Router({
     routes: [
         {
             path: "/news",
@@ -30,5 +30,8 @@ export default new Router({
             name: "notFound",
             component: NotFound
         }
-    ]
+    ],
+    mode: "history",
 });
+
+export default router;

@@ -1,5 +1,5 @@
 <template>
-  <div id="test">
+  <div>
     <header-component :nav-items="['My page', 'News', 'Logout']"></header-component>
     <profile-info-component
         @clicked-followers-btn="openFollowersModal"
