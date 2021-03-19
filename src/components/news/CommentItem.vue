@@ -43,7 +43,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../common";
 .comment-item__header {
   display: flex;
   justify-content: flex-start;

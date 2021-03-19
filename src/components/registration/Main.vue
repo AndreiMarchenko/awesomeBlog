@@ -38,8 +38,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../common";
 .registration {
+  height: 100%;
+
   &__form {
     margin-left: 90px;
     font-size: 18px;

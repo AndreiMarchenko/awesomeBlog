@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="add-post__component-wrapper">
     <section class="post-form__wrapper">
       <div class="container">
         <div class="post-form__content">
@@ -99,13 +99,17 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../common";
-@import "../variables";
+.add-post__component-wrapper {
+  height: 100%;
+}
 .post-form {
   font-size: 18px;
   margin-left: 20px;
   margin-right: 20px;
 
+  &__wrapper {
+    height: 100%;
+  }
   &__content {
     padding-top: 150px;
   }

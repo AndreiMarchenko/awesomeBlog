@@ -16,9 +16,9 @@
         <div class="login__submit-wrapper">
           <input type="submit" value="Login" class="login__submit submit-input">
           <div class="login__forgot-password-wrapper">
-            <a href="" class="login__forgot-password-ref">
+            <router-link :to="{name: 'resetPassword'}" class="login__forgot-password-ref">
               Forgot your password?
-            </a>
+            </router-link>
           </div>
         </div>
       </form>
@@ -38,15 +38,15 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../common";
 .login {
+  height: 100%;
+
   &__title {
     padding-top: 150px;
   }
   &__form {
     margin-left: 90px;
     font-size: 18px;
-    padding-bottom: 100px;
   }
   &__title {
     font-size: 22px;

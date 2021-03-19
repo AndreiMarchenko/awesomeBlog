@@ -1,9 +1,14 @@
 <template>
   <div :class="{'profile-info__edit': infoType === 'mainPage',
                 'profile-info__follow': infoType === 'friendPage'}">
-    <a href="#"
-       :class="{'profile-info__edit-ref': infoType === 'mainPage',
-                'profile-info__follow-ref': infoType === 'friendPage'}">
+    <router-link v-if="infoType === 'mainPage'"
+                 class="profile-info__edit-ref"
+                 :to="{name: 'editProfile'}">
+      {{ btnText }}
+    </router-link>
+    <a v-else-if="infoType === 'friendPage'"
+       href="#"
+       class="profile-info__follow-ref">
       {{ btnText }}
     </a>
   </div>
@@ -28,8 +33,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../common";
-@import "../variables";
 .profile-info__edit {
   font-size: 18px;
   margin-left: 3px;
@@ -67,34 +70,40 @@ export default {
 .profile-info__follow-ref {
   height: 37px;
   padding: 2px 50px;
-  color: #BF3075;
-  border: #BF3075 1px solid;
+  color: $followBtnColor;
+  border: $followBtnColor 1px solid;
   transition: background-color .4s ease-out,
   color .1s ease-out;
   border-radius: 5px;
 }
 .profile-info__follow-ref:hover{
-  background-color: #BF3075;
+  background-color: $followBtnColor;
   border: grey 1px solid;
-  color: #fff;
+  color: $white;
   transition: background-color .5s ease-out,
   color .1s ease-out,
   border .4s ease-out;
 }
 .profile-info__follow-ref:active{
-  background-color: #F5F5F5;
-  color: #BF3075;
-  border: #BF3075 1px solid;
+  background-color: $bgColor;
+  color: $followBtnColor;
+  border: $followBtnColor 1px solid;
   transition: background-color .1s ease-out,
   color .4s ease-out;
 }
 @media (max-width: 375px) {
-
   .profile-info__edit {
     display: flex;
     justify-content: center;
   }
   .profile-info__edit-ref {
+    height: 29px;
+  }
+  .profile-info__follow {
+    display: flex;
+    justify-content: center;
+  }
+  .profile-info__follow-ref {
     height: 29px;
   }
 }

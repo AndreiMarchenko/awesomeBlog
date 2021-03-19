@@ -111,8 +111,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../common";
-@import "../variables";
 .news-item {
   border: $mainColor 1px solid;
   margin-bottom: 20px;

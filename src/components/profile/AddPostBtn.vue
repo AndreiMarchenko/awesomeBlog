@@ -2,9 +2,9 @@
   <div class="profile-add-post">
     <div class="container">
       <div class="profile-add-post__ref-wrapper">
-        <a href="#" class="profile-add-post__ref">
+        <router-link :to="{name: 'addPost'}" class="profile-add-post__ref">
           Add post
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
@@ -12,10 +12,9 @@
 
 
 <style lang="scss">
-@import "../common";
-@import "../variables";
 .profile-add-post__ref-wrapper {
   padding-top: 30px;
+  padding-bottom: 20px;
   text-align: center;
 }
 .profile-add-post__ref {

@@ -89,7 +89,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../common";
 .profile-slider_mobile {
   display: none;
 }
@@ -101,6 +100,7 @@ export default {
     display: flex;
     justify-content: center;
     padding-top: 25px;
+    padding-bottom: 20px;
   }
   .profile-slider__content_visible_mobile {
     max-width: 441px;

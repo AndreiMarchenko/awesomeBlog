@@ -117,13 +117,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../common";
-@import "../../variables";
 .text-input {
   width: 401px;
 }
 .profile-editor {
   font-size: 20px;
+  height: 100%;
 
   &__picture-wrapper {
     margin: 0 86px 0 106px;

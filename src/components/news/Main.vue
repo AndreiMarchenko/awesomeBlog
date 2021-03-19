@@ -70,8 +70,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../common";
-@import "../variables";
 header {
   z-index: 1;
 }

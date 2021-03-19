@@ -50,120 +50,120 @@ export default {
       followingModalState: false,
       sliderItems: [
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
       ],
 
       usersAllList: [
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
 
       ],
@@ -171,21 +171,21 @@ export default {
       usersSameList: [
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
           name: "Sam Johns",
-          pictureSrc: "../../../images/profile/profilePicture.jpg"
+          pictureSrc: "../images/profile/profilePicture.jpg"
         }
       ],
 
       profileInfo: {
         name: "John Smith",
-        pictureSrc: "../../../images/profile/profilePicture.jpg",
+        pictureSrc: "../images/profile/profilePicture.jpg",
         followersNumber: 12,
         followingNumber: 33,
         text: "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text"
@@ -208,7 +208,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
