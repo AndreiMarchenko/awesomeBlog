@@ -6,6 +6,9 @@ import Vuex from "vuex";
 
 import "./scss/_common.scss";
 
+//require('dotenv').config()
+console.log(process.env.DB_HOST);
+
 Vue.use(Vuex);
 
 new Vue({

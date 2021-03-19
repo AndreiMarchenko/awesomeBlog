@@ -1,6 +1,10 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
+
+require('dotenv').config();
 
 module.exports = {
     mode: 'development',
@@ -47,5 +51,9 @@ module.exports = {
         new HTMLWebpackPlugin({
             template: "./src/index.html"
         }),
+        new Dotenv(),
+        new webpack.DefinePlugin({
+            'env.test': process.env.DB_HOST
+        })
     ],
 };

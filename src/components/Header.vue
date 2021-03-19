@@ -2,7 +2,7 @@
   <header class="header" :class="{'header_active': isBurgerActive}">
     <div class="container">
       <div class="header__content">
-        <div class="logo">
+        <div @click="requestToServer" class="logo">
           <router-link class="logo__ref" :class="{'logo__ref_active': isBurgerActive}" to="Friend">Awesome Blog</router-link>
         </div>
         <nav class="header__list-wrapper" :class="{'header__list_active': isBurgerActive}">
@@ -21,6 +21,7 @@
 
 <script>
 const bodyLockClass = "body_lock";
+import axios from "../api/axiosConf";
 
 export default {
   data() {
@@ -43,9 +44,15 @@ export default {
 
       body.classList.toggle(bodyLockClass);
     },
-     toSlug(str) {
+    toSlug(str) {
       return str.replace(' ', '-');
-     }
+    },
+    requestToServer() {
+      axios.get("/test")
+      .then((resp) => {
+        console.log(resp);
+      });
+    }
   }
 }
 </script>
