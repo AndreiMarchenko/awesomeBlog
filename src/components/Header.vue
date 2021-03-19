@@ -7,7 +7,7 @@
         </div>
         <nav class="header__list-wrapper" :class="{'header__list_active': isBurgerActive}">
           <ul class="header__list">
-            <li v-for="item in navItems" class="header__list-item"><router-link :to="toSlug(item)">{{ item }}</router-link></li>
+            <li v-for="item in navItems" class="header__list-item"><router-link :to="{name: toName(item)}">{{ item }}</router-link></li>
           </ul>
         </nav>
         <div @click="activateBurger" class="burger" :class="{'burger_active': isBurgerActive}">
@@ -43,8 +43,15 @@ export default {
 
       body.classList.toggle(bodyLockClass);
     },
-     toSlug(str) {
-      return str.replace(' ', '-');
+     toName(str) {
+       str = str.trim();
+       let words = [];
+       str.split(' ').forEach(word => {
+           words.push(word[0].toUpperCase() + word.slice(1));
+       });
+
+       let joinedWords = words.join('');
+       return joinedWords[0].toLowerCase() + joinedWords.slice(1);
      }
   }
 }
