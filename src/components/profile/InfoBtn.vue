@@ -3,7 +3,7 @@
                 'profile-info__follow': infoType === 'friendPage'}">
     <router-link v-if="infoType === 'mainPage'"
                  class="profile-info__edit-ref"
-                 to="Edit-profile">
+                 :to="{name: 'editProfile'}">
       {{ btnText }}
     </router-link>
     <a v-else-if="infoType === 'friendPage'"
