@@ -1,6 +1,6 @@
 import axios from "axios";
 
 axios.create();
-axios.defaults.baseURL = "http://backend.test:8888/api"
+axios.defaults.baseURL = env.API_LOCAL_ENDPOINT;
 
 export default axios;
