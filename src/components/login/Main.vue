@@ -14,7 +14,7 @@
           <input v-model="password" type="password" class="login__password-input text-input">
         </div>
         <div class="login__submit-wrapper">
-          <input type="submit" value="Login" class="login__submit submit-input">
+          <input @click="setCurrentUser({email, password})" type="submit" value="Login" class="login__submit submit-input">
           <div class="login__forgot-password-wrapper">
             <router-link :to="{name: 'resetPassword'}" class="login__forgot-password-ref">
               Forgot your password?
@@ -27,12 +27,19 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   data() {
     return {
       email: "",
       password: "",
     }
+  },
+  methods: {
+    ...mapMutations({
+      setCurrentUser: 'setCurrentUser'
+    })
   }
 }
 </script>
