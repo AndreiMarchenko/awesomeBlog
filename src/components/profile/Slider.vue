@@ -149,15 +149,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .profile-slider {
   display: flex;
   flex-grow: 1;
 
-  &__container {
-    display: flex;
-    justify-content: center;
-    flex-grow: 1;
-  }
   &__button_mouseover_active {
     background-color: $mainColor;
     border-color: $bgColor;
@@ -188,6 +184,11 @@ export default {
     }
   }
 
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+  }
   &__wrapper {
     padding-top: 20px;
     position: relative;

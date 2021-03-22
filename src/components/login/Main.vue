@@ -16,7 +16,7 @@
         <div class="login__submit-wrapper">
           <input @click="setCurrentUser({email, password})" type="submit" value="Login" class="login__submit submit-input">
           <div class="login__forgot-password-wrapper">
-            <router-link to="/Reset-password" class="login__forgot-password-ref">
+            <router-link :to="{name: 'resetPassword'}" class="login__forgot-password-ref">
               Forgot your password?
             </router-link>
           </div>
