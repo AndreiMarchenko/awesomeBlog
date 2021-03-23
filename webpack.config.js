@@ -1,18 +1,18 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
+require('dotenv').config({path: 'src/.env'});
+
 
 module.exports = {
+
     mode: 'development',
     entry: './src/index.js',
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'src/dist'),
-    },
-    devServer: {
-        contentBase: path.resolve(__dirname, 'src'),
-        watchContentBase: true,
-        historyApiFallback: true,
     },
     module: {
         rules: [
@@ -48,5 +48,20 @@ module.exports = {
         new HTMLWebpackPlugin({
             template: "./src/index.html"
         }),
+        new webpack.DefinePlugin({
+            'env.API_LOCAL_ENDPOINT': '"' + process.env.API_LOCAL_ENDPOINT + '"',
+            'env.API_ENDPOINT': '"' + process.env.API_ENDPOINT + '"',
+        })
     ],
+    devServer: {
+        contentBase: path.resolve(__dirname, 'src'),
+        watchContentBase: true,
+        historyApiFallback: true,
+        proxy: {
+            '/api': {
+                target: process.env.API_ENDPOINT,
+                changeOrigin: true,
+            }
+        },
+    },
 };

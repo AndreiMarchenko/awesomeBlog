@@ -6,6 +6,7 @@ import Vuex from "vuex";
 
 import "./scss/_common.scss";
 
+
 Vue.use(Vuex);
 
 new Vue({
