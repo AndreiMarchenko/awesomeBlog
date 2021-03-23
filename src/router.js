@@ -8,6 +8,8 @@ import NewsPageComponent from "./components/news/Page.vue";
 import AddPostPageComponent from "./components/addPost/Page.vue";
 import NotFound from "./components/NotFound.vue";
 
+import getCookie from "./helpers/cookie/getCookie";
+
 Vue.use(Router);
 
 const routes = [...authRoutes, ...profileRoutes];
@@ -17,18 +19,39 @@ let router =  new Router({
         {
             path: "/news",
             name: "news",
-            component: NewsPageComponent
+            component: NewsPageComponent,
+            beforeEnter: (to, from, next) => {
+                if (typeof getCookie("Token") === "undefined") {
+                    next({name: 'login'});
+                } else {
+                    next();
+                }
+            }
         },
         {
             path: "/add-post",
             name: "addPost",
-            component: AddPostPageComponent
+            component: AddPostPageComponent,
+            beforeEnter: (to, from, next) => {
+                if (typeof getCookie("Token") === "undefined") {
+                    next({name: 'login'});
+                } else {
+                    next();
+                }
+            }
         },
         ...routes,
         {
             path: "*",
             name: "notFound",
-            component: NotFound
+            component: NotFound,
+            beforeEnter: (to, from, next) => {
+                if (typeof getCookie("Token") === "undefined") {
+                    next({name: 'login'});
+                } else {
+                    next();
+                }
+            }
         }
     ],
     mode: "history",

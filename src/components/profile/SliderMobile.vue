@@ -66,7 +66,7 @@ export default {
   props: {
     sliderItems: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   methods: {

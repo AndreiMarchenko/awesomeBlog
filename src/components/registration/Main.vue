@@ -4,7 +4,7 @@
       <div class="registration__title">
         Registration
       </div>
-      <form action="#" class="registration__form">
+      <form @submit.prevent="register" action="#" class="registration__form">
         <div class="registration__name-wrapper">
           Enter your name:
           <input v-model="name" type="text" class="registration__name-input text-input">
@@ -26,12 +26,30 @@
 </template>
 
 <script>
+import axios from '../../api/axiosConf';
+
 export default {
   data() {
     return {
       name: "",
       surname: "",
       email: ""
+    }
+  },
+  methods: {
+    register() {
+      axios.post("/auth/register",{
+        name: this.name,
+        email: this.email,
+        password: this.surname,
+        password_confirmation: this.surname,
+      }).then(resp => {
+        if (resp.status === 201) {
+          this.$router.push({name: "login"});
+        }
+      }).catch(err => {
+        console.log(err);
+      }) ;
     }
   }
 }

@@ -4,7 +4,7 @@
       <div class="login__title">
         Login
       </div>
-      <form action="#" class="login__form">
+      <form @submit.prevent="login" action="#" class="login__form">
         <div class="login__email-wrapper">
           Enter your email:
           <input v-model="email" type="text" class="login__email-input text-input">
@@ -14,7 +14,7 @@
           <input v-model="password" type="password" class="login__password-input text-input">
         </div>
         <div class="login__submit-wrapper">
-          <input @click="setCurrentUser({email, password})" type="submit" value="Login" class="login__submit submit-input">
+          <input type="submit" value="Login" class="login__submit submit-input">
           <div class="login__forgot-password-wrapper">
             <router-link :to="{name: 'resetPassword'}" class="login__forgot-password-ref">
               Forgot your password?
@@ -28,6 +28,8 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import axios from '../../api/axiosConf';
+import setCookie from "../../helpers/cookie/setCookie";
 
 export default {
   data() {
@@ -39,7 +41,27 @@ export default {
   methods: {
     ...mapMutations({
       setCurrentUser: 'setCurrentUser'
-    })
+    }),
+    login() {
+      axios.post("/auth/login", {
+        email: this.email,
+        password: this.password
+      }).then(resp => {
+        if (resp.status === 200) {
+          this.setCurrentUser({
+            email: resp.data.user.email,
+            name: resp.data.user.name
+          });
+          setCookie("Token", resp.data.access_token, {
+            "max-age": resp.data.expires_in,
+            samesite: "lax"
+          });
+          this.$router.push({name: "myPage"});
+        }
+      }).catch(err => {
+        console.log(err);
+      })
+    }
   }
 }
 </script>

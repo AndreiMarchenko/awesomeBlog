@@ -18,8 +18,6 @@ export default {
     return {
       navItems: ["My page", "News", "Logout"],
       profileInfo: {
-        name: "John Smith",
-        email: "j.smith@gmail.com",
         pictureSrc: "../images/profile/profilePicture.jpg",
         text: "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text"
       }
