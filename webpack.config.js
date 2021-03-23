@@ -7,7 +7,6 @@ require('dotenv').config({path: 'src/.env'});
 
 
 module.exports = {
-
     mode: 'development',
     entry: './src/index.js',
     output: {
@@ -59,8 +58,7 @@ module.exports = {
         historyApiFallback: true,
         proxy: {
             '/api': {
-                // target: '"' + process.env.API_ENDPOINT + '"'
-                target: 'http://backend.test',
+                target: process.env.API_ENDPOINT,
                 changeOrigin: true,
             }
         },
