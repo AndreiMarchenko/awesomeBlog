@@ -28,14 +28,4 @@ class LoginRequest extends FormRequest
             'password' => 'required|string|min:6',
         ];
     }
-
-    public function withValidator($validator)
-    {
-        return response()->json(["test" => 'test']);
-//        $validator->after(function ($validator) {
-//            if ($validator->fails()) {
-//                return response()->json(["test" => 'test']);
-//            }
-//        });
-    }
 }
