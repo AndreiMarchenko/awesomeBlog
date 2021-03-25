@@ -28,10 +28,9 @@
 </template>
 
 <script>
+import AuthApi from "../api/AuthApi";
+
 const bodyLockClass = "body_lock";
-import axios from "../api/axiosConf";
-import getCookie from "../helpers/cookie/getCookie";
-import deleteCookie from "../helpers/cookie/deleteCookie";
 
 export default {
   data() {
@@ -65,15 +64,7 @@ export default {
       return joinedWords[0].toLowerCase() + joinedWords.slice(1);
     },
     logout() {
-      axios.post("/auth/logout", {}, {
-        headers: {
-          Authorization: "Bearer " + getCookie("Token")
-        }
-      }).then(resp => {
-        deleteCookie("Token");
-      }).catch(err => {
-        console.log(err);
-      });
+      AuthApi.logout();
     },
   },
 

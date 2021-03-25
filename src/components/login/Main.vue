@@ -27,9 +27,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-import axios from '../../api/axiosConf';
-import setCookie from "../../helpers/cookie/setCookie";
+import AuthApi from "../../api/AuthApi";
 
 export default {
   data() {
@@ -39,28 +37,11 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setCurrentUser: 'setCurrentUser'
-    }),
     login() {
-      axios.post("/auth/login", {
+      AuthApi.login.bind(this)({ // bind to get access to router and vuex
         email: this.email,
         password: this.password
-      }).then(resp => {
-        if (resp.status === 200) {
-          this.setCurrentUser({
-            email: resp.data.user.email,
-            name: resp.data.user.name
-          });
-          setCookie("Token", resp.data.access_token, {
-            "max-age": resp.data.expires_in,
-            samesite: "lax"
-          });
-          this.$router.push({name: "myPage"});
-        }
-      }).catch(err => {
-        console.log(err);
-      })
+      });
     }
   }
 }
