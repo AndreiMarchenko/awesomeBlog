@@ -49,7 +49,8 @@ export default {
 
 <style lang="scss">
 .login {
-  height: 100%;
+  display: flex;
+  flex: 1;
 
   &__title {
     padding-top: 150px;

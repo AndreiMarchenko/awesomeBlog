@@ -21,7 +21,7 @@
             <div v-for="i in pairNumber" class="profile-slider__content-pair">
               <template v-for="j in 2">
                 <div v-if="(i - 1)*2 + j <= sliderItems.length" class="profile-slider__content-item">
-                  <a href="#"><img class="profile-slider__content-item-img" :src="sliderItems[(i - 1)*2 + j - 1].pictureSrc" alt=""></a>
+                  <router-link :to="{name: 'postView', params: {id: sliderItems[(i - 1)*2 + j - 1].id}}"><img class="profile-slider__content-item-img" :src="sliderItems[(i - 1)*2 + j - 1].pictureSrc" alt=""></router-link>
                 </div>
               </template>
             </div>
@@ -190,7 +190,7 @@ export default {
   &__container {
     display: flex;
     justify-content: center;
-    flex-grow: 1;
+    flex: 1;
   }
   &__wrapper {
     padding-top: 20px;

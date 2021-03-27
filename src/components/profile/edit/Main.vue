@@ -122,7 +122,8 @@ export default {
 }
 .profile-editor {
   font-size: 20px;
-  height: 100%;
+  display: flex;
+  flex: 1;
 
   &__picture-wrapper {
     margin: 0 86px 0 106px;

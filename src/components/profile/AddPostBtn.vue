@@ -2,7 +2,7 @@
   <div class="profile-add-post">
     <div class="container">
       <div class="profile-add-post__ref-wrapper">
-        <router-link :to="{name: 'addPost'}" class="profile-add-post__ref">
+        <router-link :to="{name: 'postAdd'}" class="profile-add-post__ref">
           Add post
         </router-link>
       </div>
