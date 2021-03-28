@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegistrationRequest;
 use App\Mail\Mailtrap;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -27,22 +27,12 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
-     * @param Request $request
+     * @param LoginRequest $request
      * @return JsonResponse
-     * @throws ValidationException
      */
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        if (! $token = auth()->attempt($validator->validated())) {
+        if (! $token = auth()->attempt($request->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -52,26 +42,14 @@ class AuthController extends Controller
     /**
      * Register a User.
      *
-     * @param Request $request
+     * @param RegistrationRequest $request
      * @return JsonResponse
-     * @throws ValidationException
      */
-    public function register(Request $request): JsonResponse
+    public function register(RegistrationRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        $password = Str::random(8);
-
         $user = User::create(array_merge(
-            $validator->validated(),
-            ['password' => bcrypt($password)]
+            $request->validated(),
+            ['password' => bcrypt($request->password)]
         ));
 
         Mail::to($request->email)->send(new Mailtrap($password));

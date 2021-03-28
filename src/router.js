@@ -20,41 +20,41 @@ let router =  new Router({
             path: "/news",
             name: "news",
             component: NewsPageComponent,
-            beforeEnter: (to, from, next) => {
-                if (typeof getCookie("Token") === "undefined") {
-                    next({name: 'login'});
-                } else {
-                    next();
-                }
-            }
         },
         {
             path: "/add-post",
             name: "addPost",
             component: AddPostPageComponent,
-            beforeEnter: (to, from, next) => {
-                if (typeof getCookie("Token") === "undefined") {
-                    next({name: 'login'});
-                } else {
-                    next();
-                }
-            }
         },
         ...routes,
         {
             path: "*",
             name: "notFound",
             component: NotFound,
-            beforeEnter: (to, from, next) => {
-                if (typeof getCookie("Token") === "undefined") {
-                    next({name: 'login'});
-                } else {
-                    next();
-                }
-            }
-        }
+        },
     ],
     mode: "history",
+});
+
+router.beforeEach((to, from, next) => {
+    const permittedForNonAuth = ['login', 'signUp', 'resetPassword'];
+    const isAuthorized = typeof getCookie("Token") !== "undefined";
+
+    if (! isAuthorized) {
+        if (permittedForNonAuth.includes(to.name)) {
+            next();
+        } else {
+            next({name: 'login'});
+        }
+    }
+
+    if (isAuthorized) {
+        if (permittedForNonAuth.includes(to.name)) {
+            next({name: 'myPage'});
+        } else {
+            next();
+        }
+    }
 });
 
 export default router;

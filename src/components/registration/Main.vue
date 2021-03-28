@@ -9,10 +9,6 @@
           Enter your name:
           <input v-model="name" type="text" class="registration__name-input text-input">
         </div>
-        <div class="registration__surname-wrapper">
-          Enter your surname:
-          <input v-model="surname" type="text" class="registration__surname-input text-input">
-        </div>
         <div class="registration__email-wrapper">
           Enter your email:
           <input v-model="email" type="text" class="registration__email-input text-input">
@@ -26,28 +22,21 @@
 </template>
 
 <script>
-import axios from '../../api/axiosConf';
+import AuthApi from "../../api/AuthApi";
 
 export default {
   data() {
     return {
       name: "",
-      surname: "",
       email: ""
     }
   },
   methods: {
     register() {
-      axios.post("/auth/register",{
+      AuthApi.register.bind(this)({ // bind to get access to router
         name: this.name,
-        email: this.email,
-      }).then(resp => {
-        if (resp.status === 201) {
-          this.$router.push({name: "login"});
-        }
-      }).catch(err => {
-        console.log(err);
-      }) ;
+        email: this.email
+      });
     }
   }
 }
@@ -72,14 +61,6 @@ export default {
     margin-top: 22px;
   }
   &__name-input {
-    margin-top: 17px;
-  }
-  &__surname-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-top: 22px;
-  }
-  &__surname-input {
     margin-top: 17px;
   }
   &__email-wrapper {
