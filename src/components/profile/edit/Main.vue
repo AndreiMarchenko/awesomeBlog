@@ -30,10 +30,10 @@
         </div>
       </div>
       <div class="profile-editor-modification">
-        <form action="#" class="profile-editor__name-form">
+        <form @submit.prevent="changeName()" action="#" class="profile-editor__name-form">
           <label class="profile-editor__name-label">
             Change your name:
-            <input type="text" class="profile-editor__name-input text-input">
+            <input v-model="name" type="text" class="profile-editor__name-input text-input">
           </label>
           <div class="profile-editor__name-submit-wrapper">
             <input type="submit" value="Change" class="profile-editor__name-submit submit-input">
@@ -70,8 +70,8 @@
           <div class="profile-editor__about-title">
             About me
           </div>
-          <div class="profile-editor__about-text">
-            {{ profileInfo.text }}
+          <div class="profile-editor__about-textarea-wrapper">
+            <textarea v-model="profileInfo.text" class="profile-editor__about-textarea"></textarea>
           </div>
           <div class="profile-editor__about-edit">
             <a href="#" class="profile-editor__about-ref submit-input"> Change</a>
@@ -84,6 +84,9 @@
 </template>
 
 <script>
+import axios from "../../../api/axiosConf";
+import getCookie from "../../../helpers/cookie/getCookie";
+
 const PROFILE_PICTURE_SELECTOR = ".profile-editor__picture";
 const PROFILE_PICTURE_INPUT_SELECTOR = ".profile-editor__picture-input_hidden";
 const PROFILE_PICTURE_FORM_SELECTOR = ".profile-editor__picture-form";
@@ -93,6 +96,11 @@ export default {
     profileInfo: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      name: null
     }
   },
   methods: {
@@ -110,7 +118,19 @@ export default {
       });
 
       profilePictureForm.submit();
-
+    },
+    changeName() {
+      axios.post('edit-user/name', {
+        name: this.name
+      }, {
+        headers : {
+          Authorization: "Bearer " + getCookie("Token")
+        }
+      }).then(resp => {
+        this.name = null;
+        this.$store.dispatch("setCurrentUser");
+      }).catch(err => {
+      });
     }
   }
 }
@@ -245,12 +265,19 @@ export default {
     text-align: center;
     max-width: 1000px;
   }
-  &__about-text {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 16px;
-    max-width: 1000px;
-    text-align: center;
+  &__about-textarea-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  &__about-textarea {
+    margin-top: 20px;
+    font-size: 18px;
+    resize: none;
+    width: 1000px;
+    height: 150px;
+    border-radius: 10px;
+    border-color: $mainColor;
+    padding: 5px;
   }
   &__about-edit {
     margin-top: 25px;
@@ -307,7 +334,7 @@ export default {
   .profile-editor__line {
     margin-left: auto;
   }
-  .profile-editor__about-text {
+  .profile-editor__about-textarea {
     margin-left: 10px;
     margin-right: 10px;
   }

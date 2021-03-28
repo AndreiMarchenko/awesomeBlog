@@ -63,7 +63,7 @@ li {
 .submit-input:focus {
   outline: none;
 }
-.container {
+body .container:last-of-type {
   background-color: $bgColor;
   max-width: 1300px;
   height: 100%;

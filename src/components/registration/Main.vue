@@ -41,8 +41,6 @@ export default {
       axios.post("/auth/register",{
         name: this.name,
         email: this.email,
-        password: this.surname,
-        password_confirmation: this.surname,
       }).then(resp => {
         if (resp.status === 201) {
           this.$router.push({name: "login"});
