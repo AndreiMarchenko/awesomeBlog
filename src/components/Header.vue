@@ -3,7 +3,7 @@
     <div class="container">
       <div class="header__content">
         <div class="logo">
-          <router-link class="logo__ref" :class="{'logo__ref_active': isBurgerActive}" to="Friend">Awesome Blog
+          <router-link class="logo__ref" :class="{'logo__ref_active': isBurgerActive}" :to="{name: 'friend'}">Awesome Blog
           </router-link>
         </div>
         <nav class="header__list-wrapper" :class="{'header__list_active': isBurgerActive}">
