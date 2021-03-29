@@ -218,7 +218,6 @@ export default {
   }
   .profile-info__summary-wrapper_first {
     margin-left: 0;
-    //padding-bottom: 55px;
   }
   .profile-info__btn-comp {
     position: static;

@@ -29,6 +29,7 @@
 
 <script>
 import AuthApi from "../api/AuthApi";
+import deleteCookie from "../helpers/cookie/deleteCookie";
 
 const bodyLockClass = "body_lock";
 
@@ -64,7 +65,18 @@ export default {
       return joinedWords[0].toLowerCase() + joinedWords.slice(1);
     },
     logout() {
-      AuthApi.logout();
+      let req = AuthApi.logout();
+
+      req.then(resp => {
+        deleteCookie("Token");
+      });
+
+      req.catch(err => {
+        for (let error in err.response.data.errors) {
+          this.$toasted.error(err.response.data.errors[error]);
+        }
+      });
+
     },
   },
 
