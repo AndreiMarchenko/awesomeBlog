@@ -28,6 +28,7 @@
 
 <script>
 import AuthApi from "../../api/AuthApi";
+import setCookie from "../../helpers/cookie/setCookie";
 
 export default {
   data() {
@@ -38,10 +39,35 @@ export default {
   },
   methods: {
     login() {
-      AuthApi.login.bind(this)({ // bind to get access to router and vuex
+      let req = AuthApi.login({
         email: this.email,
         password: this.password
       });
+
+      req.then(resp => {
+        if (resp.status === 200) {
+          this.$store.commit('setCurrentUser', {
+            email: resp.data.user.email,
+            name: resp.data.user.name
+          })
+          setCookie("Token", resp.data.access_token, {
+            "max-age": resp.data.expires_in,
+            samesite: "lax"
+          });
+          this.$router.push({name: "myPage"});
+        }
+      });
+
+      req.catch(err => {
+        if (err.response.status === 401) {
+          this.$toasted.error("User doesn't exist");
+        } else {
+          for (let error in err.response.data.errors) {
+            this.$toasted.error(err.response.data.errors[error]);
+          }
+        }
+      });
+
     }
   }
 }

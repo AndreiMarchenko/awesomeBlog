@@ -9,7 +9,9 @@ export default {
     },
     mutations: {
         setCurrentUser(state, user) {
-            state.user = user;
+            for (let prop in user) {
+                state.user[prop] = user[prop];
+            }
         }
     },
     actions: {
@@ -26,6 +28,7 @@ export default {
                     }
                 )
             }).catch(err => {
+                this.$toasted.error("Error occurred! Login again please.");
             });
         }
     }
