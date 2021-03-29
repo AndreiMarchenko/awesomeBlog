@@ -22,7 +22,8 @@ export default {
                 context.commit('setCurrentUser',
                     {
                         email: resp.data.email,
-                        name: resp.data.name
+                        name: resp.data.name,
+                        picture: resp.data.profile_picture
                     }
                 )
             }).catch(err => {

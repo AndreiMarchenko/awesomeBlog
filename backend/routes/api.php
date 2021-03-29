@@ -39,4 +39,6 @@ Route::group([
     'prefix' => 'edit-user'
 ], function() {
     Route::post('/name', [EditProfileController::class, 'changeName']);
+    Route::post('/password', [EditProfileController::class, 'changePassword']);
+    Route::post('/picture', [EditProfileController::class, 'changePicture']);
 });

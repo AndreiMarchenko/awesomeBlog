@@ -7,7 +7,9 @@ use App\Mail\Mailtrap;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -47,9 +49,11 @@ class AuthController extends Controller
      */
     public function register(RegistrationRequest $request): JsonResponse
     {
+        $password = Str::random(10);
+
         $user = User::create(array_merge(
             $request->validated(),
-            ['password' => bcrypt($request->password)]
+            ['password' => bcrypt($password)]
         ));
 
         Mail::to($request->email)->send(new Mailtrap($password));

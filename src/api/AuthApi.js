@@ -29,7 +29,8 @@ class AuthApi {
             if (resp.status === 200) {
                 this.$store.commit('setCurrentUser', {
                     email: resp.data.user.email,
-                    name: resp.data.user.name
+                    name: resp.data.user.name,
+                    picture: resp.data.user.profile_picture
                 })
                 setCookie("Token", resp.data.access_token, {
                     "max-age": resp.data.expires_in,
