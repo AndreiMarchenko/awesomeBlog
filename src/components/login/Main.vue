@@ -57,17 +57,6 @@ export default {
           this.$router.push({name: "myPage"});
         }
       });
-
-      req.catch(err => {
-        if (err.response.status === 401) {
-          this.$toasted.error("User doesn't exist");
-        } else {
-          for (let error in err.response.data.errors) {
-            this.$toasted.error(err.response.data.errors[error]);
-          }
-        }
-      });
-
     }
   }
 }
