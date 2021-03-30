@@ -1,7 +1,4 @@
 import axios from "./axiosConf";
-import setCookie from "../helpers/cookie/setCookie";
-import getCookie from "../helpers/cookie/getCookie";
-import deleteCookie from "../helpers/cookie/deleteCookie";
 
 class AuthApi {
     static register(data) {
@@ -21,11 +18,7 @@ class AuthApi {
     }
 
     static logout() {
-         return axios.post("/auth/logout", {}, {
-            headers: {
-                Authorization: "Bearer " + getCookie("Token")
-            }
-        });
+         return axios.post("/auth/logout");
     }
 }
 

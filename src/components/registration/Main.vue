@@ -43,12 +43,6 @@ export default {
           this.$router.push({name: "login"});
         }
       });
-
-      req.catch(err => {
-        for (let error in err.response.data.errors) {
-          this.$toasted.error(err.response.data.errors[error]);
-        }
-      });
     }
   }
 }

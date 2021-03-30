@@ -71,12 +71,6 @@ export default {
         deleteCookie("Token");
       });
 
-      req.catch(err => {
-        for (let error in err.response.data.errors) {
-          this.$toasted.error(err.response.data.errors[error]);
-        }
-      });
-
     },
   },
 
