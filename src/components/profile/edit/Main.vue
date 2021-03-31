@@ -22,10 +22,10 @@
         </div>
         <div class="profile-editor-info__values">
           <div class="profile-editor-info__email">
-            {{ profileInfo.email }}
+            {{ this.$store.state.user.email }}
           </div>
           <div class="profile-editor-info__name">
-            {{ profileInfo.name }}
+            {{ this.$store.state.user.name }}
           </div>
         </div>
       </div>

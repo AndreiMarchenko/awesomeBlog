@@ -32,14 +32,14 @@ export default {
               pictureSrc: "../images/profile/profilePicture.jpg"
             },
             {
-              id: 1,
+              id: 2,
               author: "And enko",
               text: "text text text text text text text text text",
               time: "44 minutes ago",
               pictureSrc: "../images/profile/profilePicture.jpg"
             },
             {
-              id: 1,
+              id: 3,
               author: "Andreiasdfasf Marchenkosdf",
               text: "text text text text text text text text text text text text text text text text text text text text text ",
               time: "44 minutes ago",

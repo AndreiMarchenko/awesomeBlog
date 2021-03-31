@@ -4,14 +4,10 @@
       <div class="registration__title">
         Registration
       </div>
-      <form action="#" class="registration__form">
+      <form @submit.prevent="register" action="#" class="registration__form">
         <div class="registration__name-wrapper">
           Enter your name:
           <input v-model="name" type="text" class="registration__name-input text-input">
-        </div>
-        <div class="registration__surname-wrapper">
-          Enter your surname:
-          <input v-model="surname" type="text" class="registration__surname-input text-input">
         </div>
         <div class="registration__email-wrapper">
           Enter your email:
@@ -26,12 +22,27 @@
 </template>
 
 <script>
+import AuthApi from "../../api/AuthApi";
+
 export default {
   data() {
     return {
       name: "",
-      surname: "",
       email: ""
+    }
+  },
+  methods: {
+    register() {
+      let req = AuthApi.register({
+        name: this.name,
+        email: this.email
+      });
+
+      req.then(resp => {
+        if (resp.status === 201) {
+          this.$router.push({name: "login"});
+        }
+      });
     }
   }
 }
@@ -56,14 +67,6 @@ export default {
     margin-top: 22px;
   }
   &__name-input {
-    margin-top: 17px;
-  }
-  &__surname-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-top: 22px;
-  }
-  &__surname-input {
     margin-top: 17px;
   }
   &__email-wrapper {

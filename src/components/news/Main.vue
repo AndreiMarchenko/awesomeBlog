@@ -29,7 +29,7 @@
           <div class="news__content">
             <news-item-component
                 v-for="item in newsItems"
-                :key="item.id"
+                :key="'news-item' + item.id"
                 :text="item.text"
                 :owner-name="item.ownerName"
                 :owner-picture-src="item.ownerPictureSrc"

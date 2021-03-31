@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-component :nav-items="['My page', 'News', 'Logout']"></header-component>
+    <header-component :nav-items="navItems"></header-component>
     <profile-info-component
         @clicked-followers-btn="openFollowersModal"
         @clicked-following-btn="openFollowingModal"
@@ -48,6 +48,7 @@ export default {
     return {
       followersModalState: false,
       followingModalState: false,
+      navItems: ['My page', 'News', 'Logout'],
       sliderItems: [
         {
           pictureSrc: "../images/profile/profilePicture.jpg"
@@ -184,7 +185,6 @@ export default {
       ],
 
       profileInfo: {
-        name: "John Smith",
         pictureSrc: "../images/profile/profilePicture.jpg",
         followersNumber: 12,
         followingNumber: 33,

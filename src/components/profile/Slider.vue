@@ -62,7 +62,10 @@ const MOUSEDOWN_ACTIVE_CLASS = "profile-slider__button_mousedown_active";
 
 export default {
   props: {
-    sliderItems: Array
+    sliderItems: {
+      type: Array,
+      default: () => []
+    }
   },
   mounted() {
     this.sliderLeftButton = document.querySelector(SLIDER_LEFT_BUTTON_SELECTOR);

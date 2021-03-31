@@ -59,11 +59,11 @@ export default {
     },
     usersAllList: {
       type: Array,
-      default: []
+      default: () => []
     },
     usersSameList: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   mounted() {

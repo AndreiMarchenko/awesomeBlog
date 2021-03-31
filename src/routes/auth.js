@@ -6,21 +6,21 @@ export default [
     {
         path: "/login",
         name: "login",
-        component: Login
+        component: Login,
     },
     {
         path: "/sign-up",
         name: "signUp",
-        component: Registration
+        component: Registration,
     },
     {
         path: "/reset-password",
         name: "resetPassword",
-        component: ResetPassword
+        component: ResetPassword,
     },
     {
         path: "/logout",
         name: "logout",
-        component: Login
+        component: Login,
     },
 ]

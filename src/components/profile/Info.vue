@@ -5,7 +5,7 @@
         <div class="profile-info__summary">
           <div class="profile-info__summary-wrapper_first">
             <div class="profile-info__name">
-              {{ profileInfo.name }}
+              {{ this.$store.state.user.name }}
             </div>
             <div class="profile-info__picture-wrapper">
               <div class="profile-info__picture">
@@ -60,9 +60,7 @@ export default {
   props: {
     profileInfo: {
       type: Object,
-      validator(profileInfo) {
-        return profileInfo.name !== undefined
-      }
+      default: () => {}
     },
     infoType: {
       type: String,
@@ -220,7 +218,6 @@ export default {
   }
   .profile-info__summary-wrapper_first {
     margin-left: 0;
-    //padding-bottom: 55px;
   }
   .profile-info__btn-comp {
     position: static;
