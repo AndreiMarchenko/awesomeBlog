@@ -20,8 +20,10 @@
           <div class="profile-slider__content">
             <div v-for="i in pairNumber" class="profile-slider__content-pair">
               <template v-for="j in 2">
-                <div v-if="(i - 1)*2 + j <= sliderItems.length" class="profile-slider__content-item">
-                  <router-link :to="{name: 'postView', params: {id: sliderItems[(i - 1)*2 + j - 1].id}}"><img class="profile-slider__content-item-img" :src="sliderItems[(i - 1)*2 + j - 1].pictureSrc" alt=""></router-link>
+                <div v-if="getSliderItemNumber(i, j) <= sliderItems.length" class="profile-slider__content-item">
+                  <router-link :to="{name: 'postView', params: {id: sliderItems[getSliderItemNumber(i, j) - 1].id}}">
+                    <img class="profile-slider__content-item-img" :src="sliderItems[getSliderItemNumber(i, j) - 1].pictureSrc" alt="">
+                  </router-link>
                 </div>
               </template>
             </div>
@@ -141,7 +143,10 @@ export default {
       e.stopPropagation();
       e.currentTarget.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
       e.currentTarget.classList.add(MOUSEOVER_ACTIVE_CLASS);
-    }
+    },
+     getSliderItemNumber(pairNumber , itemInPairNumber) {
+       return (pairNumber - 1)*2 + itemInPairNumber;
+     }
   },
   computed: {
     pairNumber() {
