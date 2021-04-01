@@ -56,7 +56,7 @@ class AuthController extends Controller
             ['password' => bcrypt($password)]
         ));
 
-        Mail::to($request->email)->send(new Mailtrap($password));
+        Mail::to($request->email)->queue(new Mailtrap($password));
 
         return response()->json([
             'message' => 'User successfully registered',

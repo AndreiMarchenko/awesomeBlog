@@ -41,7 +41,7 @@ class EditProfileController extends Controller
         $email = User::where('id', Auth::id())
             ->pluck('email')->first();
 
-        Mail::to($email)->send(new Mailtrap($request->newPassword));
+        Mail::to($email)->queue(new Mailtrap($request->newPassword));
 
         return response()->json([
             'message' => 'Password successfully changed',
