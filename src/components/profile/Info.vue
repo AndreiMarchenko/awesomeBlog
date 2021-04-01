@@ -60,7 +60,9 @@ export default {
   props: {
     profileInfo: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {};
+      }
     },
     infoType: {
       type: String,
