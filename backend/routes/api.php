@@ -41,4 +41,5 @@ Route::group([
     Route::post('/name', [EditProfileController::class, 'changeName']);
     Route::post('/password', [EditProfileController::class, 'changePassword']);
     Route::post('/picture', [EditProfileController::class, 'changePicture']);
+    Route::post('/info', [EditProfileController::class, 'changeInfo']);
 });

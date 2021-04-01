@@ -3,14 +3,14 @@
     <div class="container">
       <div class="profile-editor__picture-wrapper">
         <div class="profile-editor__picture-content">
-          <img class="profile-editor__picture" :src="this.$store.state.user.picture | apiFile" alt="">
+          <img class="profile-editor__picture" :src="this.user.picture | apiFile" alt="">
         </div>
         <form class="profile-editor__picture-form">
           <label>
             <span class="profile-editor__picture-ref submit-input">
               Edit profile picture
             </span>
-            <input @change="editPicture" class="profile-editor__picture-input_hidden" type="file">
+            <input @change="changePicture" class="profile-editor__picture-input_hidden" type="file">
           </label>
           <input class="profile-editor__picture-submit_hidden" type="submit">
         </form>
@@ -22,10 +22,10 @@
         </div>
         <div class="profile-editor-info__values">
           <div class="profile-editor-info__email">
-            {{ this.$store.state.user.email }}
+            {{this.user.email }}
           </div>
           <div class="profile-editor-info__name">
-            {{ this.$store.state.user.name }}
+            {{this.user.name }}
           </div>
         </div>
       </div>
@@ -71,10 +71,10 @@
             About me
           </div>
           <div class="profile-editor__about-textarea-wrapper">
-            <textarea v-model="profileInfo.text" class="profile-editor__about-textarea"></textarea>
+            <textarea v-model="info" class="profile-editor__about-textarea"></textarea>
           </div>
           <div class="profile-editor__about-edit">
-            <a href="#" class="profile-editor__about-ref submit-input"> Change</a>
+            <a @click.prevent="changeInfo" href="#" class="profile-editor__about-ref submit-input"> Change</a>
           </div>
         </div>
       </div>
@@ -85,12 +85,15 @@
 
 <script>
 import EditProfileApi from "../../../api/EditProfileApi";
+import {mapState} from 'vuex';
 
 const PROFILE_PICTURE_SELECTOR = ".profile-editor__picture";
 const PROFILE_PICTURE_INPUT_SELECTOR = ".profile-editor__picture-input_hidden";
-const PROFILE_PICTURE_FORM_SELECTOR = ".profile-editor__picture-form";
 
 export default {
+  mounted() {
+    this.info = this.user.info;
+  },
   props: {
     profileInfo: {
       type: Object,
@@ -100,6 +103,7 @@ export default {
   data() {
     return {
       name: null,
+      info: null,
       password: null,
       newPassword: null,
       newPassword_confirmation: null
@@ -110,11 +114,15 @@ export default {
       return env.API_ENDPOINT + '/' + value;
     }
   },
+  computed: {
+    ...mapState([
+      'user'
+    ])
+  },
   methods: {
-    editPicture() {
+    changePicture() {
       const profilePicture = document.querySelector(PROFILE_PICTURE_SELECTOR);
       const profilePictureInput = document.querySelector(PROFILE_PICTURE_INPUT_SELECTOR);
-      const profilePictureForm = document.querySelector(PROFILE_PICTURE_FORM_SELECTOR);
 
       let picture = profilePictureInput.files[0];
       let reader = new FileReader();
@@ -127,13 +135,53 @@ export default {
         profilePicture.setAttribute("src", reader.result);
       });
 
-      EditProfileApi.changePicture.bind(this)(formData);
+      let req = EditProfileApi.changePicture(formData);
+
+      req.then(resp => {
+        this.$store.commit('setCurrentUser', {
+          email: this.user.email,
+          name: this.user.name,
+          picture: resp.data.path
+        });
+        this.$toasted.success("Picture changed successfully!");
+      });
     },
     changeName() {
-      EditProfileApi.changeName.bind(this)();
+      let req = EditProfileApi.changeName({
+        name: this.name
+      });
+
+      req.then(resp => {
+        this.name = null;
+        this.$store.dispatch("setCurrentUser");
+        this.$toasted.success("Name changed successfully!");
+      });
     },
     changePassword() {
-      EditProfileApi.changePassword.bind(this)();
+      let req = EditProfileApi.changePassword({
+        password: this.password,
+        newPassword: this.newPassword,
+        newPassword_confirmation: this.newPassword_confirmation
+      });
+
+      req.then(resp => {
+        this.password = null;
+        this.newPassword = null;
+        this.newPassword_confirmation = null;
+        this.$toasted.success("Password changed successfully!");
+      });
+    },
+    changeInfo() {
+      let req = EditProfileApi.changeInfo({
+        info: this.info
+      });
+
+      req.then(resp => {
+        this.$store.commit('setCurrentUser', {
+          info: resp.data.info
+        });
+        this.$toasted.success("Info changed successfully!");
+      });
     }
   }
 }

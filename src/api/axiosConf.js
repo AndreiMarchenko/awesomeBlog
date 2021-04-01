@@ -1,5 +1,6 @@
 import axios from "axios";
 import Vue from "vue";
+import router from "../router";
 import getCookie from "../helpers/cookie/getCookie";
 
 const api = axios.create({
@@ -19,13 +20,16 @@ api.interceptors.response.use((resp) => {
         return resp;
     },
     (err) => {
-        if (err.response.status === 401) {
-            Vue.toasted.error("User doesn't exist");
-        } else {
+        if (err.response.status === 403) {
+            router.push({name: 'login'});
+            Vue.toasted.error("Login again please");
+        }
+        else {
             for (let error in err.response.data.errors) {
                 Vue.toasted.error(err.response.data.errors[error]);
             }
         }
+        return Promise.reject(err);
     });
 
 export default api;

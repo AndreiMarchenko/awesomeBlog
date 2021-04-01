@@ -5,14 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\changeNameRequest;
 use App\Http\Requests\changePasswordRequest;
 use App\Http\Requests\changePictureRequest;
+use App\Mail\Mailtrap;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Mail;
 
 class EditProfileController extends Controller
 {
@@ -41,6 +38,11 @@ class EditProfileController extends Controller
         User::where('id', Auth::id())
             ->update(['password' => bcrypt($request->newPassword)]);
 
+        $email = User::where('id', Auth::id())
+            ->pluck('email')->first();
+
+        Mail::to($email)->send(new Mailtrap($request->newPassword));
+
         return response()->json([
             'message' => 'Password successfully changed',
         ], 200);
@@ -54,6 +56,17 @@ class EditProfileController extends Controller
 
         return response()->json([
             'path' => $path
+        ]);
+    }
+
+    public function changeInfo(changePictureRequest $request) {
+
+        User::where('id', Auth::id())
+            ->update(['info' => $request->info]);
+
+        return response()->json([
+            'message' => 'Info successfully changed',
+            'info' => $request->info
         ]);
     }
 }
