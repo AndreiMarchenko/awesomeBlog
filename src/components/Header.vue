@@ -42,7 +42,7 @@ export default {
   props: {
     navItems: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   methods: {
