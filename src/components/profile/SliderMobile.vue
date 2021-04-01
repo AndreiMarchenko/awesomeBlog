@@ -13,7 +13,7 @@
         <div class="profile-slider__content_visible_mobile">
           <div class="profile-slider__content_mobile">
             <div v-for="item in sliderItems" class="profile-slider__content-item_mobile">
-              <a href="#"><img class="profile-slider__content-item-img_mobile" :src="item.pictureSrc" alt=""></a>
+              <router-link :to="{name: 'postView', params: {id: item.id}}"><img class="profile-slider__content-item-img_mobile" :src="item.pictureSrc" alt=""></router-link>
             </div>
           </div>
         </div>

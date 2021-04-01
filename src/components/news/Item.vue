@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import CommentItemComponent from "./CommentItem.vue";
+import CommentItemComponent from "../post/CommentItem.vue";
 export default {
   components: {CommentItemComponent},
   props: {
@@ -90,7 +90,7 @@ export default {
     },
     comments: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   data() {

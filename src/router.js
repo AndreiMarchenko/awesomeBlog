@@ -3,16 +3,16 @@ import Router from "vue-router";
 
 import authRoutes from "./routes/auth.js";
 import profileRoutes from "./routes/profile.js";
+import postRoutes from "./routes/post.js";
 
 import NewsPageComponent from "./components/news/Page.vue";
-import AddPostPageComponent from "./components/addPost/Page.vue";
 import NotFound from "./components/NotFound.vue";
 
 import getCookie from "./helpers/cookie/getCookie";
 
 Vue.use(Router);
 
-const routes = [...authRoutes, ...profileRoutes];
+const routes = [...authRoutes, ...profileRoutes, ...postRoutes];
 
 let router =  new Router({
     routes: [
@@ -20,11 +20,6 @@ let router =  new Router({
             path: "/news",
             name: "news",
             component: NewsPageComponent,
-        },
-        {
-            path: "/add-post",
-            name: "addPost",
-            component: AddPostPageComponent,
         },
         ...routes,
         {

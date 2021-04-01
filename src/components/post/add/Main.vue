@@ -100,7 +100,9 @@ export default {
 
 <style lang="scss">
 .add-post__component-wrapper {
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex: 1;
 }
 .post-form {
   font-size: 18px;
@@ -108,7 +110,9 @@ export default {
   margin-right: 20px;
 
   &__wrapper {
-    height: 100%;
+    display: flex;
+    width: 100%;
+    max-width: 1300px;
   }
   &__content {
     padding-top: 150px;

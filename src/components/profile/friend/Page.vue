@@ -52,24 +52,31 @@ export default {
       followingModalState: false,
       sliderItems: [
         {
+          id: 1,
           pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
+          id: 2,
           pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
+          id: 3,
           pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
+          id: 4,
           pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
+          id: 5,
           pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
+          id: 6,
           pictureSrc: "../images/profile/profilePicture.jpg"
         },
         {
+          id: 7,
           pictureSrc: "../images/profile/profilePicture.jpg"
         },
       ],

@@ -50,7 +50,8 @@ export default {
 
 <style lang="scss" scoped>
 .registration {
-  height: 100%;
+  display: flex;
+  flex: 1;
 
   &__form {
     margin-left: 90px;

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import HeaderComponent from "../Header.vue";
+import HeaderComponent from "../../Header.vue";
 import AddPostComponent from "./Main.vue";
 
 export default {
