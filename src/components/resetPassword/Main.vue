@@ -7,10 +7,10 @@
       <form action="#" class="reset-password__form">
         <div class="reset-password__email-wrapper">
           Enter your email:
-          <input :value="userEmail" type="text" class="reset-password__email-input text-input">
+          <input v-model="email" type="text" class="reset-password__email-input text-input">
         </div>
         <div class="reset-password__submit-wrapper">
-          <input type="submit" value="Reset" class="reset-password__submit submit-input">
+          <input @click.prevent="resetPassword" type="submit" value="Reset" class="reset-password__submit submit-input">
         </div>
       </form>
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import ResetPasswordApi from "../../api/ResetPasswordApi";
 
 export default {
   data() {
@@ -26,10 +26,17 @@ export default {
       email: ""
     }
   },
-  computed: {
-    ...mapState({
-      userEmail: state => state.user.email
-    })
+  methods: {
+    resetPassword() {
+      let req = ResetPasswordApi.resetPassword({
+        email: this.email
+      });
+
+      req.then(resp => {
+        this.$router.push({name: 'login'});
+        this.$toasted.success("The new password sent to your email!");
+      });
+    }
   }
 }
 </script>

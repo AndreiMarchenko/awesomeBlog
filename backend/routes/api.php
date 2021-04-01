@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EditProfileController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Mail\Mailtrap;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +28,6 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
-//    Route::post('/email', function() {
-//        Mail::to('newuser@example.com')->send(new Mailtrap());
-//        return 'A message has been sent to Mailtrap!';
-//
-//    });
 });
 
 Route::group([
@@ -43,3 +39,5 @@ Route::group([
     Route::post('/picture', [EditProfileController::class, 'changePicture']);
     Route::post('/info', [EditProfileController::class, 'changeInfo']);
 });
+
+Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);

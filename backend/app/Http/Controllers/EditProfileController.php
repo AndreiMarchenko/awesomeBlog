@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\changeNameRequest;
-use App\Http\Requests\changePasswordRequest;
-use App\Http\Requests\changePictureRequest;
+use App\Http\Requests\ChangeNameRequest;
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ChangePictureRequest;
 use App\Mail\Mailtrap;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Mail;
 
 class EditProfileController extends Controller
 {
-    public function changeName(changeNameRequest $request) {
+    public function changeName(ChangeNameRequest $request) {
 
         User::where('id', Auth::id())
             ->update(['name' => $request->name]);
@@ -24,7 +24,7 @@ class EditProfileController extends Controller
         ], 200);
     }
 
-    public function changePassword(changePasswordRequest $request) {
+    public function changePassword(ChangePasswordRequest $request) {
 
         $currentPassword = User::where('id', Auth::id())
             ->value('password');
@@ -48,7 +48,7 @@ class EditProfileController extends Controller
         ], 200);
     }
 
-    public function changePicture(changePictureRequest $request) {
+    public function changePicture(ChangePictureRequest $request) {
         $path = $request->file('picture')->store('images', 'public');
 
         User::where('id', Auth::id())
@@ -59,7 +59,7 @@ class EditProfileController extends Controller
         ]);
     }
 
-    public function changeInfo(changePictureRequest $request) {
+    public function changeInfo(ChangePictureRequest $request) {
 
         User::where('id', Auth::id())
             ->update(['info' => $request->info]);

@@ -8,6 +8,6 @@
     <title>Email</title>
 </head>
 <body>
-{{ $password }}
+    Password: {{ $password }}
 </body>
 </html>
