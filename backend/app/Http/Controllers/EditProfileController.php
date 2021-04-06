@@ -13,42 +13,45 @@ use Illuminate\Support\Facades\Mail;
 
 class EditProfileController extends Controller
 {
-    public function changeName(ChangeNameRequest $request) {
-
+    public function changeName(ChangeNameRequest $request)
+    {
         User::where('id', Auth::id())
-            ->update(['name' => $request->name]);
+            ->update(['name' => $request->input('name')]);
 
         return response()->json([
             'message' => 'Name successfully changed',
-            'name' => $request->name
+            'name' => $request->input('name')
         ], 200);
     }
 
-    public function changePassword(ChangePasswordRequest $request) {
-
+    public function changePassword(ChangePasswordRequest $request)
+    {
         $currentPassword = User::where('id', Auth::id())
             ->value('password');
 
-        if (! Hash::check($request->password, $currentPassword)) {
+        if (! Hash::check($request->input('password'), $currentPassword)) {
             return response()->json(
                 ['errors' => ['Wrong current password']]
             , 400);
         }
 
         User::where('id', Auth::id())
-            ->update(['password' => bcrypt($request->newPassword)]);
+            ->update([
+                'password' => bcrypt($request->input('newPassword'))
+            ]);
 
         $email = User::where('id', Auth::id())
             ->pluck('email')->first();
 
-        Mail::to($email)->queue(new PasswordMail($request->newPassword));
+        Mail::to($email)->queue(new PasswordMail($request->input('newPassword')));
 
         return response()->json([
             'message' => 'Password successfully changed',
         ], 200);
     }
 
-    public function changePicture(ChangePictureRequest $request) {
+    public function changePicture(ChangePictureRequest $request)
+    {
         $path = $request->file('picture')->store('images', 'public');
 
         User::where('id', Auth::id())
@@ -59,14 +62,16 @@ class EditProfileController extends Controller
         ]);
     }
 
-    public function changeInfo(ChangePictureRequest $request) {
-
+    public function changeInfo(ChangePictureRequest $request)
+    {
         User::where('id', Auth::id())
-            ->update(['info' => $request->info]);
+            ->update([
+                'info' => $request->input('info')
+            ]);
 
         return response()->json([
             'message' => 'Info successfully changed',
-            'info' => $request->info
+            'info' => $request->input('info')
         ]);
     }
 }
