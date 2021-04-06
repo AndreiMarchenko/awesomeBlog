@@ -34,7 +34,7 @@ export default {
 
       req.then(resp => {
         this.$router.push({name: 'login'});
-        this.$toasted.success("The new password sent to your email!");
+        this.$toasted.success("The password reset email was sent!");
       });
     }
   }

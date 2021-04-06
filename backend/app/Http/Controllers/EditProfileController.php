@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangeNameRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ChangePictureRequest;
-use App\Mail\Mailtrap;
+use App\Mail\PasswordMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,7 +41,7 @@ class EditProfileController extends Controller
         $email = User::where('id', Auth::id())
             ->pluck('email')->first();
 
-        Mail::to($email)->queue(new Mailtrap($request->newPassword));
+        Mail::to($email)->queue(new PasswordMail($request->newPassword));
 
         return response()->json([
             'message' => 'Password successfully changed',

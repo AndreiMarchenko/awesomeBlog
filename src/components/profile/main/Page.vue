@@ -5,7 +5,7 @@
         @clicked-followers-btn="openFollowersModal"
         @clicked-following-btn="openFollowingModal"
         info-type="mainPage"
-        :profile-info="profileInfo"
+        :profile-owner="profileOwner"
     >
     </profile-info-component>
     <profile-add-post-component></profile-add-post-component>
@@ -191,12 +191,7 @@ export default {
         }
       ],
 
-      profileInfo: {
-        pictureSrc: "../images/profile/profilePicture.jpg",
-        followersNumber: 12,
-        followingNumber: 33,
-        text: "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text"
-      }
+      profileOwner: this.$store.state.user
     }
   },
   methods: {
@@ -212,6 +207,6 @@ export default {
     closeFollowingModal() {
       this.followingModalState = false;
     }
-  }
+  },
 }
 </script>

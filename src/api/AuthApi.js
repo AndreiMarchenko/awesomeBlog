@@ -5,8 +5,6 @@ class AuthApi {
         return axios.post("/auth/register", {
             name: data.name,
             email: data.email,
-            password: data.name,
-            password_confirmation: data.name,
         });
     }
 

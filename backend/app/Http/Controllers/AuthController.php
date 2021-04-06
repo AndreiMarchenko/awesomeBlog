@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
-use App\Mail\Mailtrap;
+use App\Mail\PasswordMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -53,10 +54,10 @@ class AuthController extends Controller
 
         $user = User::create(array_merge(
             $request->validated(),
-            ['password' => bcrypt($password)]
+            ['password' => Hash::make($password)]
         ));
 
-        Mail::to($request->email)->queue(new Mailtrap($password));
+        Mail::to($request->email)->queue(new PasswordMail($password));
 
         return response()->json([
             'message' => 'User successfully registered',

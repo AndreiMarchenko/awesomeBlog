@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\ResetPasswordController;
-use App\Mail\Mailtrap;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +39,6 @@ Route::group([
     Route::post('/info', [EditProfileController::class, 'changeInfo']);
 });
 
-Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
+
+Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink']);
+Route::get('/reset-password-confirmation/{email}', [ResetPasswordController::class, 'resetPassword']);

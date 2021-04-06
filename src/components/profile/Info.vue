@@ -5,11 +5,11 @@
         <div class="profile-info__summary">
           <div class="profile-info__summary-wrapper_first">
             <div class="profile-info__name">
-              {{ this.$store.state.user.name }}
+              {{ profileOwner.name }}
             </div>
             <div class="profile-info__picture-wrapper">
               <div class="profile-info__picture">
-                <a href="#"><img :src="profileInfo.pictureSrc" alt=""></a>
+                <a href="#"><img :src="profileOwner.picture | apiFile" alt=""></a>
               </div>
             </div>
             <profile-info-btn-component
@@ -23,7 +23,7 @@
                   @click="$emit('clicked-followers-btn')"
                   class="profile-info__followers-ref"
                   href="javascript:;">
-                Followers: <span>{{ profileInfo.followersNumber }}</span>
+                Followers: <span>34</span>
               </a>
             </div>
             <div class="profile-info__following">
@@ -31,7 +31,7 @@
                   @click="$emit('clicked-following-btn')"
                   class="profile-info__following-ref"
                   href="javascript:;">
-                Following: <span>{{ profileInfo.followingNumber }}</span>
+                Following: <span>17</span>
               </a>
             </div>
           </div>
@@ -41,7 +41,7 @@
             About me
           </div>
           <div class="profile-info__text">
-            {{ profileInfo.text }}
+            {{ profileOwner.info }}
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default {
     ProfileInfoBtnComponent
   },
   props: {
-    profileInfo: {
+    profileOwner: {
       type: Object,
       default: () => {
         return {};
@@ -67,6 +67,11 @@ export default {
     infoType: {
       type: String,
       required: true
+    }
+  },
+  filters: {
+    apiFile(value) {
+      return env.API_ENDPOINT + '/' + value;
     }
   },
 }
@@ -137,6 +142,7 @@ export default {
   font-weight: bold;
 }
 .profile-info__about {
+  flex: 1;
   margin-right: 40px;
 }
 .profile-info__title {

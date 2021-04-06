@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Mailtrap extends Mailable
+class PasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,8 +30,8 @@ class Mailtrap extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mailtrap Confirmation')
-            ->view('email')
+        return $this->subject('Awesome Blog confirmation')
+            ->view('emails.passwordEmail')
             ->with([
                 'password' => $this->password,
             ]);
