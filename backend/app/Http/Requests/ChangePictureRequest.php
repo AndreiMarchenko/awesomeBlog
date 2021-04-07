@@ -25,7 +25,7 @@ class changePictureRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'picture' => 'image'
         ];
     }
 }

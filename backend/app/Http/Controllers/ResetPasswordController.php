@@ -49,13 +49,13 @@ class ResetPasswordController extends Controller
             ]);
         }
 
-        $password = Str::random(10);
+        $passwordData = User::generatePassword();
 
         $user->update([
-            'password' => Hash::make($password)
+            'password' => $passwordData['hashedPassword']
         ]);
 
-        Mail::to($email)->queue(new PasswordMail($password));
+        Mail::to($email)->queue(new PasswordMail($passwordData['password']));
         return view('resetPasswordNotification', [
             'success' => true
         ]);

@@ -50,14 +50,14 @@ class AuthController extends Controller
      */
     public function register(RegistrationRequest $request): JsonResponse
     {
-        $password = Str::random(10);
+        $passwordData = User::generatePassword();
 
         $user = User::create(array_merge(
             $request->validated(),
-            ['password' => Hash::make($password)]
+            ['password' => $passwordData['hashedPassword']]
         ));
 
-        Mail::to($request->input('email'))->queue(new PasswordMail($password));
+        Mail::to($request->input('email'))->queue(new PasswordMail($passwordData['password']));
 
         return response()->json([
             'message' => 'User successfully registered',

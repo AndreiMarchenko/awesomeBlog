@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeInfoRequest;
 use App\Http\Requests\ChangeNameRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ChangePictureRequest;
@@ -15,35 +16,30 @@ class EditProfileController extends Controller
 {
     public function changeName(ChangeNameRequest $request)
     {
-        User::where('id', Auth::id())
+        Auth::user()
             ->update(['name' => $request->input('name')]);
 
         return response()->json([
             'message' => 'Name successfully changed',
-            'name' => $request->input('name')
+            'name' => Auth::user()->name
         ], 200);
     }
 
     public function changePassword(ChangePasswordRequest $request)
     {
-        $currentPassword = User::where('id', Auth::id())
-            ->value('password');
+        $user = Auth::user();
 
-        if (! Hash::check($request->input('password'), $currentPassword)) {
+        if (! Hash::check($request->input('password'), $user->password)) {
             return response()->json(
                 ['errors' => ['Wrong current password']]
             , 400);
         }
 
-        User::where('id', Auth::id())
-            ->update([
-                'password' => bcrypt($request->input('newPassword'))
+        $user->update([
+                'password' => Hash::make($request->input('newPassword'))
             ]);
 
-        $email = User::where('id', Auth::id())
-            ->pluck('email')->first();
-
-        Mail::to($email)->queue(new PasswordMail($request->input('newPassword')));
+        Mail::to($user->email)->queue(new PasswordMail($request->input('newPassword')));
 
         return response()->json([
             'message' => 'Password successfully changed',
@@ -54,7 +50,7 @@ class EditProfileController extends Controller
     {
         $path = $request->file('picture')->store('images', 'public');
 
-        User::where('id', Auth::id())
+        Auth::user()
             ->update(['profile_picture' => $path]);
 
         return response()->json([
@@ -62,16 +58,15 @@ class EditProfileController extends Controller
         ]);
     }
 
-    public function changeInfo(ChangePictureRequest $request)
+    public function changeInfo(ChangeInfoRequest $request)
     {
-        User::where('id', Auth::id())
-            ->update([
+        Auth::user()->update([
                 'info' => $request->input('info')
             ]);
 
         return response()->json([
             'message' => 'Info successfully changed',
-            'info' => $request->input('info')
+            'info' => Auth::user()->info,
         ]);
     }
 }

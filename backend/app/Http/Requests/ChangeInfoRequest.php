@@ -25,7 +25,7 @@ class changeInfoRequest extends FormRequest
     public function rules()
     {
         return [
-           //
+            'info' => 'required|string|max:1000'
         ];
     }
 }

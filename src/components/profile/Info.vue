@@ -69,11 +69,6 @@ export default {
       required: true
     }
   },
-  filters: {
-    apiFile(value) {
-      return env.API_ENDPOINT + '/' + value;
-    }
-  },
 }
 </script>
 

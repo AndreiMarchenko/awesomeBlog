@@ -3,7 +3,7 @@
     <div class="container">
       <div class="profile-editor__picture-wrapper">
         <div class="profile-editor__picture-content">
-          <img class="profile-editor__picture" :src="this.user.picture | apiFile" alt="">
+          <img class="profile-editor__picture" :src="user.picture | apiFile" alt="">
         </div>
         <form class="profile-editor__picture-form">
           <label>
@@ -12,7 +12,6 @@
             </span>
             <input @change="changePicture" class="profile-editor__picture-input_hidden" type="file">
           </label>
-          <input class="profile-editor__picture-submit_hidden" type="submit">
         </form>
       </div>
       <div class="profile-editor-info">
@@ -22,10 +21,10 @@
         </div>
         <div class="profile-editor-info__values">
           <div class="profile-editor-info__email">
-            {{this.user.email }}
+            {{user.email }}
           </div>
           <div class="profile-editor-info__name">
-            {{this.user.name }}
+            {{user.name }}
           </div>
         </div>
       </div>
@@ -88,12 +87,8 @@ import EditProfileApi from "../../../api/EditProfileApi";
 import {mapState} from 'vuex';
 
 const PROFILE_PICTURE_SELECTOR = ".profile-editor__picture";
-const PROFILE_PICTURE_INPUT_SELECTOR = ".profile-editor__picture-input_hidden";
 
 export default {
-  mounted() {
-    this.info = this.user.info;
-  },
   props: {
     profileInfo: {
       type: Object,
@@ -103,28 +98,31 @@ export default {
   data() {
     return {
       name: null,
-      info: null,
       password: null,
       newPassword: null,
       newPassword_confirmation: null
     }
   },
-  filters: {
-    apiFile(value) {
-      return env.API_ENDPOINT + '/' + value;
-    }
-  },
   computed: {
     ...mapState([
       'user'
-    ])
+    ]),
+    info: {
+      set(value) {
+        this.$store.commit('setCurrentUser', {
+          info: value
+        });
+      },
+      get() {
+        return this.user.info;
+      }
+    }
   },
   methods: {
-    changePicture() {
+    changePicture(event) {
       const profilePicture = document.querySelector(PROFILE_PICTURE_SELECTOR);
-      const profilePictureInput = document.querySelector(PROFILE_PICTURE_INPUT_SELECTOR);
 
-      let picture = profilePictureInput.files[0];
+      let picture = event.currentTarget.files[0];
       let reader = new FileReader();
 
       let formData = new FormData();
@@ -215,9 +213,6 @@ export default {
     padding-top: 7px;
   }
   &__picture-input_hidden {
-    display: none;
-  }
-  &__picture-submit_hidden {
     display: none;
   }
   &-info {

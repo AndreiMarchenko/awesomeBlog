@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddProfilePictureToUsersTable extends Migration
+class AddProfilePictureAndInfoToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class AddProfilePictureToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('profile_picture')->default('images/No-photo.png');
+            $table->string('info', 1000)->default('');
         });
     }
 
@@ -27,6 +28,7 @@ class AddProfilePictureToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('profile_picture');
+            $table->dropColumn('info');
         });
     }
 }
