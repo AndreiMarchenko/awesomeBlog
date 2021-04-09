@@ -2,6 +2,7 @@ import user from "./states/user"
 
 import axios from "./api/axiosConf";
 import getCookie from "./helpers/cookie/getCookie";
+import Vue from 'vue';
 
 export default {
     state: {
@@ -24,11 +25,11 @@ export default {
                 context.commit('setCurrentUser',
                     {
                         email: resp.data.email,
-                        name: resp.data.name
+                        name: resp.data.name,
+                        picture: resp.data.profile_picture,
+                        info: resp.data.info
                     }
                 )
-            }).catch(err => {
-                this.$toasted.error("Error occurred! Login again please.");
             });
         }
     }

@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
+use App\Mail\PasswordMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 
@@ -43,10 +50,14 @@ class AuthController extends Controller
      */
     public function register(RegistrationRequest $request): JsonResponse
     {
+        $passwordData = User::generatePassword();
+
         $user = User::create(array_merge(
             $request->validated(),
-            ['password' => bcrypt($request->password)]
+            ['password' => $passwordData['hashedPassword']]
         ));
+
+        Mail::to($request->input('email'))->queue(new PasswordMail($passwordData['password']));
 
         return response()->json([
             'message' => 'User successfully registered',

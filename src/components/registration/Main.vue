@@ -5,13 +5,13 @@
         Registration
       </div>
       <form @submit.prevent="register" action="#" class="registration__form">
-        <div class="registration__name-wrapper">
-          Enter your name:
-          <input v-model="name" type="text" class="registration__name-input text-input">
-        </div>
         <div class="registration__email-wrapper">
           Enter your email:
           <input v-model="email" type="text" class="registration__email-input text-input">
+        </div>
+        <div class="registration__name-wrapper">
+          Enter your name:
+          <input v-model="name" type="text" class="registration__name-input text-input">
         </div>
         <div class="registration__submit-wrapper">
           <input type="submit" value="Sign up" class="registration__submit submit-input">
@@ -40,6 +40,7 @@ export default {
 
       req.then(resp => {
         if (resp.status === 201) {
+          this.$toasted.success("Registered successfully!");
           this.$router.push({name: "login"});
         }
       });

@@ -3,16 +3,15 @@
     <div class="container">
       <div class="profile-editor__picture-wrapper">
         <div class="profile-editor__picture-content">
-          <img class="profile-editor__picture" :src="profileInfo.pictureSrc" alt="">
+          <img class="profile-editor__picture" :src="user.picture | apiFile" alt="">
         </div>
         <form class="profile-editor__picture-form">
           <label>
             <span class="profile-editor__picture-ref submit-input">
               Edit profile picture
             </span>
-            <input @change="editPicture" class="profile-editor__picture-input_hidden" type="file">
+            <input @change="changePicture" class="profile-editor__picture-input_hidden" type="file">
           </label>
-          <input class="profile-editor__picture-submit_hidden" type="submit">
         </form>
       </div>
       <div class="profile-editor-info">
@@ -22,18 +21,18 @@
         </div>
         <div class="profile-editor-info__values">
           <div class="profile-editor-info__email">
-            {{ this.$store.state.user.email }}
+            {{user.email }}
           </div>
           <div class="profile-editor-info__name">
-            {{ this.$store.state.user.name }}
+            {{user.name }}
           </div>
         </div>
       </div>
       <div class="profile-editor-modification">
-        <form action="#" class="profile-editor__name-form">
+        <form @submit.prevent="changeName()" action="#" class="profile-editor__name-form">
           <label class="profile-editor__name-label">
             Change your name:
-            <input type="text" class="profile-editor__name-input text-input">
+            <input v-model="name" type="text" class="profile-editor__name-input text-input">
           </label>
           <div class="profile-editor__name-submit-wrapper">
             <input type="submit" value="Change" class="profile-editor__name-submit submit-input">
@@ -45,19 +44,19 @@
         </div>
         <hr class="profile-editor__line">
 
-        <form class="profile-editor__password-form" action="#">
+        <form  @submit.prevent="changePassword()" class="profile-editor__password-form" action="#">
           <label class="profile-editor__current-password-label">
             Type in your current password:
-            <input type="password" class="profile-editor__current-password-input text-input">
+            <input v-model="password" type="password" class="profile-editor__current-password-input text-input">
           </label>
           <label class="profile-editor__new-password-label_first">
             Type in new password:
-            <input type="password" class="profile-editor__new-password-input_first text-input">
+            <input v-model="newPassword" type="password" class="profile-editor__new-password-input_first text-input">
           </label>
           <div class="profile-editor__password-submit-content">
             <label class="profile-editor__new-password-label_second">
               Type in new password again:
-              <input type="password" class="profile-editor__new-password-input_second text-input">
+              <input v-model="newPassword_confirmation" type="password" class="profile-editor__new-password-input_second text-input">
             </label>
             <div class="profile-editor__password-submit-wrapper">
               <input type="submit" value="Change" class="profile-editor__password-submit submit-input">
@@ -70,11 +69,11 @@
           <div class="profile-editor__about-title">
             About me
           </div>
-          <div class="profile-editor__about-text">
-            {{ profileInfo.text }}
+          <div class="profile-editor__about-textarea-wrapper">
+            <textarea v-model="info" class="profile-editor__about-textarea"></textarea>
           </div>
           <div class="profile-editor__about-edit">
-            <a href="#" class="profile-editor__about-ref submit-input"> Change</a>
+            <a @click.prevent="changeInfo" href="#" class="profile-editor__about-ref submit-input"> Change</a>
           </div>
         </div>
       </div>
@@ -84,9 +83,10 @@
 </template>
 
 <script>
+import EditProfileApi from "../../../api/EditProfileApi";
+import {mapState} from 'vuex';
+
 const PROFILE_PICTURE_SELECTOR = ".profile-editor__picture";
-const PROFILE_PICTURE_INPUT_SELECTOR = ".profile-editor__picture-input_hidden";
-const PROFILE_PICTURE_FORM_SELECTOR = ".profile-editor__picture-form";
 
 export default {
   props: {
@@ -95,22 +95,91 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      name: null,
+      password: null,
+      newPassword: null,
+      newPassword_confirmation: null
+    }
+  },
+  computed: {
+    ...mapState([
+      'user'
+    ]),
+    info: {
+      set(value) {
+        this.$store.commit('setCurrentUser', {
+          info: value
+        });
+      },
+      get() {
+        return this.user.info;
+      }
+    }
+  },
   methods: {
-    editPicture() {
+    changePicture(event) {
       const profilePicture = document.querySelector(PROFILE_PICTURE_SELECTOR);
-      const profilePictureInput = document.querySelector(PROFILE_PICTURE_INPUT_SELECTOR);
-      const profilePictureForm = document.querySelector(PROFILE_PICTURE_FORM_SELECTOR);
 
-      let picture = profilePictureInput.files[0];
+      let picture = event.currentTarget.files[0];
       let reader = new FileReader();
+
+      let formData = new FormData();
+      formData.append("picture", picture);
 
       reader.readAsDataURL(picture);
       reader.addEventListener("load", () => {
         profilePicture.setAttribute("src", reader.result);
       });
 
-      profilePictureForm.submit();
+      let req = EditProfileApi.changePicture(formData);
 
+      req.then(resp => {
+        this.$store.commit('setCurrentUser', {
+          email: this.user.email,
+          name: this.user.name,
+          picture: resp.data.path
+        });
+        this.$toasted.success("Picture changed successfully!");
+      });
+    },
+    changeName() {
+      let req = EditProfileApi.changeName({
+        name: this.name
+      });
+
+      req.then(resp => {
+        this.name = null;
+        this.$store.dispatch("setCurrentUser");
+        this.$toasted.success("Name changed successfully!");
+      });
+    },
+    changePassword() {
+      let req = EditProfileApi.changePassword({
+        password: this.password,
+        newPassword: this.newPassword,
+        newPassword_confirmation: this.newPassword_confirmation
+      });
+
+      req.then(resp => {
+        this.password = null;
+        this.newPassword = null;
+        this.newPassword_confirmation = null;
+        this.$toasted.success("Password changed successfully!");
+      });
+    },
+    changeInfo() {
+      let req = EditProfileApi.changeInfo({
+        info: this.info
+      });
+
+      req.then(resp => {
+        this.$store.commit('setCurrentUser', {
+          info: resp.data.info
+        });
+        this.$toasted.success("Info changed successfully!");
+      });
     }
   }
 }
@@ -144,9 +213,6 @@ export default {
     padding-top: 7px;
   }
   &__picture-input_hidden {
-    display: none;
-  }
-  &__picture-submit_hidden {
     display: none;
   }
   &-info {
@@ -246,12 +312,19 @@ export default {
     text-align: center;
     max-width: 1000px;
   }
-  &__about-text {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 16px;
-    max-width: 1000px;
-    text-align: center;
+  &__about-textarea-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  &__about-textarea {
+    margin-top: 20px;
+    font-size: 18px;
+    resize: none;
+    width: 1000px;
+    height: 150px;
+    border-radius: 10px;
+    border-color: $mainColor;
+    padding: 5px;
   }
   &__about-edit {
     margin-top: 25px;
@@ -308,7 +381,7 @@ export default {
   .profile-editor__line {
     margin-left: auto;
   }
-  .profile-editor__about-text {
+  .profile-editor__about-textarea {
     margin-left: 10px;
     margin-right: 10px;
   }
