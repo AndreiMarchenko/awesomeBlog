@@ -5,7 +5,12 @@
 <script>
 export default {
   created() {
-    this.$store.dispatch("setCurrentUser");
-  }
+    this.$store.dispatch("setCurrentUser").then(() => {
+      this.$store.dispatch("setPosts", this.$store.state.user.id);
+    });
+  },
+  beforeDestroy() {
+    this.unsubscribe();
+  },
 }
 </script>

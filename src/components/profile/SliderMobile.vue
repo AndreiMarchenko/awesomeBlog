@@ -1,9 +1,10 @@
 <template>
   <section class="profile-slider_mobile">
     <div class="container">
-      <div class="profile-slider__wrapper_mobile">
+      <loader v-show="isLoading"></loader>
+      <div v-show="!isLoading" class="profile-slider__wrapper_mobile">
         <div @click="moveLeft" class="profile-slider__button-left_mobile">
-          <a href="#">
+          <a href="javascript: void(0);">
             <svg width="23" height="44" viewBox="0 0 23 44" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.2132 42.9203L1 21.7071M1.00001 22.2132L22.2132 1.00001" stroke="#308CBF"/>
             </svg>
@@ -12,14 +13,16 @@
 
         <div class="profile-slider__content_visible_mobile">
           <div class="profile-slider__content_mobile">
-            <div v-for="item in sliderItems" class="profile-slider__content-item_mobile">
-              <router-link :to="{name: 'postView', params: {id: item.id}}"><img class="profile-slider__content-item-img_mobile" :src="item.pictureSrc" alt=""></router-link>
+            <div v-for="item in posts" class="profile-slider__content-item_mobile">
+              <router-link :to="{name: 'postView', params: {id: item.id}}">
+                <img class="profile-slider__content-item-img_mobile" :src="item.picture | apiFile" alt="">
+              </router-link>
             </div>
           </div>
         </div>
 
         <div @click="moveRight" class="profile-slider__button-right_mobile">
-          <a href="#">
+          <a href="javascript: void(0);">
             <svg width="23" height="44" viewBox="0 0 23 44" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0.999992 1L22.2132 22.2132M22.2132 21.7071L0.999985 42.9203" stroke="#308CBF"/>
             </svg>
@@ -31,6 +34,8 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 const SLIDER_CONTENT_SELECTOR = ".profile-slider__content_mobile";
 const SLIDER_CONTENT_ITEMS_SELECTOR = ".profile-slider__content-item_mobile";
 const SLIDER_IMG_SELECTOR = ".profile-slider__content-item-img_mobile";
@@ -39,19 +44,11 @@ const SLIDER_CONTENT_VISIBLE_SELECTOR = ".profile-slider__content_visible_mobile
 
 export default {
   mounted() {
-    this.sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
-    this.sliderContentItems = document.querySelectorAll(SLIDER_CONTENT_ITEMS_SELECTOR);
-    this.sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
-    this.sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
-
-    this.contentItemsNumber = this.sliderContentItems.length;
-    this.sliderImgWidth = parseInt(window.getComputedStyle(this.sliderImg).width);
-    this.sliderMargin = parseInt(window.getComputedStyle(this.sliderContentItems[0]).marginRight);
-    this.sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(this.sliderContentVisible).maxWidth);
-    this.sliderItemsVisibleNumber = Math.round(this.sliderContentVisibleMaxWidth / this.sliderImgWidth);
+    this.initMobileSlider();
   },
   data() {
     return {
+      isLoading: true,
       sliderContent: null,
       sliderContentItems: null,
       sliderImg: null,
@@ -63,13 +60,33 @@ export default {
       sliderItemsVisibleNumber: null
     }
   },
-  props: {
-    sliderItems: {
-      type: Array,
-      default: () => []
+  computed: {
+    ...mapState(['posts'])
+  },
+  watch: {
+    posts() {
+      this.initMobileSlider();
     }
   },
   methods: {
+    initMobileSlider() {
+      this.$nextTick(() => {
+        if (this.posts.length > 0) {
+          this.sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
+          this.sliderContentItems = document.querySelectorAll(SLIDER_CONTENT_ITEMS_SELECTOR);
+          this.sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
+          this.sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
+
+          this.contentItemsNumber = this.sliderContentItems.length;
+          this.sliderImgWidth = parseInt(window.getComputedStyle(this.sliderImg).width);
+          this.sliderMargin = parseInt(window.getComputedStyle(this.sliderContentItems[0]).marginRight);
+          this.sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(this.sliderContentVisible).maxWidth);
+          this.sliderItemsVisibleNumber = Math.round(this.sliderContentVisibleMaxWidth / this.sliderImgWidth);
+
+          this.isLoading = false;
+        }
+      });
+    },
     moveLeft() {
       let sliderContentStyles  = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);

@@ -4,8 +4,7 @@ import EditProfile from "../components/profile/edit/Page.vue";
 
 export default [
     {
-        path: "/",
-        alias: "/my-page",
+        path: "/user/:id",
         name: "myPage",
         component: MainProfile,
     },

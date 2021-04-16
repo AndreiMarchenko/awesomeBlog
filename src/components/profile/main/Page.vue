@@ -5,12 +5,11 @@
         @clicked-followers-btn="openFollowersModal"
         @clicked-following-btn="openFollowingModal"
         info-type="mainPage"
-        :profile-owner="profileOwner"
     >
     </profile-info-component>
     <profile-add-post-component></profile-add-post-component>
-    <profile-slider-component :slider-items="sliderItems"></profile-slider-component>
-    <profile-slider-mobile-component :slider-items="sliderItems"></profile-slider-mobile-component>
+    <profile-slider-component></profile-slider-component>
+    <profile-slider-mobile-component></profile-slider-mobile-component>
     <profile-list-modal-component
         modal-name="followers"
         :is-modal-active="followersModalState"
@@ -49,37 +48,6 @@ export default {
       followersModalState: false,
       followingModalState: false,
       navItems: ['My page', 'News', 'Logout'],
-      sliderItems: [
-        {
-          id: 1,
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          id: 2,
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          id: 3,
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          id: 4,
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          id: 5,
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          id: 6,
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          id: 7,
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-      ],
-
       usersAllList: [
         {
           name: "Sam Johns",
@@ -190,8 +158,6 @@ export default {
           pictureSrc: "../images/profile/profilePicture.jpg"
         }
       ],
-
-      profileOwner: this.$store.state.user
     }
   },
   methods: {
@@ -206,7 +172,7 @@ export default {
     },
     closeFollowingModal() {
       this.followingModalState = false;
-    }
+    },
   },
 }
 </script>

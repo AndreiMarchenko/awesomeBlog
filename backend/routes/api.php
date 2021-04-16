@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EditProfileController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResetPasswordController;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,23 @@ Route::group([
     Route::post('/info', [EditProfileController::class, 'changeInfo']);
 });
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'user'
+], function() {
+    Route::get('/{user}', [UserController::class, 'get']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'post'
+], function() {
+    Route::post('/create', [PostController::class, 'create']);
+    Route::post('/edit/{post}', [PostController::class, 'edit']);
+    Route::get('/all/{user}', [PostController::class, 'getAll'])
+        ->whereNumber('user');
+    Route::get('/{post}', [PostController::class, 'get']);
+});
 
 Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink']);
 Route::get('/reset-password-confirmation/{email}', [ResetPasswordController::class, 'resetPassword']);

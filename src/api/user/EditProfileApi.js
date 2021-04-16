@@ -1,4 +1,4 @@
-import axios from "./axiosConf";
+import axios from "../axiosConf";
 
 class EditProfileApi {
     static changeName(data) {

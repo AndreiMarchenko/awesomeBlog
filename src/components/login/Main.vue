@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import AuthApi from "../../api/AuthApi";
+import AuthApi from "../../api/user/AuthApi";
 import setCookie from "../../helpers/cookie/setCookie";
 
 export default {
@@ -47,21 +47,24 @@ export default {
       req.then(resp => {
         if (resp.status === 200) {
           this.$store.commit('setCurrentUser', {
+            id: resp.data.user.id,
             email: resp.data.user.email,
             name: resp.data.user.name,
             picture: resp.data.user.profile_picture,
             info: resp.data.user.info
-          })
+          });
+          this.$store.dispatch("setPosts", resp.data.user.id);
           setCookie("Token", resp.data.access_token, {
             "max-age": resp.data.expires_in,
             samesite: "lax"
           });
-          this.$router.push({name: "myPage"});
+          this.$router.push({name: "myPage", params: {
+              id : resp.data.user.id.toString()
+          }});
         }
       }).catch(err => {
         this.$toasted.error("User doesn't exist");
       });
-
     }
   }
 }

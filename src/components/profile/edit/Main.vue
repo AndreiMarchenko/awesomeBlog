@@ -83,18 +83,12 @@
 </template>
 
 <script>
-import EditProfileApi from "../../../api/EditProfileApi";
+import EditProfileApi from "../../../api/user/EditProfileApi";
 import {mapState} from 'vuex';
 
 const PROFILE_PICTURE_SELECTOR = ".profile-editor__picture";
 
 export default {
-  props: {
-    profileInfo: {
-      type: Object,
-      required: true
-    }
-  },
   data() {
     return {
       name: null,
@@ -137,8 +131,6 @@ export default {
 
       req.then(resp => {
         this.$store.commit('setCurrentUser', {
-          email: this.user.email,
-          name: this.user.name,
           picture: resp.data.path
         });
         this.$toasted.success("Picture changed successfully!");

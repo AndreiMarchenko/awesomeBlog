@@ -1,15 +1,16 @@
 <template>
   <section class="profile-info">
     <div class="container">
-      <div class="profile-info__content">
+      <loader v-if="!user" class="loader"></loader>
+      <div v-else class="profile-info__content">
         <div class="profile-info__summary">
           <div class="profile-info__summary-wrapper_first">
             <div class="profile-info__name">
-              {{ profileOwner.name }}
+              {{ user.name }}
             </div>
             <div class="profile-info__picture-wrapper">
               <div class="profile-info__picture">
-                <a href="#"><img :src="profileOwner.picture | apiFile" alt=""></a>
+                <a v-if="user.picture" href="#"><img :src="user.picture | apiFile" alt=""></a>
               </div>
             </div>
             <profile-info-btn-component
@@ -41,7 +42,7 @@
             About me
           </div>
           <div class="profile-info__text">
-            {{ profileOwner.info }}
+            {{ user.info }}
           </div>
         </div>
       </div>
@@ -51,6 +52,7 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
 import ProfileInfoBtnComponent from "./InfoBtn.vue";
 
 export default {
@@ -58,21 +60,21 @@ export default {
     ProfileInfoBtnComponent
   },
   props: {
-    profileOwner: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    },
     infoType: {
       type: String,
       required: true
     }
   },
+  computed: {
+    ...mapState(['user'])
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.loader {
+  margin-top: 100px;
+}
 .profile-info__content {
   display: flex;
   justify-content: space-between;

@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegistrationRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegistrationRequest;
 use App\Mail\PasswordMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

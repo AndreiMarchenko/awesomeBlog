@@ -2,14 +2,8 @@
   <div>
     <header-component :nav-items="navItems"></header-component>
     <profile-post-component
-      :text="postInfo.text"
-      :owner-name="postInfo.ownerName"
-      :owner-picture-src="postInfo.ownerPictureSrc"
-      :time="postInfo.time"
-      :picture-src="postInfo.pictureSrc"
       :like-count="postInfo.likeCount"
       :comments="postInfo.comments">
-
     </profile-post-component>
   </div>
 </template>
@@ -27,12 +21,6 @@ export default {
     return {
       navItems: ['My page', 'News', 'Logout'],
       postInfo: {
-        id: 1,
-        text: "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text",
-        ownerName: "valera",
-        ownerPictureSrc: "../../images/profile/profilePicture.jpg",
-        time: "2 hours ago",
-        pictureSrc: "../../images/profile/profilePicture.jpg",
         likeCount: 22,
         comments: [
           {

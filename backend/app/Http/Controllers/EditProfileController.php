@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ChangeInfoRequest;
-use App\Http\Requests\ChangeNameRequest;
-use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\ChangePictureRequest;
+use App\Http\Requests\EditProfile\ChangeInfoRequest;
+use App\Http\Requests\EditProfile\ChangeNameRequest;
+use App\Http\Requests\EditProfile\ChangePasswordRequest;
+use App\Http\Requests\EditProfile\ChangePictureRequest;
 use App\Mail\PasswordMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
