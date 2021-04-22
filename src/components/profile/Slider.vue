@@ -71,6 +71,7 @@ const MOUSEOVER_ACTIVE_CLASS = "profile-slider__button_mouseover_active";
 const MOUSELEAVE_ACTIVE_CLASS = "profile-slider__button_mouseleave_active";
 const MOUSEDOWN_ACTIVE_CLASS = "profile-slider__button_mousedown_active";
 
+const MOVES_UNTIL_POST_ADD = 3;
 
 export default {
   mounted() {
@@ -79,10 +80,24 @@ export default {
   watch: {
     posts() {
       this.initSlider();
+    },
+    sliderMoveCount() {
+      if (this.sliderMoveCount === MOVES_UNTIL_POST_ADD && this.page !== this.lastPage) {
+        this.$store.dispatch('addPosts', {
+          id: this.$route.params.id,
+          page: ++this.page
+        }).then((resp) => {
+          this.lastPage = resp.last_page;
+          this.sliderMoveCount = 0;
+        });
+      }
     }
   },
   data() {
     return {
+      sliderMoveCount: 0,
+      page: 1,
+      lastPage: null,
       isLoading: true,
       sliderLeftButton: null,
       sliderRightButton: null,
@@ -126,6 +141,10 @@ export default {
       });
     },
     moveLeft() {
+      if (this.sliderMoveCount !== 0) {
+        this.sliderMoveCount--;
+      }
+
       let sliderContentStyles = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
       if (sliderContentMarginLeft !== 0) {
@@ -133,6 +152,8 @@ export default {
       }
     },
     moveRight() {
+      this.sliderMoveCount++;
+
       let sliderContentStyles = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
       if (sliderContentMarginLeft !== -(this.pairNumber - this.sliderPairsVisibleNumber)*(this.sliderImgWidth + this.sliderMargin)) {

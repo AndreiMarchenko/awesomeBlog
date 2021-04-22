@@ -53,7 +53,7 @@ export default {
             picture: resp.data.user.profile_picture,
             info: resp.data.user.info
           });
-          this.$store.dispatch("setPosts", resp.data.user.id);
+          this.$store.dispatch("setPosts", {id : resp.data.user.id});
           setCookie("Token", resp.data.access_token, {
             "max-age": resp.data.expires_in,
             samesite: "lax"

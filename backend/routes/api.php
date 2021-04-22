@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
-
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -31,7 +30,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => ['api', 'auth'],
     'prefix' => 'edit-user'
 ], function() {
     Route::post('/name', [EditProfileController::class, 'changeName']);
@@ -41,22 +40,22 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => ['api', 'auth'],
     'prefix' => 'user'
 ], function() {
-    Route::get('/{user}', [UserController::class, 'get']);
+    Route::get('/{user}', [UserController::class, 'show']);
 });
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => ['api', 'auth'],
     'prefix' => 'post'
 ], function() {
     Route::post('/create', [PostController::class, 'create']);
-    Route::post('/edit/{post}', [PostController::class, 'edit']);
-    Route::get('/all/{user}', [PostController::class, 'getAll'])
+    Route::post('/edit/{post}', [PostController::class, 'update']);
+    Route::get('/all/{user}', [PostController::class, 'index'])
         ->whereNumber('user');
-    Route::get('/{post}', [PostController::class, 'get']);
+    Route::get('/{post}', [PostController::class, 'show']);
 });
 
-Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink']);
-Route::get('/reset-password-confirmation/{email}', [ResetPasswordController::class, 'resetPassword']);
+Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink'])->middleware('api');
+Route::get('/reset-password-confirmation/{email}', [ResetPasswordController::class, 'resetPassword'])->middleware('api');

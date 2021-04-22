@@ -6,7 +6,9 @@
 export default {
   created() {
     this.$store.dispatch("setCurrentUser").then(() => {
-      this.$store.dispatch("setPosts", this.$store.state.user.id);
+      this.$store.dispatch("setPosts", {
+        id: this.$store.state.user.id,
+      });
     });
   }
 }

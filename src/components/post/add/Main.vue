@@ -97,7 +97,10 @@ export default {
     createPost() {
       dataUrlToPicture(localStorage.getItem("postPicture")).then(resp => {
         let formData = new FormData();
-        formData.append("picture", resp);
+
+        if (this.picture) {
+          formData.append("picture", resp);
+        }
         formData.append("text", this.textAreaValue);
 
         let req = PostApi.create(formData);
@@ -106,7 +109,7 @@ export default {
           localStorage.removeItem("postText");
           localStorage.removeItem("postPicture");
 
-          this.$store.commit('addPost', resp.data.post);
+          this.$store.commit('addPosts', [resp.data.post]);
           this.$router.push({name: 'myPage', params: { id: this.user.id}});
           this.$toasted.success("Post created successfully!");
         });
