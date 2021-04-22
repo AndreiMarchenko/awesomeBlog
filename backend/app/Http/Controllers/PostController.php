@@ -50,7 +50,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        if ($request->input('picture') === null) {
+        if ($request->file('picture') === null) {
             $post->update([
                 'text' => $request->input('text'),
             ]);
