@@ -1,6 +1,6 @@
 <template>
   <section class="profile-post container">
-    <div class="profile-post__content">
+    <div v-if="owner" class="profile-post__content">
       <div class="profile-post__header">
         <div @click="$router.back()" class="go-back">
           <svg class="go-back__svg" width="42" height="20" viewBox="0 0 33 16" fill="none"
@@ -14,22 +14,25 @@
           </div>
         </div>
         <div class="profile-post__owner-picture-wrapper">
-          <img :src="ownerPictureSrc" alt="" class="profile-post__owner-picture">
+          <img :src="owner.profile_picture | apiFile" alt="" class="profile-post__owner-picture">
         </div>
         <div class="profile-post__info-wrapper">
           <div class="profile-post__owner-name">
-            {{ ownerName }}
+            {{ owner.name }}
           </div>
           <div class="profile-post__time">
             {{ time }}
           </div>
         </div>
+        <div class="profile-post__change-wrapper">
+          <router-link :to="{name: 'postEdit', params: {id: this.$route.params.id}}" class="profile-post__change-ref">Change</router-link>
+        </div>
       </div>
       <div class="profile-post__text">
-        {{ text }}
+        {{ post.text }}
       </div>
       <div class="profile-post__picture-wrapper">
-        <img class="profile-post__picture" :src="pictureSrc" alt="">
+        <img class="profile-post__picture" :src="post.picture | apiFile" alt="">
       </div>
     </div>
     <div class="profile-post__footer">
@@ -77,33 +80,16 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
 import CommentItemComponent from "../CommentItem.vue";
+import UserApi from "../../../api/user/UserApi";
+import timeAgo from "../../../helpers/time/timeAgo";
 
 export default {
   components: {
     CommentItemComponent
   },
   props: {
-    text: {
-      type: String,
-      default: ""
-    },
-    ownerName: {
-      type: String,
-      required: true
-    },
-    ownerPictureSrc: {
-      type: String,
-      required: true
-    },
-    time: {
-      type: String,
-      required: true
-    },
-    pictureSrc: {
-      type: String,
-      required: true
-    },
     likeCount: {
       type: Number,
       default: 0
@@ -113,13 +99,46 @@ export default {
       default: () => []
     }
   },
+  mounted() {
+    this.initPost();
+  },
   data() {
     return {
+      post: null,
+      time: null,
+      owner: null,
+      ownerPictureSrc: null,
+      ownerName: null,
       isLikeActive: false,
       isCommentsActive: false
     }
   },
+  computed: {
+    ...mapState(['posts'])
+  },
+  watch: {
+    posts() {
+      this.initPost();
+    }
+  },
   methods: {
+    initPost() {
+      this.post = this.posts.find(post => {
+        return post.id == this.$route.params.id;
+      });
+
+      if (this.post) {
+        this.time = timeAgo(new Date(this.post.created_at));
+
+        let req = UserApi.get({
+          id: this.post.user_id
+        });
+
+        req.then(resp => {
+          this.owner = resp.data;
+        });
+      }
+    },
     comment() {
       this.isCommentsActive = !this.isCommentsActive;
     },
@@ -203,6 +222,34 @@ export default {
     height: 100%;
   }
 
+  &__change-wrapper {
+    flex: 1;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
+
+  &__change-ref {
+    height: 37px;
+    padding: 4px 50px;
+    font-size: 18px;
+    color: $mainColor;
+    border: $mainColor 1px solid;
+    transition: background-color .4s ease-out,
+    color .1s ease-out;
+    border-radius: 5px;
+  }
+
+  &__change-ref:hover{
+    background-color: $mainColor;
+    border: grey 1px solid;
+    color: $white;
+    transition: background-color .5s ease-out,
+    color .1s ease-out,
+    border .4s ease-out;
+  }
   &__footer {
     display: flex;
     justify-content: flex-start;
@@ -301,10 +348,28 @@ export default {
   }
 }
 
+@media (max-width: 510px) {
+  .profile-post__header {
+    margin-bottom: 100px;
+  }
+  .profile-post__change-wrapper {
+    position: absolute;
+    top: 265px;
+    left: 50%;
+    margin-left: -84px;
+  }
+}
+
 @media (max-width: 425px) {
   .go-back {
     bottom: 95px;
     left: 30px;
+  }
+  .profile-post__header {
+    margin-bottom: 80px;
+  }
+  .profile-post__change-wrapper {
+    top: 210px;
   }
   .profile-post__owner-picture-wrapper {
     width: 90px;

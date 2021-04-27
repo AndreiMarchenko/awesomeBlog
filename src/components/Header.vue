@@ -10,7 +10,7 @@
           <ul class="header__list">
             <template v-for="item in navItems">
               <li v-if="item.localeCompare('Logout') !== 0" class="header__list-item">
-                <router-link :to="{name: toName(item)}">{{ item }}</router-link>
+                <router-link :to="{name: toName(item), params: toParams(item)}">{{ item }}</router-link>
               </li>
               <li v-else @click="logout" class="header__list-item">
                 <router-link :to="{name: toName(item)}">{{ item }}</router-link>
@@ -28,16 +28,22 @@
 </template>
 
 <script>
-import AuthApi from "../api/AuthApi";
+import {mapState} from "vuex";
+import AuthApi from "../api/user/AuthApi";
 import deleteCookie from "../helpers/cookie/deleteCookie";
 
 const bodyLockClass = "body_lock";
+const MY_PAGE_NAV_ITEM = "My page";
 
 export default {
   data() {
     return {
-      isBurgerActive: false
+      isBurgerActive: false,
+      body: null
     }
+  },
+  computed: {
+    ...mapState(['user'])
   },
   props: {
     navItems: {
@@ -47,22 +53,30 @@ export default {
   },
   methods: {
     activateBurger() {
-      const body = document.querySelector("body");
+      this.body = document.querySelector("body");
 
       this.$emit("clicked-burger");
       this.isBurgerActive = !this.isBurgerActive;
 
-      body.classList.toggle(bodyLockClass);
+      this.body.classList.toggle(bodyLockClass);
     },
-    toName(str) {
-      str = str.trim();
+    toName(navItem) {
+      navItem = navItem.trim();
       let words = [];
-      str.split(' ').forEach(word => {
+      navItem.split(' ').forEach(word => {
         words.push(word[0].toUpperCase() + word.slice(1));
       });
 
       let joinedWords = words.join('');
       return joinedWords[0].toLowerCase() + joinedWords.slice(1);
+    },
+    toParams(navItem) {
+      if (navItem === MY_PAGE_NAV_ITEM) {
+        return {
+          id: this.user.id
+        }
+      }
+      return {};
     },
     logout() {
       let req = AuthApi.logout();
@@ -70,10 +84,13 @@ export default {
       req.then(resp => {
         deleteCookie("Token");
       });
-
     },
   },
-
+  beforeDestroy() {
+    if (this.body) {
+      this.body.classList.remove(bodyLockClass);
+    }
+  }
 }
 </script>
 

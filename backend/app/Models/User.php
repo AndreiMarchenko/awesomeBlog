@@ -46,6 +46,10 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
     public static function generatePassword()
     {
         $password = Str::random(10);

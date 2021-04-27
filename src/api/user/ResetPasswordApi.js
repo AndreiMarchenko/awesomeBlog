@@ -1,4 +1,4 @@
-import axios from "./axiosConf";
+import axios from "../axiosConf";
 
 class ResetPasswordApi {
     static resetPassword(data) {

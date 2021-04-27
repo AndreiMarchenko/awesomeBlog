@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ResetPasswordApi from "../../api/ResetPasswordApi";
+import ResetPasswordApi from "../../api/user/ResetPasswordApi";
 
 export default {
   data() {

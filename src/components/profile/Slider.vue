@@ -1,7 +1,8 @@
 <template>
   <section class="profile-slider">
     <div class="profile-slider__container container">
-      <div class="profile-slider__wrapper">
+      <loader v-show="isLoading"></loader>
+      <div v-show="!isLoading" class="profile-slider__wrapper">
         <div
             @click="moveLeft"
             @mouseover="mouseoverStyle"
@@ -9,7 +10,7 @@
             @mousedown="mousedownStyle"
             @mouseup="mouseupStyle"
             class="profile-slider__button-left">
-          <a class="profile-slider__button-left-ref" href="#">
+          <a class="profile-slider__button-left-ref" href="javascript: void(0)">
             <svg class="profile-slider__button-left-svg" width="33" height="16" viewBox="0 0 33 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0.292892 7.29289C-0.0976295 7.68342 -0.0976295 8.31658 0.292892 8.70711L6.65685 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928932C7.68054 0.538408 7.04738 0.538408 6.65685 0.928932L0.292892 7.29289ZM33 7L1 7V9L33 9V7Z"/>
             </svg>
@@ -18,11 +19,17 @@
 
         <div class="profile-slider__content_visible">
           <div class="profile-slider__content">
-            <div v-for="i in pairNumber" class="profile-slider__content-pair">
+            <div v-for="i in pairNumber" :key="i" class="profile-slider__content-pair">
               <template v-for="j in 2">
-                <div v-if="getSliderItemNumber(i, j) <= sliderItems.length" class="profile-slider__content-item">
-                  <router-link :to="{name: 'postView', params: {id: sliderItems[getSliderItemNumber(i, j) - 1].id}}">
-                    <img class="profile-slider__content-item-img" :src="sliderItems[getSliderItemNumber(i, j) - 1].pictureSrc" alt="">
+                <div v-if="getSliderItemNumber(i, j) <= posts.length" :key="i*2 + j" class="profile-slider__content-item">
+                  <router-link :to="{
+                      name: 'postView',
+                      params: {id: posts[getSliderItemNumber(i, j) - 1].id},
+                    }"
+                  >
+                    <img v-if="posts[getSliderItemNumber(i, j) - 1].picture"
+                         class="profile-slider__content-item-img"
+                         :src="posts[getSliderItemNumber(i, j) - 1].picture | apiFile" alt="">
                   </router-link>
                 </div>
               </template>
@@ -37,7 +44,7 @@
             @mousedown="mousedownStyle"
             @mouseup="mouseupStyle"
             class="profile-slider__button-right">
-          <a class="profile-slider__button-right-ref" href="#">
+          <a class="profile-slider__button-right-ref" href="javascript: void(0)">
             <svg class="profile-slider__button-right-svg" width="35" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M33.69 9.27114C34.0872 8.88741 34.0982 8.25434 33.7144 7.85714L27.4612 1.38435C27.0775 0.987153 26.4444 0.976232 26.0472 1.35996C25.65 1.74369 25.6391 2.37676 26.0228 2.77397L31.5812 8.52755L25.8277 14.086C25.4305 14.4697 25.4195 15.1028 25.8033 15.5C26.187 15.8972 26.8201 15.9081 27.2173 15.5244L33.69 9.27114ZM0.982752 8.99985L32.978 9.55179L33.0125 7.55209L1.01725 7.00015L0.982752 8.99985Z"/>
             </svg>
@@ -49,6 +56,9 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+import PostApi from "../../api/post/PostApi";
+
 const SLIDER_LEFT_BUTTON_SELECTOR = ".profile-slider__button-left";
 const SLIDER_RIGHT_BUTTON_SELECTOR = ".profile-slider__button-right";
 const SLIDER_CONTENT_SELECTOR = ".profile-slider__content";
@@ -61,68 +71,92 @@ const MOUSEOVER_ACTIVE_CLASS = "profile-slider__button_mouseover_active";
 const MOUSELEAVE_ACTIVE_CLASS = "profile-slider__button_mouseleave_active";
 const MOUSEDOWN_ACTIVE_CLASS = "profile-slider__button_mousedown_active";
 
+const MOVES_UNTIL_POST_ADD = 3;
 
 export default {
-  props: {
-    sliderItems: {
-      type: Array,
-      default: () => []
-    }
-  },
   mounted() {
-    this.sliderLeftButton = document.querySelector(SLIDER_LEFT_BUTTON_SELECTOR);
-    this.sliderRightButton = document.querySelector(SLIDER_RIGHT_BUTTON_SELECTOR);
-
-    this.sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
-    this.sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
-    this.sliderContentPairs = document.querySelectorAll(SLIDER_CONTENT_PAIR_SELECTOR);
-    this.sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
-
-    this.sliderImgWidth = parseInt(window.getComputedStyle(this.sliderImg).width);
-    this.sliderMargin = parseInt(window.getComputedStyle(this.sliderContentPairs[0]).marginRight);
-    this.contentPairNumber = this.sliderContentPairs.length;
-    this.sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(this.sliderContentVisible).maxWidth);
-    this.sliderPairsVisibleNumber = Math.round(this.sliderContentVisibleMaxWidth / this.sliderImgWidth);
-    this.pageReferences = document.querySelectorAll(PAGE_REFERENCE_SELECTOR);
-
-
-
-    this.pageReferences.forEach((ref) => ref.ondragstart = () => false);
-    this.sliderContent.style.width = this.contentPairNumber * (this.sliderImgWidth + this.sliderMargin) - this.sliderMargin + "px";
-
-    document.addEventListener("mouseup", () => {
-      this.sliderLeftButton.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
-      this.sliderRightButton.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
-    });
+    this.initSlider();
+  },
+  watch: {
+    posts() {
+      this.initSlider();
+    },
+    sliderMoveCount() {
+      if (this.sliderMoveCount === MOVES_UNTIL_POST_ADD && this.page !== this.lastPage) {
+        this.$store.dispatch('addPosts', {
+          id: this.$route.params.id,
+          page: ++this.page
+        }).then((resp) => {
+          this.lastPage = resp.last_page;
+          this.sliderMoveCount = 0;
+        });
+      }
+    }
   },
   data() {
     return {
+      sliderMoveCount: 0,
+      page: 1,
+      lastPage: null,
+      isLoading: true,
       sliderLeftButton: null,
       sliderRightButton: null,
       sliderContent: null,
       sliderImg: null,
-      sliderContentPairs: null,
       sliderContentVisible: null,
       pageReferences: null,
       sliderImgWidth: null,
       sliderMargin: null,
-      contentPairNumber: null,
       sliderContentVisibleMaxWidth: null,
       sliderPairsVisibleNumber: null,
     }
   },
   methods: {
+    initSlider() {
+      this.$nextTick(() => {
+        if (this.posts.length > 0) {
+          this.sliderLeftButton = document.querySelector(SLIDER_LEFT_BUTTON_SELECTOR);
+          this.sliderRightButton = document.querySelector(SLIDER_RIGHT_BUTTON_SELECTOR);
+          this.sliderContent = document.querySelector(SLIDER_CONTENT_SELECTOR);
+          this.sliderImg = document.querySelector(SLIDER_IMG_SELECTOR);
+          this.sliderContentVisible = document.querySelector(SLIDER_CONTENT_VISIBLE_SELECTOR);
+          let sliderContentPair = document.querySelectorAll(SLIDER_CONTENT_PAIR_SELECTOR)[0];
+          this.sliderMargin = parseInt(window.getComputedStyle(sliderContentPair).marginRight);
+
+          this.sliderImgWidth = parseInt(window.getComputedStyle(this.sliderImg).width);
+          this.sliderContentVisibleMaxWidth = parseInt(window.getComputedStyle(this.sliderContentVisible).maxWidth);
+          this.sliderPairsVisibleNumber = Math.round(this.sliderContentVisibleMaxWidth / this.sliderImgWidth);
+          this.pageReferences = document.querySelectorAll(PAGE_REFERENCE_SELECTOR);
+
+          this.sliderContent.style.width = this.pairNumber * (this.sliderImgWidth + this.sliderMargin) - this.sliderMargin + "px";
+
+          this.pageReferences.forEach((ref) => ref.ondragstart = () => false);
+
+          document.addEventListener("mouseup", () => {
+            this.sliderLeftButton.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
+            this.sliderRightButton.classList.remove(MOUSEDOWN_ACTIVE_CLASS);
+          });
+          this.isLoading = false;
+        }
+      });
+    },
     moveLeft() {
-      let sliderContentStyles  = window.getComputedStyle(this.sliderContent);
+      if (this.sliderMoveCount !== 0) {
+        this.sliderMoveCount--;
+      }
+
+      let sliderContentStyles = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
       if (sliderContentMarginLeft !== 0) {
         this.sliderContent.style.marginLeft =  (sliderContentMarginLeft + this.sliderImgWidth + this.sliderMargin) + "px";
       }
     },
     moveRight() {
-      let sliderContentStyles  = window.getComputedStyle(this.sliderContent);
+      this.sliderMoveCount++;
+
+      let sliderContentStyles = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
-      if (sliderContentMarginLeft !== -(this.contentPairNumber - this.sliderPairsVisibleNumber)*(this.sliderImgWidth + this.sliderMargin)) {
+      if (sliderContentMarginLeft !== -(this.pairNumber - this.sliderPairsVisibleNumber)*(this.sliderImgWidth + this.sliderMargin)) {
         this.sliderContent.style.marginLeft =  (sliderContentMarginLeft - this.sliderImgWidth - this.sliderMargin) + "px";
       }
     },
@@ -150,8 +184,9 @@ export default {
   },
   computed: {
     pairNumber() {
-      return Math.ceil(this.sliderItems.length/2);
-    }
+      return Math.ceil(this.posts.length/2);
+    },
+    ...mapState(['posts', 'user'])
   }
 }
 </script>

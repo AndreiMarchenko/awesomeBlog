@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import AuthApi from "../../api/AuthApi";
+import AuthApi from "../../api/user/AuthApi";
 
 export default {
   data() {

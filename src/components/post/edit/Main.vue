@@ -1,31 +1,31 @@
 <template>
-  <div class="add-post__component-wrapper">
+  <div class="edit-post__component-wrapper">
     <section class="post-form__wrapper">
       <div class="container">
         <div class="post-form__content">
           <div class="post-form__title">
-            New post
+            Edit post
           </div>
           <form action="#" class="post-form">
             <div class="post-form__textarea-wrapper">
-              Enter post text:
+              Edit post text:
               <label class="post-form__textarea-label">
-                <textarea @change="storeText" v-model="textAreaValue" class="post-form__textarea"></textarea>
+                <textarea v-model="textAreaValue" class="post-form__textarea"></textarea>
               </label>
             </div>
             <div class="post-form__picture-input-wrapper">
               <div class="post-form__picture-wrapper">
-                <img class="post-form__picture" src="" alt="">
+                <img v-if="post" class="post-form__picture" :src="post.picture | apiFile" alt="">
               </div>
               <label class="post-form__picture-label">
-                <span class="post-form__picture-input submit-input">Choose post picture...</span>
+                <span class="post-form__picture-input submit-input">Edit post picture...</span>
                 <input @change="changePicture" class="post-form__picture-input_hidden" type="file">
               </label>
             </div>
             <hr class="post-form__line">
             <div class="post-form__submit-wrapper">
               <label class="post-form__submit-label">
-                <input @click.prevent="createPost" class="post-form__submit submit-input" type="submit" value="Post">
+                <input @click.prevent="editPost" class="post-form__submit submit-input" type="submit" value="Post">
               </label>
             </div>
           </form>
@@ -36,93 +36,79 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState} from "vuex";
 import PostApi from "../../../api/post/PostApi";
-import dataUrlToPicture from "../../../helpers/picture/dataUrlToPicture";
 
-const PICTURE_WRAPPER_SELECTOR = ".post-form__picture-wrapper";
-const PICTURE_SELECTOR = ".post-form__picture";
+const IMG_WRAPPER_SELECTOR = ".post-form__picture-wrapper";
+const IMG_SELECTOR = ".post-form__picture";
 
-const PICTURE_WRAPPER_ACTIVE_CLASS = "picture-wrapper_active";
 
 
 export default {
   mounted() {
-    this.pictureWrapper = document.querySelector(PICTURE_WRAPPER_SELECTOR);
-    this.picture = document.querySelector(PICTURE_SELECTOR);
-
-    if (localStorage.getItem("postText")) {
-      this.textAreaValue = localStorage.getItem("postText");
-    }
-
-    if (localStorage.getItem("postPicture")) {
-      this.pictureWrapper.classList.add(PICTURE_WRAPPER_ACTIVE_CLASS);
-      this.picture.setAttribute("src", localStorage.getItem("postPicture"));
-    }
+    this.initPostEdit();
   },
   data() {
     return {
+      post: null,
       textAreaValue: "",
-      pictureWrapper: null,
-      picture: null,
+      imgWrapper: null,
+      img: null,
+      image: null
     }
   },
   computed: {
-    ...mapState(['user'])
+    ...mapState(['posts'])
+  },
+  watch: {
+    posts() {
+      this.initPostEdit();
+    }
   },
   methods: {
-    changePicture(event) {
-      if (event.currentTarget.files[0] !== null) {
-        this.pictureWrapper.classList.add(PICTURE_WRAPPER_ACTIVE_CLASS);
-      } else {
-        this.pictureWrapper.classList.remove(PICTURE_WRAPPER_ACTIVE_CLASS);
+    initPostEdit() {
+      this.post = this.posts.find(post => {
+        return post.id == this.$route.params.id;
+      });
+      if (this.post) {
+        this.textAreaValue = this.post.text;
       }
-
-      let selectedFile = event.currentTarget.files[0];
+      this.$nextTick(() => {
+        this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
+        this.img = document.querySelector(IMG_SELECTOR);
+      });
+    },
+    changePicture(event) {
+      this.image = event.currentTarget.files[0];
       let reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        this.picture.setAttribute("src", reader.result);
-        this.storePicture(reader.result);
+        this.img.setAttribute("src", reader.result);
       });
 
-      reader.readAsDataURL(selectedFile);
+      reader.readAsDataURL(this.image);
     },
-    storeText() {
-      localStorage.setItem("postText", this.textAreaValue);
-    },
-    storePicture(src) {
-      localStorage.setItem("postPicture", src);
-    },
-    createPost() {
-      dataUrlToPicture(localStorage.getItem("postPicture")).then(resp => {
-        let formData = new FormData();
+    editPost() {
+      let formData = new FormData();
+      if (this.image) {
+        formData.append("picture", this.image);
+      }
+      formData.append("text", this.textAreaValue);
 
-        if (this.picture) {
-          formData.append("picture", resp);
-        }
-        formData.append("text", this.textAreaValue);
+      let req = PostApi.edit(this.$route.params.id, formData);
 
-        let req = PostApi.create(formData);
-
-        req.then(resp => {
-          localStorage.removeItem("postText");
-          localStorage.removeItem("postPicture");
-
-          this.$store.commit('addPosts', [resp.data.post]);
-          this.$router.push({name: 'myPage', params: { id: this.user.id}});
-          this.$toasted.success("Post created successfully!");
-        });
-      }).catch(err => {
-        this.$toasted.error("Please choose another file");
+      req.then(resp => {
+        this.$store.commit('editPost', resp.data.post);
+        this.$router.push({name: 'myPage'});
+        this.$toasted.success("Post edited successfully!");
       });
-    },
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.add-post__component-wrapper {
+.edit-post__component-wrapper {
   display: flex;
   justify-content: center;
   flex: 1;
@@ -181,7 +167,6 @@ export default {
     display: none;
   }
   &__picture-wrapper {
-    display: none;
     padding-bottom: 58%;
     margin: 0 auto;
     overflow: hidden;
@@ -213,9 +198,6 @@ export default {
     justify-content: center;
     margin-top: 30px;
   }
-}
-.picture-wrapper_active {
-  display: block;
 }
 @media (max-width: 880px) {
   .post-form__content {

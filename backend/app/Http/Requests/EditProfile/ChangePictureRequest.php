@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\EditProfile;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class changeNameRequest extends FormRequest
+class changePictureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class changeNameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|between:2,100',
+            'picture' => 'image'
         ];
     }
 }
