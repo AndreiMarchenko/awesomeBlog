@@ -7,7 +7,7 @@ export default {
     state: {
         authenticatedUser,
         user,
-        posts: []
+        posts: [],
     },
     getters: {
         sortedPosts(state) {
@@ -28,8 +28,8 @@ export default {
         setPosts(state, posts) {
             state.posts = posts;
         },
-        addPost(state, post) {
-            state.posts.push(post);
+        addPosts(state, posts) {
+            state.posts.push(...posts);
         },
         editPost(state, post) {
             let postIndex = state.posts.findIndex((item) => {
@@ -69,9 +69,15 @@ export default {
                 );
             });
         },
-        setPosts(context, id) {
-            return axios.get("/post/all/" + id).then(resp => {
-               context.commit('setPosts', resp.data)
+        setPosts(context, data) {
+            return axios.get("/post/all/" + data.id).then(resp => {
+               context.commit('setPosts', resp.data.data);
+            });
+        },
+        addPosts(context, data) {
+            return axios.get("/post/all/" + data.id + "?page=" + data.page).then(resp => {
+                context.commit('addPosts', resp.data.data);
+                return resp.data;
             });
         }
     }

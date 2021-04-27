@@ -14,11 +14,7 @@ class UserController extends Controller
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(User $user) {
-        if (! Auth::check()) {
-            return response() -> json(['error' => 'Unauthorized'], 401);
-        }
-
+    public function show(User $user) {
         return response()->json(array_merge(
             $user->toArray(),
             [
@@ -51,8 +47,8 @@ class UserController extends Controller
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getFollowings(User $user) {
-
+    public function getFollowings(User $user)
+    {
         return response()->json(
             ['followings' => $user->followings->all()],
         );

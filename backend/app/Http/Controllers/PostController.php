@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\CreatePostRequest;
-use App\Http\Requests\Post\EditPostRequest;
-use App\Http\Requests\Post\GetAllPostsRequest;
+use App\Http\Requests\Post\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -19,13 +15,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAll(User $user)
+    public function index(User $user)
     {
-        if (! Auth::check()) {
-            return response() -> json(['error' => 'Unauthorized'], 401);
-        }
-
-        return response()->json($user->posts);
+        return response()->json($user->posts()->paginate(12));
     }
 
     /**
@@ -38,12 +30,9 @@ class PostController extends Controller
     {
         $path = $request->file('picture')->store('images', 'public');
 
-        $post = Post::create([
-            'user_id' => Auth::id(),
+        $post = Auth::user()->posts()->create([
             'text' => $request->input('text'),
             'picture' => $path,
-            'created_at' => $now = Carbon::now(),
-            'updated_at' => $now,
         ]);
 
         return response()->json([
@@ -55,23 +44,21 @@ class PostController extends Controller
     /**
      * Edit post.
      *
-     * @param \App\Http\Requests\Post\EditPostRequest $request
+     * @param \App\Http\Requests\Post\UpdatePostRequest $request
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\JsonResponse
      */
-    public function edit(EditPostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        if ($post->picture === null) {
+        if ($request->file('picture') === null) {
             $post->update([
                 'text' => $request->input('text'),
-                'updated_at' => Carbon::now(),
             ]);
         } else {
             $path = $request->file('picture')->store('images', 'public');
             $post->update([
                 'text' => $request->input('text'),
                 'picture' => $path,
-                'updated_at' => Carbon::now(),
             ]);
         }
 
@@ -87,12 +74,8 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(Post $post)
+    public function show(Post $post)
     {
-        if (! Auth::check()) {
-            return response() -> json(['error' => 'Unauthorized'], 401);
-        }
-
         return response()->json($post);
     }
 

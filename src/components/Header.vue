@@ -36,6 +36,7 @@ import AuthApi from "../api/user/AuthApi";
 import deleteCookie from "../helpers/cookie/deleteCookie";
 
 const BODY_LOCK_CLASS = "body_lock";
+const MY_PAGE_NAV_ITEM = "My page";
 
 export default {
   data() {
@@ -62,18 +63,18 @@ export default {
 
       this.body.classList.toggle(BODY_LOCK_CLASS);
     },
-    toName(str) {
-      str = str.trim();
+    toName(navItem) {
+      navItem = navItem.trim();
       let words = [];
-      str.split(' ').forEach(word => {
+      navItem.split(' ').forEach(word => {
         words.push(word[0].toUpperCase() + word.slice(1));
       });
 
       let joinedWords = words.join('');
       return joinedWords[0].toLowerCase() + joinedWords.slice(1);
     },
-    toParams(str) {
-      if (str === "My page") {
+    toParams(navItem) {
+      if (navItem === MY_PAGE_NAV_ITEM) {
         return {
           id: this.authenticatedUser.id
         }
