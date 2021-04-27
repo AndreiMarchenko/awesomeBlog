@@ -14,7 +14,7 @@ export default [
         component: FriendProfile,
     },
     {
-        path: "/edit-profile",
+        path: "/edit-profile/:id",
         name: "editProfile",
         component: EditProfile,
     },

@@ -3,7 +3,10 @@
     <div class="container">
       <div class="header__content">
         <div class="logo">
-          <router-link class="logo__ref" :class="{'logo__ref_active': isBurgerActive}" :to="{name: 'friend'}">Awesome Blog
+          <router-link class="logo__ref"
+                       :class="{'logo__ref_active': isBurgerActive}"
+                       :to="{name: 'myPage', params: {id: authenticatedUser.id}}">
+            Awesome Blog
           </router-link>
         </div>
         <nav class="header__list-wrapper" :class="{'header__list_active': isBurgerActive}">
@@ -32,7 +35,7 @@ import {mapState} from "vuex";
 import AuthApi from "../api/user/AuthApi";
 import deleteCookie from "../helpers/cookie/deleteCookie";
 
-const bodyLockClass = "body_lock";
+const BODY_LOCK_CLASS = "body_lock";
 
 export default {
   data() {
@@ -42,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user', 'authenticatedUser'])
   },
   props: {
     navItems: {
@@ -57,7 +60,7 @@ export default {
       this.$emit("clicked-burger");
       this.isBurgerActive = !this.isBurgerActive;
 
-      body.classList.toggle(bodyLockClass);
+      this.body.classList.toggle(BODY_LOCK_CLASS);
     },
     toName(str) {
       str = str.trim();
@@ -72,7 +75,7 @@ export default {
     toParams(str) {
       if (str === "My page") {
         return {
-          id: this.user.id
+          id: this.authenticatedUser.id
         }
       }
       return {};
@@ -87,7 +90,7 @@ export default {
   },
   beforeDestroy() {
     if (this.body) {
-      this.body.classList.remove(bodyLockClass);
+      this.body.classList.remove(BODY_LOCK_CLASS);
     }
   }
 }
@@ -101,6 +104,7 @@ export default {
 .header {
   width: 100%;
   position: fixed;
+  z-index: 1;
 
   &__content {
     display: flex;

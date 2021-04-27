@@ -15,26 +15,26 @@
       </div>
     </div>
     <div class="profile-list-modal__items_all profile-list-modal__items" :class="{'profile-list-modal__items_active': isAllTabActive}">
-      <div v-for="user in usersAllList" class="profile-list-modal__item">
+      <div v-for="item in usersAllList" class="profile-list-modal__item">
         <div class="profile-list-modal__item-picture-wrapper">
-          <a class="profile-list-modal__item-picture-ref" href="">
-            <img class="profile-list-modal__item-picture" :src="user.pictureSrc" alt="">
-          </a>
+          <router-link :to="{path: '/user/' + item.id}" class="profile-list-modal__item-picture-ref" >
+            <img class="profile-list-modal__item-picture" :src="item.picture | apiFile" alt="">
+          </router-link>
         </div>
         <div class="profile-list-modal__item-name">
-          {{ user.name }}
+          {{ item.name }}
         </div>
       </div>
     </div>
     <div class="profile-list-modal__items_same profile-list-modal__items" :class="{'profile-list-modal__items_active': !isAllTabActive}">
-      <div v-for="user in usersSameList" class="profile-list-modal__item">
+      <div v-for="item in usersSameList" class="profile-list-modal__item">
         <div class="profile-list-modal__item-picture-wrapper">
-          <a class="profile-list-modal__item-picture-ref" href="">
-            <img class="profile-list-modal__item-picture" :src="user.pictureSrc" alt="">
-          </a>
+          <router-link :to="{path: '/user/' + item.id}" class="profile-list-modal__item-picture-ref" href="">
+            <img class="profile-list-modal__item-picture" :src="item.picture | apiFile" alt="">
+          </router-link>
         </div>
         <div class="profile-list-modal__item-name">
-          {{ user.name }}
+          {{ item.name }}
         </div>
       </div>
     </div>
@@ -42,6 +42,9 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+import UserApi from "../../api/user/UserApi";
+
 const DARK_BODY_SELECTOR = ".dark-body";
 const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
 const BODY_LOCK_CLASS = "body_lock";
@@ -51,10 +54,6 @@ export default {
   props: {
     modalName: {
       type: String,
-      required: true
-    },
-    isModalActive: {
-      type: Boolean,
       required: true
     },
     usersAllList: {
@@ -67,39 +66,40 @@ export default {
     }
   },
   mounted() {
-    const profileListModalItems = document.querySelectorAll(PROFILE_LIST_MODAL_ITEMS_SELECTOR);
     this.darkBody = document.querySelector(DARK_BODY_SELECTOR);
     this.body = document.querySelector("body");
+
+    this.openModal();
+
+    const profileListModalItems = document.querySelectorAll(PROFILE_LIST_MODAL_ITEMS_SELECTOR);
 
     profileListModalItems.forEach((modalItem) => {
       modalItem.style.height = window.innerHeight/2 + "px";
     });
-  },
-  watch: {
-    isModalActive() {
-      if (this.isModalActive === true) {
-        this.openModal();
-      }
-    }
+
   },
   data() {
     return {
+      isModalActive: false,
       isAllTabActive: true,
       darkBody: null,
       body: null
     }
   },
   computed: {
+    ...mapState(['user']),
     capitalizedModalName() {
       return this.modalName.charAt(0).toUpperCase() + this.modalName.slice(1);
     }
   },
   methods: {
     openModal() {
+
       if (this.usersAllList.length === 0) {
         this.$emit(`closed-${this.modalName}-modal`);
         return;
       }
+      this.isModalActive = true;
 
       this.darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
       this.body.classList.add(BODY_LOCK_CLASS);
@@ -119,6 +119,11 @@ export default {
     },
     setSameTabActive() {
       this.isAllTabActive = false;
+    }
+  },
+  beforeDestroy() {
+    if (this.body) {
+      this.body.classList.remove(BODY_LOCK_CLASS);
     }
   }
 }

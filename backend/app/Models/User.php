@@ -27,6 +27,8 @@ class User extends Authenticatable implements JWTSubject
         'info'
     ];
 
+    protected $appends = array('picture');
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -46,8 +48,22 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function getPictureAttribute() {
+        return $this->profile_picture;
+    }
+
     public function posts() {
         return $this->hasMany(Post::class);
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id')->withTimestamps();
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id')->withTimestamps();
     }
 
     public static function generatePassword()
@@ -63,6 +79,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return [];
+        return ['id' => $this->id];
     }
 }

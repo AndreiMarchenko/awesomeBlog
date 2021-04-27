@@ -46,14 +46,15 @@ export default {
 
       req.then(resp => {
         if (resp.status === 200) {
-          this.$store.commit('setCurrentUser', {
+          this.$store.commit('setAuthenticatedUser', {
             id: resp.data.user.id,
             email: resp.data.user.email,
             name: resp.data.user.name,
             picture: resp.data.user.profile_picture,
             info: resp.data.user.info
           });
-          this.$store.dispatch("setPosts", resp.data.user.id);
+          // this.$store.dispatch("setPosts", resp.data.user.id);
+          // this.$store.commit("setAuthenticated", resp.data.user.id);
           setCookie("Token", resp.data.access_token, {
             "max-age": resp.data.expires_in,
             samesite: "lax"

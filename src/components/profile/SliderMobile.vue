@@ -106,13 +106,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.profile-slider_mobile {
-  display: none;
-}
 @media (max-width: 950px) {
-  .profile-slider_mobile {
-    display: block;
-  }
   .profile-slider__wrapper_mobile {
     display: flex;
     justify-content: center;

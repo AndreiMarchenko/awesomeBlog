@@ -305,9 +305,4 @@ export default {
     margin-right: 90px;
   }
 }
-@media (max-width: 950px) {
-  .profile-slider {
-    display: none;
-  }
-}
 </style>

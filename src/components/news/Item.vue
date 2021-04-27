@@ -16,9 +16,9 @@
     <div class="news-item__text">
       {{text}}
     </div>
-    <div class="news-item__picture-wrapper">
+    <router-link tag="div" class="news-item__picture-wrapper" :to="{name: 'postView', params: {id: id}}">
       <img class="news-item__picture" :src="pictureSrc" alt="">
-    </div>
+    </router-link>
     <hr class="news-item__line">
     <div class="news-item__footer">
       <div class="like__wrapper" @click="like">
@@ -64,6 +64,10 @@ import CommentItemComponent from "../post/CommentItem.vue";
 export default {
   components: {CommentItemComponent},
   props: {
+    id: {
+      type: Number,
+      required: true
+    },
     text: {
       type: String,
       default: ""

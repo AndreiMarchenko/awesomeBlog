@@ -20,7 +20,7 @@ api.interceptors.response.use((resp) => {
         return resp;
     },
     (err) => {
-        if (err.response.status === 403) {
+        if (err.response.status === 403 || err.response.status === 401) {
             router.push({name: 'login'});
             Vue.toasted.error("Login again please");
         }

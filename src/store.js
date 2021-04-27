@@ -1,13 +1,25 @@
 import user from "./states/user"
+import authenticatedUser from "./states/authenticatedUser";
 
 import axios from "./api/axiosConf";
 
 export default {
     state: {
+        authenticatedUser,
         user,
         posts: []
     },
+    getters: {
+        sortedPosts(state) {
+            return state.posts.reverse();
+        }
+    },
     mutations: {
+        setAuthenticatedUser(state, user) {
+            for (let prop in user) {
+                state.authenticatedUser[prop] = user[prop];
+            }
+        },
         setCurrentUser(state, user) {
             for (let prop in user) {
                 state.user[prop] = user[prop];
@@ -28,15 +40,31 @@ export default {
         }
     },
     actions: {
-        setCurrentUser(context) {
+        setAuthenticatedUser(context) {
             return axios.get("/auth/user-profile").then(resp => {
+                context.commit('setAuthenticatedUser',
+                    {
+                        id: resp.data.id,
+                        email: resp.data.email,
+                        name: resp.data.name,
+                        picture: resp.data.picture,
+                        info: resp.data.info,
+                    }
+                );
+            });
+        },
+        setCurrentUser(context, id) {
+            return axios.get("/user/" + id).then(resp => {
                 context.commit('setCurrentUser',
                     {
                         id: resp.data.id,
                         email: resp.data.email,
                         name: resp.data.name,
-                        picture: resp.data.profile_picture,
-                        info: resp.data.info
+                        picture: resp.data.picture,
+                        info: resp.data.info,
+                        followerCount: resp.data.followerCount,
+                        followingCount: resp.data.followingCount,
+                        isFollowedByAuth: resp.data.isFollowedByAuth
                     }
                 );
             });

@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="profile-post__owner-picture-wrapper">
-          <img :src="owner.profile_picture | apiFile" alt="" class="profile-post__owner-picture">
+          <img :src="owner.picture | apiFile" alt="" class="profile-post__owner-picture">
         </div>
         <div class="profile-post__info-wrapper">
           <div class="profile-post__owner-name">
@@ -24,7 +24,7 @@
             {{ time }}
           </div>
         </div>
-        <div class="profile-post__change-wrapper">
+        <div v-if="isMyPost" class="profile-post__change-wrapper">
           <router-link :to="{name: 'postEdit', params: {id: this.$route.params.id}}" class="profile-post__change-ref">Change</router-link>
         </div>
       </div>
@@ -83,6 +83,7 @@
 import {mapState} from "vuex";
 import CommentItemComponent from "../CommentItem.vue";
 import UserApi from "../../../api/user/UserApi";
+import PostApi from "../../../api/post/PostApi";
 import timeAgo from "../../../helpers/time/timeAgo";
 
 export default {
@@ -114,37 +115,51 @@ export default {
     }
   },
   computed: {
-    ...mapState(['posts'])
-  },
-  watch: {
-    posts() {
-      this.initPost();
+    ...mapState(['posts', 'authenticatedUser']),
+    isMyPost() {
+      return this.authenticatedUser.id === this.owner.id;
     }
   },
   methods: {
     initPost() {
-      this.post = this.posts.find(post => {
-        return post.id == this.$route.params.id;
+      if (this.posts.length !== 0) {
+        this.setPostFromStore();
+        this.setPostOwner();
+        return;
+      }
+
+      let req = PostApi.get({
+        id: this.$route.params.id
       });
 
-      if (this.post) {
+      req.then(resp => {
+        this.post = resp.data;
         this.time = timeAgo(new Date(this.post.created_at));
 
-        let req = UserApi.get({
-          id: this.post.user_id
-        });
+        this.setPostOwner();
+      });
+    },
+    setPostFromStore() {
+      this.post = this.posts.find(post => {
+        return post.id === this.$route.params.id;
+      });
 
-        req.then(resp => {
-          this.owner = resp.data;
-        });
-      }
+      this.time = timeAgo(new Date(this.post.created_at));
+    },
+    setPostOwner() {
+      let req = UserApi.get({
+        id: this.post.user_id
+      });
+      req.then(resp => {
+        this.owner = resp.data;
+      });
     },
     comment() {
       this.isCommentsActive = !this.isCommentsActive;
     },
     like() {
       this.isLikeActive = !this.isLikeActive;
-    }
+    },
   }
 }
 </script>

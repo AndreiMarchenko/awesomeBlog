@@ -1,4 +1,4 @@
-let user = {
+let authenticatedUser = {
     id: null,
     email: null,
     name: null,
@@ -9,4 +9,4 @@ let user = {
     followingCount: null,
 }
 
-export default user;
+export default authenticatedUser;

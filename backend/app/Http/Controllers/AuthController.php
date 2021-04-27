@@ -95,7 +95,12 @@ class AuthController extends Controller
      */
     public function userProfile(): JsonResponse
     {
-        return response()->json(auth()->user());
+        $authenticated = auth()->user();
+        return response()->json(array_merge(
+            $authenticated->toArray(),
+            ['followers' => $authenticated->followers->pluck('id')],
+            ['following' => $authenticated->followings->pluck('id')]
+        ));
     }
 
     /**
