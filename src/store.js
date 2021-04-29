@@ -9,11 +9,6 @@ export default {
         user,
         posts: [],
     },
-    getters: {
-        sortedPosts(state) {
-            return state.posts.reverse();
-        }
-    },
     mutations: {
         setAuthenticatedUser(state, user) {
             for (let prop in user) {
@@ -70,7 +65,7 @@ export default {
             });
         },
         setPosts(context, data) {
-            return axios.get("/post/all/" + data.id).then(resp => {
+            return axios.get("/post/all/" + data.id + "?page=" + 1).then(resp => {
                context.commit('setPosts', resp.data.data);
             });
         },

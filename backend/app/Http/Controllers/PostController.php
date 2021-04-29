@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index(User $user)
     {
-        return response()->json($user->posts()->paginate(12));
+        return response()->json($user->posts()->orderBy('created_at', 'desc')->paginate(12));
     }
 
     /**

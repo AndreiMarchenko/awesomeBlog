@@ -19,6 +19,8 @@
         modal-name="followers"
         :is-modal-active="followersModalState"
         @closed-followers-modal="closeFollowersModal"
+        @scrolled-all-modal-to-bottom="addAllFollowers"
+        @scrolled-same-modal-to-bottom="addSameFollowers"
         :users-all-list="allFollowers"
         :users-same-list="sameFollowers">
     </profile-list-modal-component>
@@ -26,6 +28,8 @@
         modal-name="following"
         :is-modal-active="followingModalState"
         @closed-following-modal="closeFollowingModal"
+        @scrolled-all-modal-to-bottom="addAllFollowings"
+        @scrolled-same-modal-to-bottom="addSameFollowings"
         :users-all-list="allFollowings"
         :users-same-list="sameFollowings">
     </profile-list-modal-component>
@@ -98,128 +102,30 @@ export default {
       followingModalState: false,
       navItems: ['My page', 'News', 'Logout'],
 
+      allFollowersPage: 1,
+      allFollowersPageLast: null,
+      sameFollowersPage: 1,
+      sameFollowersPageLast: null,
+
+      allFollowingsPage: 1,
+      allFollowingsPageLast: null,
+      sameFollowingsPage: 1,
+      sameFollowingsPageLast: null,
+
+      addedFollowers: true,
+      addedFollowings: true,
+
       allFollowers: [],
       sameFollowers: [],
       allFollowings: [],
       sameFollowings: [],
-
-      usersAllList: [
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-
-      ],
-
-      usersSameList: [
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        },
-        {
-          name: "Sam Johns",
-          pictureSrc: "../images/profile/profilePicture.jpg"
-        }
-      ],
     }
   },
   methods: {
     initProfile() {
       Promise.all([
         this.$store.dispatch("setCurrentUser", this.$route.params.id),
-        this.$store.dispatch("setPosts", this.$route.params.id),
+        this.$store.dispatch("setPosts", {id: this.$route.params.id}),
       ]).then(() => {
         this.isLoading = false;
         if (this.user.id === this.authenticatedUser.id) {
@@ -250,19 +156,18 @@ export default {
       }
 
       UserApi.getFollowers({
-        id: this.user.id
+        id: this.user.id,
+        page: 1
       }).then(resp => {
-        this.allFollowers = resp.data.followers;
+        this.allFollowers = resp.data.followers.data;
+        this.allFollowersPageLast = resp.data.followers.last_page;
 
-        UserApi.getFollowers({
-          id: this.authenticatedUser.id
+        UserApi.getSameFollowers({
+          id: this.user.id,
+          page: 1
         }).then(resp => {
-          let followerIds = resp.data.followers.map(item => {
-            return item.id;
-          });
-          this.sameFollowers = this.allFollowers.filter(item => {
-            return followerIds.includes(item.id);
-          });
+          this.sameFollowersPageLast = resp.data.followers.last_page;
+          this.sameFollowers = resp.data.followers.data;
         });
 
         this.followersModalState = true;
@@ -279,19 +184,18 @@ export default {
       }
 
       UserApi.getFollowings({
-        id: this.user.id
+        id: this.user.id,
+        page: 1
       }).then(resp => {
-        this.allFollowings = resp.data.followings;
+        this.allFollowings = resp.data.followings.data;
+        this.allFollowingsPageLast = resp.data.followings.last_page;
 
-        UserApi.getFollowings({
-          id: this.authenticatedUser.id
+        UserApi.getSameFollowings({
+          id: this.user.id,
+          page: 1
         }).then(resp => {
-          let followingIds = resp.data.followings.map(item => {
-            return item.id;
-          });
-          this.sameFollowings = this.allFollowings.filter(item => {
-            return followingIds.includes(item.id);
-          });
+          this.sameFollowingsPageLast = resp.data.followings.last_page;
+          this.sameFollowings = resp.data.followings.data;
         });
 
         this.followingModalState = true;
@@ -301,6 +205,83 @@ export default {
     closeFollowingModal() {
       this.followingModalState = false;
     },
+    addAllFollowers() {
+      if (this.allFollowersPage === this.allFollowersPageLast) {
+        return;
+      }
+
+      if (! this.addedFollowers) { // wait until previous request finished
+        return;
+      }
+
+      this.addedFollowers = false;
+
+      let req = UserApi.getFollowers({
+        id: this.user.id,
+        page: ++this.allFollowersPage
+      });
+
+      req.then((resp) => {
+        this.allFollowers.push(...resp.data.followers.data);
+        this.addedFollowers = true;
+      });
+    },
+    addSameFollowers() {
+      if (this.sameFollowersPage === this.sameFollowersPageLast) {
+        return;
+      }
+
+      if (! this.addedFollowers) {
+        return;
+      }
+
+      this.addedFollowers = false;
+
+      let req = UserApi.getSameFollowers({
+        id: this.user.id,
+        page: ++this.sameFollowersPage
+      });
+
+      req.then((resp) => {
+        this.sameFollowers.push(...resp.data.followers.data);
+        this.addedFollowers = true;
+      });
+    },
+    addAllFollowings() {
+      if (this.allFollowingsPage === this.allFollowingsPageLast) {
+        return;
+      }
+
+      if (! this.addedFollowings) {
+        return;
+      }
+
+      this.addedFollowings = false;
+
+      let req = UserApi.getFollowings({
+        id: this.user.id,
+        page: ++this.allFollowingsPage
+      });
+
+      req.then((resp) => {
+        this.allFollowings.push(...resp.data.followings.data);
+        this.addedFollowings = true;
+      });
+    },
+    addSameFollowings() {
+      if (this.sameFollowingsPage === this.sameFollowingsPageLast) {
+        return;
+      }
+
+      let req = UserApi.getSameFollowings({
+        id: this.user.id,
+        page: ++this.sameFollowingsPage
+      });
+
+      req.then((resp) => {
+        this.sameFollowings.push(...resp.data.followings.data);
+      });
+    }
   },
 }
 </script>

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="profile-editor__picture-wrapper">
         <div class="profile-editor__picture-content">
-          <img class="profile-editor__picture" :src="user.picture | apiFile" alt="">
+          <img class="profile-editor__picture" :src="authenticatedUser.picture | apiFile" alt="">
         </div>
         <form class="profile-editor__picture-form">
           <label>
@@ -21,10 +21,10 @@
         </div>
         <div class="profile-editor-info__values">
           <div class="profile-editor-info__email">
-            {{user.email }}
+            {{authenticatedUser.email }}
           </div>
           <div class="profile-editor-info__name">
-            {{user.name }}
+            {{authenticatedUser.name }}
           </div>
         </div>
       </div>
@@ -99,16 +99,16 @@ export default {
   },
   computed: {
     ...mapState([
-      'user'
+      'authenticatedUser'
     ]),
     info: {
       set(value) {
-        this.$store.commit('setCurrentUser', {
+        this.$store.commit('setAuthenticatedUser', {
           info: value
         });
       },
       get() {
-        return this.user.info;
+        return this.authenticatedUser.info;
       }
     }
   },
@@ -143,7 +143,9 @@ export default {
 
       req.then(resp => {
         this.name = null;
-        this.$store.dispatch("setCurrentUser");
+        this.$store.commit("setAuthenticatedUser", {
+          name: resp.data.name
+        });
         this.$toasted.success("Name changed successfully!");
       });
     },
@@ -167,7 +169,7 @@ export default {
       });
 
       req.then(resp => {
-        this.$store.commit('setCurrentUser', {
+        this.$store.commit('setAuthenticatedUser', {
           info: resp.data.info
         });
         this.$toasted.success("Info changed successfully!");

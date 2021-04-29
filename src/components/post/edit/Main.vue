@@ -59,7 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['posts'])
+    ...mapState(['posts', 'user'])
   },
   watch: {
     posts() {
@@ -117,7 +117,7 @@ export default {
 
       req.then(resp => {
         this.$store.commit('editPost', resp.data.post);
-        this.$router.push({name: 'myPage'});
+        this.$router.push({name: 'myPage', params: {id: this.user.id}});
         this.$toasted.success("Post edited successfully!");
       });
     }

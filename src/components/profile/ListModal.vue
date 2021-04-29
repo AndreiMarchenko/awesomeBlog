@@ -14,7 +14,7 @@
 
       </div>
     </div>
-    <div class="profile-list-modal__items_all profile-list-modal__items" :class="{'profile-list-modal__items_active': isAllTabActive}">
+    <div @scroll="getMoreUsersAllIfNeed" class="profile-list-modal__items_all profile-list-modal__items" :class="{'profile-list-modal__items_active': isAllTabActive}">
       <div v-for="item in usersAllList" class="profile-list-modal__item">
         <div class="profile-list-modal__item-picture-wrapper">
           <router-link :to="{path: '/user/' + item.id}" class="profile-list-modal__item-picture-ref" >
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="profile-list-modal__items_same profile-list-modal__items" :class="{'profile-list-modal__items_active': !isAllTabActive}">
+    <div @scroll="getMoreUsersSameIfNeed" class="profile-list-modal__items_same profile-list-modal__items" :class="{'profile-list-modal__items_active': !isAllTabActive}">
       <div v-for="item in usersSameList" class="profile-list-modal__item">
         <div class="profile-list-modal__item-picture-wrapper">
           <router-link :to="{path: '/user/' + item.id}" class="profile-list-modal__item-picture-ref" href="">
@@ -49,6 +49,10 @@ const DARK_BODY_SELECTOR = ".dark-body";
 const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
 const BODY_LOCK_CLASS = "body_lock";
 const PROFILE_LIST_MODAL_ITEMS_SELECTOR = ".profile-list-modal__items";
+const PROFILE_LIST_MODAL_ITEMS_ALL_SELECTOR = ".profile-list-modal__items_all";
+const PROFILE_LIST_MODAL_ITEMS_SAME_SELECTOR = ".profile-list-modal__items_same";
+
+const SCROLL_LEFT_TRIGGER = 1000;
 
 export default {
   props: {
@@ -68,6 +72,8 @@ export default {
   mounted() {
     this.darkBody = document.querySelector(DARK_BODY_SELECTOR);
     this.body = document.querySelector("body");
+    this.profileListModalItemAll = document.querySelector(PROFILE_LIST_MODAL_ITEMS_ALL_SELECTOR);
+    this.profileListModalItemSame = document.querySelector(PROFILE_LIST_MODAL_ITEMS_SAME_SELECTOR);
 
     this.openModal();
 
@@ -82,6 +88,8 @@ export default {
     return {
       isModalActive: false,
       isAllTabActive: true,
+      profileListModalItemAll: null,
+      profileListModalItemSame: null,
       darkBody: null,
       body: null
     }
@@ -94,7 +102,6 @@ export default {
   },
   methods: {
     openModal() {
-
       if (this.usersAllList.length === 0) {
         this.$emit(`closed-${this.modalName}-modal`);
         return;
@@ -119,6 +126,26 @@ export default {
     },
     setSameTabActive() {
       this.isAllTabActive = false;
+    },
+    getMoreUsersAllIfNeed() {
+      if(this.scrolledAllModalToBottom()) {
+        this.$emit('scrolled-all-modal-to-bottom');
+      }
+    },
+    getMoreUsersSameIfNeed() {
+      if(this.scrolledSameModalToBottom()) {
+        this.$emit('scrolled-same-modal-to-bottom');
+      }
+    },
+    scrolledAllModalToBottom() {
+        let scrollLeft = this.profileListModalItemAll.scrollHeight - this.profileListModalItemAll.scrollTop;
+
+        return scrollLeft < SCROLL_LEFT_TRIGGER;
+    },
+    scrolledSameModalToBottom() {
+      let scrollLeft = this.profileListModalItemSame.scrollHeight - this.profileListModalItemSame.scrollTop;
+
+      return scrollLeft < SCROLL_LEFT_TRIGGER;
     }
   },
   beforeDestroy() {

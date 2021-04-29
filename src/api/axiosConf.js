@@ -20,14 +20,8 @@ api.interceptors.response.use((resp) => {
         return resp;
     },
     (err) => {
-        if (err.response.status === 403 || err.response.status === 401) {
-            router.push({name: 'login'});
-            Vue.toasted.error("Login again please");
-        }
-        else {
-            for (let error in err.response.data.errors) {
-                Vue.toasted.error(err.response.data.errors[error]);
-            }
+        for (let error in err.response.data.errors) {
+            Vue.toasted.error(err.response.data.errors[error]);
         }
         return Promise.reject(err);
     });

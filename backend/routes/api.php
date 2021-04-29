@@ -46,7 +46,9 @@ Route::group([
 ], function() {
     Route::get('/{user}', [UserController::class, 'show']);
     Route::get('followers/{user}', [UserController::class, 'getFollowers']);
+    Route::get('followers/same/{user}', [UserController::class, 'getSameFollowers']);
     Route::get('followings/{user}', [UserController::class, 'getFollowings']);
+    Route::get('followings/same/{user}', [UserController::class, 'getSameFollowings']);
 });
 
 Route::group([

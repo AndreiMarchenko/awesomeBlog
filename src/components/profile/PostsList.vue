@@ -21,18 +21,6 @@
 <script>
 import {mapState} from "vuex";
 export default {
-  mounted() {
-    if (this.posts.length > 0) {
-
-    }
-  },
-  watch: {
-    posts: {
-      handler() {
-      },
-      deep: true
-    }
-  },
   computed : {
     ...mapState(['posts'])
   }

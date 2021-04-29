@@ -2,7 +2,7 @@
   <section class="posts-list-mobile-wrapper">
     <div class="container">
       <div class="posts-list-mobile">
-        <div class="posts-list-mobile__content">
+        <div v-if="posts.length > 0" class="posts-list-mobile__content">
           <news-item-component
               v-for="post in posts"
               :key="'news-item' + post.id"
@@ -13,7 +13,7 @@
               :time="time(post.created_at)"
               :picture-src="post.picture | apiFile"
               :like-count="34"
-              :comments="21">
+              :comments="[]">
           </news-item-component>
         </div>
       </div>
@@ -27,20 +27,53 @@ import timeAgo from "../../helpers/time/timeAgo";
 import {mapState} from "vuex";
 import {mapGetters} from "vuex";
 
+const SCROLL_LEFT_TRIGGER = 1000;
+
 export default {
+  mounted() {
+    document.addEventListener('scroll', this.getMorePostsIfNeed);
+  },
+  data() {
+    return {
+      page: 1,
+      lastPage: Number.MAX_VALUE,
+      addedPost: true
+    }
+  },
   components: {
     NewsItemComponent
   },
   computed: {
-    ...mapState(['user']),
-    ...mapGetters({
-      posts: 'sortedPosts'
-    })
+    ...mapState(['user', 'posts']),
   },
   methods: {
     time(time) {
       return timeAgo(new Date(time));
-    }
+    },
+    getMorePostsIfNeed() {
+      if(this.scrolledDocumentToBottom() &&
+          this.page < this.lastPage &&
+          this.addedPost === true
+      ) {
+
+        this.addedPost = false;
+        this.$store.dispatch('addPosts', {
+          id: this.user.id,
+          page: ++this.page
+        }).then((resp) => {
+          this.lastPage = resp.last_page;
+          this.addedPost = true;
+        });
+      }
+    },
+    scrolledDocumentToBottom() {
+      let scrollLeft = document.documentElement.scrollHeight - document.documentElement.scrollTop;
+
+      return scrollLeft < SCROLL_LEFT_TRIGGER;
+    },
+  },
+  beforeDestroy() {
+
   }
 }
 </script>

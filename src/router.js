@@ -37,6 +37,9 @@ router.beforeEach((to, from, next) => {
     const isAuthorized = typeof getCookie("Token") !== "undefined";
 
     if (! isAuthorized) {
+        if (from.name !== null && !permittedForNonAuth.includes(from.name)) {
+            Vue.toasted.error('Login again please!');
+        }
         if (permittedForNonAuth.includes(to.name)) {
             next();
         } else {
@@ -52,6 +55,7 @@ router.beforeEach((to, from, next) => {
             next();
         }
     }
+
 });
 
 export default router;

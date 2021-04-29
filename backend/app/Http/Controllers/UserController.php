@@ -32,12 +32,23 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getFollowers(User $user) {
-        if (! Auth::check()) {
-            return response() -> json(['error' => 'Unauthorized'], 401);
-        }
 
         return response()->json(
-            ['followers' => $user->followers->all()],
+            ['followers' => $user->followers()->paginate(20)],
+        );
+    }
+
+    /**
+     * get same with auth followers.
+     *
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSameFollowers(User $user) {
+
+        return response()->json(
+            ['followers' => Auth::user()->followers()->whereIn("follower_id",
+                User::findOrFail($user->id)->followers()->pluck("follower_id"))->paginate(20)],
         );
     }
 
@@ -50,7 +61,21 @@ class UserController extends Controller
     public function getFollowings(User $user)
     {
         return response()->json(
-            ['followings' => $user->followings->all()],
+            ['followings' => $user->followings()->paginate(20)],
+        );
+    }
+
+    /**
+     * get same with auth followings.
+     *
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSameFollowings(User $user) {
+
+        return response()->json(
+            ['followings' => Auth::user()->followings()->whereIn("user_id",
+                User::findOrFail($user->id)->followings()->pluck("user_id"))->paginate(20)],
         );
     }
 }

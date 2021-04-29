@@ -5,7 +5,8 @@
 <script>
 export default {
   created() {
-    this.$store.dispatch("setAuthenticatedUser");
-  }
+    this.$store.dispatch("setAuthenticatedUser")
+         .catch(err => this.$router.go);
+  },
 }
 </script>

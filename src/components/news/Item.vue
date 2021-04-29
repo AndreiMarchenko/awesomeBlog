@@ -47,6 +47,7 @@
       <hr class="news-item__line">
       <template  v-for="(comment, i) in comments">
         <comment-item-component
+            v-if="comment.id"
             :key="'comment' + comment.id"
             :author="comment.author"
             :picture-src="comment.pictureSrc"

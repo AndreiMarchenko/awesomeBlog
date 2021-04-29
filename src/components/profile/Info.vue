@@ -51,13 +51,17 @@
 </template>
 
 <script>
-import FollowApi from "../../api/user/FollowApi";
+import FollowApi from "../../api/follow/FollowApi";
 import {mapState} from "vuex";
 import ProfileInfoBtnComponent from "./InfoBtn.vue";
 
 const EDIT_INFO_TYPE = "Edit";
 const FOLLOW_INFO_TYPE = "Follow";
 const UNFOLLOW_INFO_TYPE = "Unfollow";
+
+const EDIT_BTN_COLOR = "#308CBF";
+const FOLLOW_BTN_COLOR = "#FF3527";
+const UNFOLLOW_BTN_COLOR = "#BF3075";
 
 export default {
   components: {
@@ -86,13 +90,13 @@ export default {
     initInfo() {
       switch (this.infoType) {
         case EDIT_INFO_TYPE:
-          this.btnColor = '#308CBF';
+          this.btnColor = EDIT_BTN_COLOR;
           break;
         case FOLLOW_INFO_TYPE:
-          this.btnColor = '#BF3075';
+          this.btnColor = UNFOLLOW_BTN_COLOR;
           break;
         case UNFOLLOW_INFO_TYPE:
-          this.btnColor = '#FF3527';
+          this.btnColor = FOLLOW_BTN_COLOR;
           break;
       }
     },
