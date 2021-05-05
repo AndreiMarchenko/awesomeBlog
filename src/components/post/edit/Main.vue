@@ -156,15 +156,15 @@ export default {
   }
   &__textarea {
     font-size: 18px;
-    color: #525354;
+    color: $textareaColor;
     margin-top: 15px;
     height: 150px;
     width: 800px;
     padding: 5px;
     resize: none;
     border-radius: 10px;
-    border-color: #abb2cf;
-    background-color: #f2f2f5;
+    border-color: $textareaBorder;
+    background-color: $textareaBg;
   }
   &__textarea:focus {
     background-color: #faf9f5;

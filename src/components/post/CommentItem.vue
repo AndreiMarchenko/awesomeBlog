@@ -3,7 +3,7 @@
     <div class="comment-item__header">
       <div class="comment-item__picture-wrapper">
         <a class="comment_item__picture-ref" href="">
-          <img class="comment-item__picture" :src="pictureSrc" alt="">
+          <img class="comment-item__picture" :src="picture | apiFile" alt="">
         </a>
       </div>
       <div class="comment-item__author">
@@ -20,29 +20,36 @@
 </template>
 
 <script>
+import timeAgo from "../../helpers/time/timeAgo";
+
 export default {
   props: {
     author: {
       type: String,
       required: true
     },
-    text:  {
+    text: {
       type: String,
       required: true
     },
-    time:  {
+    ago: {
       type: String,
       required: true
     },
-    pictureSrc:  {
+    picture: {
       type: String,
       required: true
     },
+  },
+  computed: {
+    time() {
+      return timeAgo(new Date(this.ago));
+    }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .comment-item__header {
   display: flex;
   justify-content: flex-start;

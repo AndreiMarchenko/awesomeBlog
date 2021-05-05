@@ -49,7 +49,7 @@
           </div>
         </a>
       </div>
-      <div class="comment-icon__wrapper" @click="comment">
+      <div class="comment-icon__wrapper" @click="toggleComments">
         <a class="comment-icon__ref" href="javascript:void(0)">
           <svg class="comment-icon" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -58,23 +58,33 @@
           </svg>
 
           <div class="comment__count">
-            {{ comments.length }}
+            {{ commentCount }}
           </div>
         </a>
       </div>
     </div>
-    <div class="comment__wrapper" :class="{'comment__wrapper_active': isCommentsActive}">
-      <hr class="profile-post__line">
+    <div v-if="isCommentsActive">
       <template v-for="(comment, i) in comments">
         <comment-item-component class="comment-item"
                                 :key="comment.id"
                                 :author="comment.author"
-                                :picture-src="comment.pictureSrc"
+                                :picture="comment.picture"
                                 :text="comment.text"
-                                :time="comment.time"
+                                :ago="comment.created_at"
         ></comment-item-component>
-        <hr v-if="i !== comments.length - 1" class="profile-post__line">
       </template>
+      <hr class="profile-post__line">
+      <div class="new-comment">
+        <div class="new-comment__title">
+          Add new comment
+        </div>
+        <textarea v-model="commentText" class="new-comment__text" name="" id="" cols="30" rows="10"></textarea>
+        <div class="new-comment__submit-wrapper">
+          <label class="new-comment__submit-label">
+            <input @click.prevent="addComment" class="new-comment__submit submit-input" type="submit" value="Add">
+          </label>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -85,6 +95,7 @@ import CommentItemComponent from "../CommentItem.vue";
 import UserApi from "../../../api/user/UserApi";
 import PostApi from "../../../api/post/PostApi";
 import timeAgo from "../../../helpers/time/timeAgo";
+import CommentApi from "../../../api/comment/CommentApi";
 
 export default {
   components: {
@@ -95,10 +106,6 @@ export default {
       type: Number,
       default: 0
     },
-    comments: {
-      type: Array,
-      default: () => []
-    }
   },
   mounted() {
     this.initPost();
@@ -110,8 +117,11 @@ export default {
       owner: null,
       ownerPictureSrc: null,
       ownerName: null,
+      comments: [],
+      commentCount: null,
       isLikeActive: false,
-      isCommentsActive: false
+      isCommentsActive: false,
+      commentText: null
     }
   },
   computed: {
@@ -122,40 +132,66 @@ export default {
   },
   methods: {
     initPost() {
-      if (this.posts.length !== 0) {
-        this.setPostFromStore();
-        this.setPostOwner();
-        return;
-      }
-
       let req = PostApi.get({
         id: this.$route.params.id
       });
 
       req.then(resp => {
-        this.post = resp.data;
+        this.post = resp.data.data;
         this.time = timeAgo(new Date(this.post.created_at));
 
-        this.setPostOwner();
+        this.setPostOwner().then(() => {
+          this.setCommentCount();
+        });
       });
-    },
-    setPostFromStore() {
-      this.post = this.posts.find(post => {
-        return post.id === this.$route.params.id;
-      });
-
-      this.time = timeAgo(new Date(this.post.created_at));
     },
     setPostOwner() {
       let req = UserApi.get({
         id: this.post.user_id
       });
+
       req.then(resp => {
         this.owner = resp.data;
       });
+
+      return req;
     },
-    comment() {
-      this.isCommentsActive = !this.isCommentsActive;
+    addComment() {
+      let req = CommentApi.add({
+        id: this.post.id,
+        text: this.commentText
+      });
+
+      req.then(resp => {
+        this.comments.push(resp.data.comment);
+        this.commentCount++;
+        this.commentText = null;
+      });
+    },
+    setCommentCount() {
+      let req = CommentApi.getCount({
+        id: this.post.id
+      });
+
+      req.then(resp => {
+        this.commentCount = resp.data;
+      });
+    },
+    toggleComments() {
+      if (this.comments.length > 0) {
+        this.isCommentsActive = !this.isCommentsActive;
+        return;
+      }
+
+      let req = CommentApi.getAll({
+        id: this.post.id
+      });
+
+      req.then(resp => {
+        this.comments = resp.data;
+        this.isCommentsActive = !this.isCommentsActive;
+      });
+
     },
     like() {
       this.isLikeActive = !this.isLikeActive;
@@ -227,7 +263,8 @@ export default {
   }
 
   &__picture-wrapper {
-    margin: 60px 60px 20px 60px;
+    margin: 60px auto 20px auto;
+    max-width: 1000px;
     height: auto;
   }
 
@@ -299,6 +336,10 @@ export default {
   margin-left: 5px;
 }
 
+.comment__wrapper {
+  margin: 20px 0 40px;
+}
+
 .comment__wrapper_active {
   display: block;
 }
@@ -308,7 +349,40 @@ export default {
 }
 
 .comment-item {
-  margin: 0 50px;
+  margin: 0 50px 10px;
+  padding: 10px;
+  border: 1px grey solid;
+  border-radius: 10px;
+}
+
+.new-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.new-comment__title {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.new-comment__text {
+  font-size: 18px;
+  color: $textareaColor;
+  height: 110px;
+  max-width: 800px;
+  width: 100%;
+  padding: 5px;
+  resize: none;
+  border-radius: 10px;
+  border-color: $textareaBorder;
+  background-color: $textareaBg;
+}
+
+.new-comment__submit-wrapper {
+  margin-top: 20px;
 }
 
 @media (max-width: 768px) {
@@ -359,7 +433,7 @@ export default {
     margin-left: 5px;
   }
   .comment-item {
-    margin: 0 20px;
+    margin: 0 20px 20px;
   }
 }
 

@@ -12,6 +12,7 @@
               :owner-picture-src="user.picture | apiFile"
               :time="time(post.created_at)"
               :picture-src="post.picture | apiFile"
+              :comment-count="post.commentNumber"
               :like-count="34"
               :comments="[]">
           </news-item-component>
@@ -37,7 +38,7 @@ export default {
     return {
       page: 1,
       lastPage: Number.MAX_VALUE,
-      addedPost: true
+      addedPost: true,
     }
   },
   components: {
@@ -71,9 +72,6 @@ export default {
 
       return scrollLeft < SCROLL_LEFT_TRIGGER;
     },
-  },
-  beforeDestroy() {
-
   }
 }
 </script>

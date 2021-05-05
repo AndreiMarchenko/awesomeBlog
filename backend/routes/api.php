@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
@@ -68,6 +69,16 @@ Route::group([
     Route::get('/all/{user}', [PostController::class, 'index'])
         ->whereNumber('user');
     Route::get('/{post}', [PostController::class, 'show']);
+});
+
+Route::group([
+    'middleware' => ['api', 'auth'],
+    'prefix' => 'comment'
+], function() {
+    Route::get('/all/{post}', [CommentController::class, 'index']);
+    Route::get('/count/{post}', [CommentController::class, 'getCommentCount']);
+    Route::post('/counts', [CommentController::class, 'getCommentCounts']);
+    Route::post('/add/{post}', [CommentController::class, 'addComment']);
 });
 
 Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink'])->middleware('api');

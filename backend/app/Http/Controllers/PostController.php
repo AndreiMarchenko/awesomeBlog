@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\CreatePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +14,12 @@ class PostController extends Controller
     /**
      * Get all posts
      *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(User $user)
     {
-        return response()->json($user->posts()->orderBy('created_at', 'desc')->paginate(12));
+        return PostResource::collection(
+            $user->posts()->orderBy('created_at', 'desc')->paginate(12)
+        );
     }
 
     /**
@@ -72,11 +74,11 @@ class PostController extends Controller
      * get specified post.
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\JsonResponse
+     * @return PostResource
      */
     public function show(Post $post)
     {
-        return response()->json($post);
+        return new PostResource($post);
     }
 
 }
