@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
+use App\Http\Resources\AuthResource;
 use App\Mail\PasswordMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -95,12 +96,7 @@ class AuthController extends Controller
      */
     public function userProfile(): JsonResponse
     {
-        $authenticated = auth()->user();
-        return response()->json(array_merge(
-            $authenticated->toArray(),
-            ['followers' => $authenticated->followers->pluck('id')],
-            ['following' => $authenticated->followings->pluck('id')]
-        ));
+          return response()->json(auth()->user());
     }
 
     /**
@@ -115,7 +111,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => auth()->factory()->getTTL() * 0.3,
             'user' => auth()->user()
         ]);
     }

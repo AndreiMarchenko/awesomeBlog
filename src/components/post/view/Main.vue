@@ -151,7 +151,7 @@ export default {
         id: this.post.user_id
       });
       req.then(resp => {
-        this.owner = resp.data;
+        this.owner = resp.data.data;
       });
     },
     comment() {

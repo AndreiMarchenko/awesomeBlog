@@ -52,14 +52,14 @@ export default {
             return axios.get("/user/" + id).then(resp => {
                 context.commit('setCurrentUser',
                     {
-                        id: resp.data.id,
-                        email: resp.data.email,
-                        name: resp.data.name,
-                        picture: resp.data.picture,
-                        info: resp.data.info,
-                        followerCount: resp.data.followerCount,
-                        followingCount: resp.data.followingCount,
-                        isFollowedByAuth: resp.data.isFollowedByAuth
+                        id: resp.data.data.id,
+                        email: resp.data.data.email,
+                        name: resp.data.data.name,
+                        picture: resp.data.data.picture,
+                        info: resp.data.data.info,
+                        followerCount: resp.data.data.followerCount,
+                        followingCount: resp.data.data.followingCount,
+                        isFollowedByAuth: resp.data.data.isFollowedByAuth
                     }
                 );
             });
