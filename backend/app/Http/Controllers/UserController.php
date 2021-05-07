@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,17 +13,10 @@ class UserController extends Controller
      * get specified user.
      *
      * @param  \App\Models\User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return \App\Http\Resources\UserResource
      */
     public function show(User $user) {
-        return response()->json(array_merge(
-            $user->toArray(),
-            [
-                'isFollowedByAuth' => (bool) $user->followers()->find(Auth::id()),
-                'followerCount' => $user->followers()->count(),
-                'followingCount' => $user->followings()->count()
-            ]
-        ));
+        return new UserResource($user);
     }
 
     /**

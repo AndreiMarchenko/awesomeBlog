@@ -149,7 +149,7 @@ export default {
       });
 
       req.then(resp => {
-        this.owner = resp.data;
+        this.owner = resp.data.data;
       });
     },
     addComment() {
