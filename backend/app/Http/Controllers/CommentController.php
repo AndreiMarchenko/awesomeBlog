@@ -31,9 +31,9 @@ class CommentController extends Controller
      * @param Post $post
      * @return JsonResponse
      */
-    public function getCommentCount(Post $post) {
-        return response()->json($post->comments()->count());
-    }
+//    public function getCommentCount(Post $post) {
+//        return response()->json($post->comments()->count());
+//    }
 
     /**
      * get many posts comment count

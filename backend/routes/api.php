@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
@@ -73,11 +74,20 @@ Route::group([
 
 Route::group([
     'middleware' => ['api', 'auth'],
+    'prefix' => 'like'
+], function() {
+    Route::post('/action/{post}', [LikeController::class, 'likeAction']);
+//    Route::get('/count/{post}', [LikeController::class, 'getLikeCount']);
+   // Route::get('/isactive/{post}', [LikeController::class, 'isActive']);
+});
+
+Route::group([
+    'middleware' => ['api', 'auth'],
     'prefix' => 'comment'
 ], function() {
     Route::get('/all/{post}', [CommentController::class, 'index']);
-    Route::get('/count/{post}', [CommentController::class, 'getCommentCount']);
-    Route::post('/counts', [CommentController::class, 'getCommentCounts']);
+   // Route::get('/count/{post}', [CommentController::class, 'getCommentCount']);
+//    Route::post('/counts', [CommentController::class, 'getCommentCounts']);
     Route::post('/add/{post}', [CommentController::class, 'addComment']);
 });
 

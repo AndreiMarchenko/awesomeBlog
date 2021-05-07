@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="profile-post__footer">
-      <div class="like__wrapper" @click="like">
+      <div class="like__wrapper" @click="likeAction">
         <a class="like__ref" href="javascript:void(0)">
           <svg class="like__icon" :class="{'like__icon_active': isLikeActive}" viewBox="0 0 26 26" fill="none"
                xmlns="http://www.w3.org/2000/svg">
@@ -96,16 +96,11 @@ import UserApi from "../../../api/user/UserApi";
 import PostApi from "../../../api/post/PostApi";
 import timeAgo from "../../../helpers/time/timeAgo";
 import CommentApi from "../../../api/comment/CommentApi";
+import LikeApi from "../../../api/like/LikeApi";
 
 export default {
   components: {
     CommentItemComponent
-  },
-  props: {
-    likeCount: {
-      type: Number,
-      default: 0
-    },
   },
   mounted() {
     this.initPost();
@@ -121,7 +116,8 @@ export default {
       commentCount: null,
       isLikeActive: false,
       isCommentsActive: false,
-      commentText: null
+      commentText: null,
+      likeCount: null
     }
   },
   computed: {
@@ -140,9 +136,11 @@ export default {
         this.post = resp.data.data;
         this.time = timeAgo(new Date(this.post.created_at));
 
-        this.setPostOwner().then(() => {
-          this.setCommentCount();
-        });
+        this.likeCount = resp.data.data.likeNumber;
+        this.commentCount = resp.data.data.commentNumber;
+        this.isLikeActive = resp.data.data.isLikedByAuth;
+
+        this.setPostOwner();
       });
     },
     setPostOwner() {
@@ -153,8 +151,6 @@ export default {
       req.then(resp => {
         this.owner = resp.data;
       });
-
-      return req;
     },
     addComment() {
       let req = CommentApi.add({
@@ -166,15 +162,6 @@ export default {
         this.comments.push(resp.data.comment);
         this.commentCount++;
         this.commentText = null;
-      });
-    },
-    setCommentCount() {
-      let req = CommentApi.getCount({
-        id: this.post.id
-      });
-
-      req.then(resp => {
-        this.commentCount = resp.data;
       });
     },
     toggleComments() {
@@ -193,8 +180,19 @@ export default {
       });
 
     },
-    like() {
-      this.isLikeActive = !this.isLikeActive;
+    likeAction() {
+      let req = LikeApi.likeAction({
+        id: this.post.id
+      });
+
+      req.then(resp => {
+        if(resp.data.currentState) {
+          this.likeCount++;
+        } else {
+          this.likeCount--;
+        }
+        this.isLikeActive = !this.isLikeActive;
+      });
     },
   }
 }

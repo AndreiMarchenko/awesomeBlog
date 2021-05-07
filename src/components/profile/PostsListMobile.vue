@@ -5,6 +5,8 @@
         <div v-if="posts.length > 0" class="posts-list-mobile__content">
           <news-item-component
               v-for="post in posts"
+              @liked="handleLike"
+              @unliked="handleUnlike"
               :key="'news-item' + post.id"
               :id="post.id"
               :text="post.text"
@@ -13,7 +15,8 @@
               :time="time(post.created_at)"
               :picture-src="post.picture | apiFile"
               :comment-count="post.commentNumber"
-              :like-count="34"
+              :like-count="post.likeNumber"
+              :is-like-active="post.isLikedByAuth"
               :comments="[]">
           </news-item-component>
         </div>
@@ -72,6 +75,26 @@ export default {
 
       return scrollLeft < SCROLL_LEFT_TRIGGER;
     },
+    handleLike(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
+
+      post.likeNumber++;
+      post.isLikedByAuth = true;
+
+      this.$store.commit('editPost', post);
+    },
+    handleUnlike(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
+
+      post.likeNumber--;
+      post.isLikedByAuth = false;
+
+      this.$store.commit('editPost', post);
+    }
   }
 }
 </script>

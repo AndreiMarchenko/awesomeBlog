@@ -5,10 +5,6 @@ class CommentApi {
         return axios.get("/comment/all/" + data.id);
     }
 
-    static getCount(data) {
-        return axios.get("/comment/count/" + data.id);
-    }
-
     static add(data) {
         return axios.post("/comment/add/" + data.id, {
             text: data.text

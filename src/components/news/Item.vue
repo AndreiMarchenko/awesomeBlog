@@ -21,7 +21,7 @@
     </router-link>
     <hr class="news-item__line">
     <div class="news-item__footer">
-      <div class="like__wrapper" @click="like">
+      <div class="like__wrapper" @click="likeAction">
         <a class="like__ref" href="javascript:;">
           <svg class="like__icon" :class="{'like__icon_active': isLikeActive}" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.4204 8.86946L12.7739 9.22302L13.1275 8.86946C15.2838 6.71312 18.7799 6.71312 20.9363 8.86946C23.0926 11.0258 23.0926 14.5219 20.9363 16.6783L12.7739 24.8406L4.61157 16.6783C2.45523 14.5219 2.45523 11.0258 4.61157 8.86946C6.76791 6.71312 10.264 6.71312 12.4204 8.86946Z" stroke="black"/>
@@ -72,6 +72,7 @@
 <script>
 import CommentItemComponent from "../post/CommentItem.vue";
 import CommentApi from "../../api/comment/CommentApi";
+import LikeApi from "../../api/like/LikeApi";
 
 export default {
   components: {CommentItemComponent},
@@ -108,12 +109,15 @@ export default {
       type: Number,
       default: 0
     },
+    isLikeActive: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
       comments: [],
       commentText: null,
-      isLikeActive: false,
       isCommentsActive: false
     }
   },
@@ -146,8 +150,18 @@ export default {
         this.commentText = null;
       });
     },
-    like() {
-      this.isLikeActive = !this.isLikeActive;
+    likeAction() {
+      let req = LikeApi.likeAction({
+        id: this.id
+      });
+
+      req.then(resp => {
+        if(resp.data.currentState) {
+          this.$emit('liked', this.id);
+        } else {
+          this.$emit('unliked', this.id);
+        }
+      });
     }
   }
 }
