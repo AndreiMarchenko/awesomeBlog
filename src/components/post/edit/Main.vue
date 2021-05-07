@@ -78,7 +78,7 @@ export default {
       });
 
       req.then(resp => {
-        this.post = resp.data;
+        this.post = resp.data.data;
 
         this.textAreaValue = this.post.text;
 
@@ -93,8 +93,10 @@ export default {
         return post.id === this.$route.params.id;
       });
       this.textAreaValue = this.post.text;
-      this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
-      this.img = document.querySelector(IMG_SELECTOR);
+      this.$nextTick(() => {
+        this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
+        this.img = document.querySelector(IMG_SELECTOR);
+      });
     },
     changePicture(event) {
       this.image = event.currentTarget.files[0];
