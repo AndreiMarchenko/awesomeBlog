@@ -2,7 +2,7 @@
   <div class="comment-item">
     <div class="comment-item__header">
       <div class="comment-item__picture-wrapper">
-        <router-link :to="{alias: 'user', params: {id : authorId}}" class="comment_item__picture-ref">
+        <router-link :to="{path: '/user/' + authorId}" class="comment_item__picture-ref">
           <img class="comment-item__picture" :src="picture | apiFile" alt="">
         </router-link>
       </div>
