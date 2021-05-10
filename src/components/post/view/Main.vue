@@ -63,11 +63,12 @@
         </a>
       </div>
     </div>
-    <div v-if="isCommentsActive">
+    <div class="comments-wrapper" v-if="isCommentsActive">
       <template v-for="(comment, i) in comments">
         <comment-item-component class="comment-item"
                                 :key="comment.id"
-                                :author="comment.author"
+                                :author-name="comment.author"
+                                :author-id="comment.user_id"
                                 :picture="comment.picture"
                                 :text="comment.text"
                                 :ago="comment.created_at"
@@ -326,6 +327,7 @@ export default {
   font-size: 22px;
   margin-top: 10px;
   margin-left: 3px;
+  min-width: 20px;
 }
 
 .comment__count {
@@ -344,6 +346,10 @@ export default {
 
 .like__icon_active {
   fill: $likeColor;
+}
+
+.comments-wrapper {
+  margin-top: 30px;
 }
 
 .comment-item {
@@ -425,6 +431,7 @@ export default {
   .like__count {
     margin-top: 5px;
     margin-left: 3px;
+    min-width: 20px;
   }
   .comment__count {
     margin-top: 2px;

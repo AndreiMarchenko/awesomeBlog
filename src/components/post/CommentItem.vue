@@ -2,12 +2,12 @@
   <div class="comment-item">
     <div class="comment-item__header">
       <div class="comment-item__picture-wrapper">
-        <a class="comment_item__picture-ref" href="">
+        <router-link :to="{alias: 'user', params: {id : authorId}}" class="comment_item__picture-ref">
           <img class="comment-item__picture" :src="picture | apiFile" alt="">
-        </a>
+        </router-link>
       </div>
       <div class="comment-item__author">
-        {{author}}
+        {{authorName}}
       </div>
     </div>
     <div class="comment-item__text">
@@ -24,8 +24,12 @@ import timeAgo from "../../helpers/time/timeAgo";
 
 export default {
   props: {
-    author: {
+    authorName: {
       type: String,
+      required: true
+    },
+    authorId: {
+      type: Number,
       required: true
     },
     text: {
@@ -70,6 +74,7 @@ export default {
 }
 .comment-item__text {
   font-size: 16px;
+  word-break: break-word;
   margin: 10px 10px 6px;
 }
 .comment-item__time {

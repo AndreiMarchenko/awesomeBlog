@@ -71,7 +71,7 @@ const MOUSELEAVE_ACTIVE_CLASS = "profile-slider__button_mouseleave_active";
 const MOUSEDOWN_ACTIVE_CLASS = "profile-slider__button_mousedown_active";
 
 const MOVES_UNTIL_POST_ADD = 3;
-const SLIDER_ANIMATION_SPEED = 13;
+const SLIDER_ANIMATION_SPEED = 14;
 
 export default {
   mounted() {

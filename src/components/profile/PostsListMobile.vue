@@ -7,6 +7,7 @@
               v-for="post in posts"
               @liked="handleLike"
               @unliked="handleUnlike"
+              @commented="handleComment"
               :key="'news-item' + post.id"
               :id="post.id"
               :text="post.text"
@@ -93,6 +94,14 @@ export default {
       post.likeNumber--;
       post.isLikedByAuth = false;
 
+      this.$store.commit('editPost', post);
+    },
+    handleComment(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
+
+      post.commentNumber++;
       this.$store.commit('editPost', post);
     }
   }

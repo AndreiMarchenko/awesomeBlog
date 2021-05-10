@@ -14,11 +14,10 @@ class PostController extends Controller
     /**
      * Get all posts
      *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(User $user)
     {
-        return response()->json($user->posts()->latest()->paginate(12));
+        return PostResource::collection($user->posts()->latest()->paginate(12));
     }
 
     /**

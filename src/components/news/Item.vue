@@ -47,7 +47,8 @@
       <template  v-for="comment in comments">
         <comment-item-component
             :key="comment.id"
-            :author="comment.author"
+            :author-name="comment.author"
+            :author-id="comment.user_id"
             :picture="comment.picture"
             :text="comment.text"
             :ago="comment.created_at"
@@ -146,7 +147,7 @@ export default {
 
       req.then(resp => {
         this.comments.push(resp.data.comment);
-        this.commentCount++;
+        this.$emit('commented', this.id);
         this.commentText = null;
       });
     },
@@ -245,6 +246,7 @@ export default {
 }
 .like__count {
   margin-top: 1px;
+  min-width: 10px;
 }
 .comment-icon__wrapper {
   margin-left: 13px;
