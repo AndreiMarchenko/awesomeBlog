@@ -25,34 +25,6 @@ class CommentController extends Controller
         return response()->json($post->comments);
     }
 
-    /**
-     * get post comment count
-     *
-     * @param Post $post
-     * @return JsonResponse
-     */
-//    public function getCommentCount(Post $post) {
-//        return response()->json($post->comments()->count());
-//    }
-
-    /**
-     * get many posts comment count
-     *
-     * @param CommentCountsRequest $request
-     * @return JsonResponse
-     */
-//    public function getCommentCounts(CommentCountsRequest $request) {
-//        $posts = Post::with('comments')->whereIn('id', $request->input('ids'))->get();
-//
-//        $commentCounts = [];
-//
-//        $posts->each(function($post) use (&$commentCounts) {
-//            $commentCounts = Arr::add($commentCounts, $post->id, count($post->comments));
-//        });
-//
-//        return response()->json($commentCounts);
-//    }
-
 
     /**
      * add comment to the post

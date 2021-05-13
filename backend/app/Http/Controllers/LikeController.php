@@ -33,7 +33,4 @@ class LikeController extends Controller
 
     }
 
-//    public function isActive(Post $post) {
-//        return response()->json(Auth::user()->likes()->where('post_id', $post->id)->exists());
-//    }
 }
