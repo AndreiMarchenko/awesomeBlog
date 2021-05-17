@@ -1,109 +1,71 @@
 <template>
-  <div :class="{'profile-info__edit': infoType === 'mainPage',
-                'profile-info__follow': infoType === 'friendPage'}">
-    <router-link v-if="infoType === 'mainPage'"
-                 class="profile-info__edit-ref"
-                 :to="{name: 'editProfile'}">
-      {{ btnText }}
-    </router-link>
-    <a v-else-if="infoType === 'friendPage'"
-       href="#"
-       class="profile-info__follow-ref">
-      {{ btnText }}
+  <div class="profile-info__btn">
+    <a class="profile-info__btn-ref">
+      <slot></slot>
     </a>
   </div>
 </template>
 
 <script>
+const BTN_SELECTOR = ".profile-info__btn-ref";
+
 export default {
   props: {
-    infoType: String
-  },
-  computed: {
-    btnText() {
-      switch (this.infoType) {
-        case "mainPage":
-          return "Edit";
-        case "friendPage":
-          return "Follow";
-      }
+    color: {
+      type: String,
+      default: '#308CBF'
     }
-  }
+  },
+  mounted() {
+    this.btn = document.querySelector(BTN_SELECTOR);
+    this.btn.style.setProperty('--color', this.color);
+  },
+  data() {
+    return {
+      btn: null
+    }
+  },
 }
 </script>
 
 <style lang="scss">
-.profile-info__edit {
+.profile-info__btn {
+  cursor: pointer;
   font-size: 18px;
   margin-left: 3px;
   margin-top: 25px;
 }
-.profile-info__edit-ref {
+.profile-info__btn-ref {
   height: 37px;
   padding: 2px 50px;
-  color: $mainColor;
-  border: $mainColor 1px solid;
+  color: var(--color);
+  border: var(--color) 1px solid;
   transition: background-color .4s ease-out,
   color .1s ease-out;
   border-radius: 5px;
 }
-.profile-info__edit-ref:hover{
-  background-color: $mainColor;
+.profile-info__btn-ref:hover{
+  background-color: var(--color);
   border: grey 1px solid;
   color: $white;
   transition: background-color .5s ease-out,
   color .1s ease-out,
   border .4s ease-out;
 }
-.profile-info__edit-ref:active{
+.profile-info__btn-ref:active{
   background-color: $bgColor;
-  color: $mainColor;
-  border: $mainColor 1px solid;
+  color: var(--color);
+  border: var(--color) 1px solid;
   transition: background-color .1s ease-out,
   color .4s ease-out;
 }
-.profile-info__follow {
-  font-size: 18px;
-  margin-left: 3px;
-  margin-top: 25px;
-}
-.profile-info__follow-ref {
-  height: 37px;
-  padding: 2px 50px;
-  color: $followBtnColor;
-  border: $followBtnColor 1px solid;
-  transition: background-color .4s ease-out,
-  color .1s ease-out;
-  border-radius: 5px;
-}
-.profile-info__follow-ref:hover{
-  background-color: $followBtnColor;
-  border: grey 1px solid;
-  color: $white;
-  transition: background-color .5s ease-out,
-  color .1s ease-out,
-  border .4s ease-out;
-}
-.profile-info__follow-ref:active{
-  background-color: $bgColor;
-  color: $followBtnColor;
-  border: $followBtnColor 1px solid;
-  transition: background-color .1s ease-out,
-  color .4s ease-out;
-}
+
 @media (max-width: 375px) {
-  .profile-info__edit {
+  .profile-info__btn {
     display: flex;
     justify-content: center;
   }
-  .profile-info__edit-ref {
-    height: 29px;
-  }
-  .profile-info__follow {
-    display: flex;
-    justify-content: center;
-  }
-  .profile-info__follow-ref {
+  .profile-info__btn-ref {
     height: 29px;
   }
 }

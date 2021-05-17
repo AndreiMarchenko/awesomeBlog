@@ -25,7 +25,7 @@
             <hr class="post-form__line">
             <div class="post-form__submit-wrapper">
               <label class="post-form__submit-label">
-                <input @click.prevent="editPost" class="post-form__submit submit-input" type="submit" value="Post">
+                <input @click.prevent="editPost" class="post-form__submit submit-input" type="submit" value="Edit">
               </label>
             </div>
           </form>
@@ -38,6 +38,7 @@
 <script>
 import {mapState} from "vuex";
 import PostApi from "../../../api/post/PostApi";
+import timeAgo from "../../../helpers/time/timeAgo";
 
 const IMG_WRAPPER_SELECTOR = ".post-form__picture-wrapper";
 const IMG_SELECTOR = ".post-form__picture";
@@ -58,7 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['posts'])
+    ...mapState(['posts', 'user'])
   },
   watch: {
     posts() {
@@ -67,16 +68,33 @@ export default {
   },
   methods: {
     initPostEdit() {
-      this.post = this.posts.find(post => {
-        return post.id == this.$route.params.id;
-      });
-      if (this.post) {
-        this.textAreaValue = this.post.text;
+      if (this.posts.length !== 0) {
+        this.setPostFromStore();
+        return;
       }
-      this.$nextTick(() => {
-        this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
-        this.img = document.querySelector(IMG_SELECTOR);
+
+      let req = PostApi.get({
+        id: this.$route.params.id
       });
+
+      req.then(resp => {
+        this.post = resp.data;
+
+        this.textAreaValue = this.post.text;
+
+        this.$nextTick(() => {
+          this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
+          this.img = document.querySelector(IMG_SELECTOR);
+        });
+      });
+    },
+    setPostFromStore() {
+      this.post = this.posts.find(post => {
+        return post.id === this.$route.params.id;
+      });
+      this.textAreaValue = this.post.text;
+      this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
+      this.img = document.querySelector(IMG_SELECTOR);
     },
     changePicture(event) {
       this.image = event.currentTarget.files[0];
@@ -99,7 +117,7 @@ export default {
 
       req.then(resp => {
         this.$store.commit('editPost', resp.data.post);
-        this.$router.push({name: 'myPage'});
+        this.$router.push({name: 'myPage', params: {id: this.user.id}});
         this.$toasted.success("Post edited successfully!");
       });
     }

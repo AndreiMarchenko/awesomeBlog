@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EditProfileController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
@@ -44,6 +45,18 @@ Route::group([
     'prefix' => 'user'
 ], function() {
     Route::get('/{user}', [UserController::class, 'show']);
+    Route::get('followers/{user}', [UserController::class, 'getFollowers']);
+    Route::get('followers/same/{user}', [UserController::class, 'getSameFollowers']);
+    Route::get('followings/{user}', [UserController::class, 'getFollowings']);
+    Route::get('followings/same/{user}', [UserController::class, 'getSameFollowings']);
+});
+
+Route::group([
+    'middleware' => ['api', 'auth'],
+    'prefix' => 'follow'
+], function() {
+    Route::post('/add', [FollowController::class, 'follow']);
+    Route::post('/remove', [FollowController::class, 'unfollow']);
 });
 
 Route::group([

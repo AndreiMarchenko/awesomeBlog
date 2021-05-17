@@ -9,6 +9,7 @@ import NewsPageComponent from "./components/news/Page.vue";
 import NotFound from "./components/NotFound.vue";
 
 import getCookie from "./helpers/cookie/getCookie";
+import parseJwt from "./helpers/jwt/parseJWT";
 
 Vue.use(Router);
 
@@ -36,6 +37,9 @@ router.beforeEach((to, from, next) => {
     const isAuthorized = typeof getCookie("Token") !== "undefined";
 
     if (! isAuthorized) {
+        if (from.name !== null && !permittedForNonAuth.includes(from.name)) {
+            Vue.toasted.error('Login again please!');
+        }
         if (permittedForNonAuth.includes(to.name)) {
             next();
         } else {
@@ -45,11 +49,13 @@ router.beforeEach((to, from, next) => {
 
     if (isAuthorized) {
         if (permittedForNonAuth.includes(to.name)) {
-            next({name: 'myPage'});
+            let AuthorizedId = parseJwt(getCookie("Token")).id;
+            next({name: 'myPage', params: {id : AuthorizedId}});
         } else {
             next();
         }
     }
+
 });
 
 export default router;

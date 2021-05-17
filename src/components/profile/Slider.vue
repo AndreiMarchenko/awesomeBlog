@@ -57,7 +57,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import PostApi from "../../api/post/PostApi";
 
 const SLIDER_LEFT_BUTTON_SELECTOR = ".profile-slider__button-left";
 const SLIDER_RIGHT_BUTTON_SELECTOR = ".profile-slider__button-right";
@@ -186,7 +185,7 @@ export default {
     pairNumber() {
       return Math.ceil(this.posts.length/2);
     },
-    ...mapState(['posts', 'user'])
+    ...mapState(['user', 'posts']),
   }
 }
 </script>
@@ -324,11 +323,6 @@ export default {
   }
   .profile-slider__button-right {
     margin-right: 90px;
-  }
-}
-@media (max-width: 950px) {
-  .profile-slider {
-    display: none;
   }
 }
 </style>

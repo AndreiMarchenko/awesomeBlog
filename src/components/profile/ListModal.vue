@@ -14,27 +14,27 @@
 
       </div>
     </div>
-    <div class="profile-list-modal__items_all profile-list-modal__items" :class="{'profile-list-modal__items_active': isAllTabActive}">
-      <div v-for="user in usersAllList" class="profile-list-modal__item">
+    <div @scroll="getMoreUsersAllIfNeed" class="profile-list-modal__items_all profile-list-modal__items" :class="{'profile-list-modal__items_active': isAllTabActive}">
+      <div v-for="item in usersAllList" class="profile-list-modal__item">
         <div class="profile-list-modal__item-picture-wrapper">
-          <a class="profile-list-modal__item-picture-ref" href="">
-            <img class="profile-list-modal__item-picture" :src="user.pictureSrc" alt="">
-          </a>
+          <router-link :to="{path: '/user/' + item.id}" class="profile-list-modal__item-picture-ref" >
+            <img class="profile-list-modal__item-picture" :src="item.picture | apiFile" alt="">
+          </router-link>
         </div>
         <div class="profile-list-modal__item-name">
-          {{ user.name }}
+          {{ item.name }}
         </div>
       </div>
     </div>
-    <div class="profile-list-modal__items_same profile-list-modal__items" :class="{'profile-list-modal__items_active': !isAllTabActive}">
-      <div v-for="user in usersSameList" class="profile-list-modal__item">
+    <div @scroll="getMoreUsersSameIfNeed" class="profile-list-modal__items_same profile-list-modal__items" :class="{'profile-list-modal__items_active': !isAllTabActive}">
+      <div v-for="item in usersSameList" class="profile-list-modal__item">
         <div class="profile-list-modal__item-picture-wrapper">
-          <a class="profile-list-modal__item-picture-ref" href="">
-            <img class="profile-list-modal__item-picture" :src="user.pictureSrc" alt="">
-          </a>
+          <router-link :to="{path: '/user/' + item.id}" class="profile-list-modal__item-picture-ref" href="">
+            <img class="profile-list-modal__item-picture" :src="item.picture | apiFile" alt="">
+          </router-link>
         </div>
         <div class="profile-list-modal__item-name">
-          {{ user.name }}
+          {{ item.name }}
         </div>
       </div>
     </div>
@@ -42,19 +42,22 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+import UserApi from "../../api/user/UserApi";
+
 const DARK_BODY_SELECTOR = ".dark-body";
 const DARK_BODY_ACTIVE_CLASS = "dark-body_active";
 const BODY_LOCK_CLASS = "body_lock";
 const PROFILE_LIST_MODAL_ITEMS_SELECTOR = ".profile-list-modal__items";
+const PROFILE_LIST_MODAL_ITEMS_ALL_SELECTOR = ".profile-list-modal__items_all";
+const PROFILE_LIST_MODAL_ITEMS_SAME_SELECTOR = ".profile-list-modal__items_same";
+
+const SCROLL_LEFT_TRIGGER = 1000;
 
 export default {
   props: {
     modalName: {
       type: String,
-      required: true
-    },
-    isModalActive: {
-      type: Boolean,
       required: true
     },
     usersAllList: {
@@ -67,29 +70,32 @@ export default {
     }
   },
   mounted() {
-    const profileListModalItems = document.querySelectorAll(PROFILE_LIST_MODAL_ITEMS_SELECTOR);
     this.darkBody = document.querySelector(DARK_BODY_SELECTOR);
     this.body = document.querySelector("body");
+    this.profileListModalItemAll = document.querySelector(PROFILE_LIST_MODAL_ITEMS_ALL_SELECTOR);
+    this.profileListModalItemSame = document.querySelector(PROFILE_LIST_MODAL_ITEMS_SAME_SELECTOR);
+
+    this.openModal();
+
+    const profileListModalItems = document.querySelectorAll(PROFILE_LIST_MODAL_ITEMS_SELECTOR);
 
     profileListModalItems.forEach((modalItem) => {
       modalItem.style.height = window.innerHeight/2 + "px";
     });
-  },
-  watch: {
-    isModalActive() {
-      if (this.isModalActive === true) {
-        this.openModal();
-      }
-    }
+
   },
   data() {
     return {
+      isModalActive: false,
       isAllTabActive: true,
+      profileListModalItemAll: null,
+      profileListModalItemSame: null,
       darkBody: null,
       body: null
     }
   },
   computed: {
+    ...mapState(['user']),
     capitalizedModalName() {
       return this.modalName.charAt(0).toUpperCase() + this.modalName.slice(1);
     }
@@ -100,6 +106,7 @@ export default {
         this.$emit(`closed-${this.modalName}-modal`);
         return;
       }
+      this.isModalActive = true;
 
       this.darkBody.classList.add(DARK_BODY_ACTIVE_CLASS);
       this.body.classList.add(BODY_LOCK_CLASS);
@@ -119,6 +126,31 @@ export default {
     },
     setSameTabActive() {
       this.isAllTabActive = false;
+    },
+    getMoreUsersAllIfNeed() {
+      if(this.scrolledAllModalToBottom()) {
+        this.$emit('scrolled-all-modal-to-bottom');
+      }
+    },
+    getMoreUsersSameIfNeed() {
+      if(this.scrolledSameModalToBottom()) {
+        this.$emit('scrolled-same-modal-to-bottom');
+      }
+    },
+    scrolledAllModalToBottom() {
+        let scrollLeft = this.profileListModalItemAll.scrollHeight - this.profileListModalItemAll.scrollTop;
+
+        return scrollLeft < SCROLL_LEFT_TRIGGER;
+    },
+    scrolledSameModalToBottom() {
+      let scrollLeft = this.profileListModalItemSame.scrollHeight - this.profileListModalItemSame.scrollTop;
+
+      return scrollLeft < SCROLL_LEFT_TRIGGER;
+    }
+  },
+  beforeDestroy() {
+    if (this.body) {
+      this.body.classList.remove(BODY_LOCK_CLASS);
     }
   }
 }

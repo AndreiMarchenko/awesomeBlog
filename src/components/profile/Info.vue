@@ -13,10 +13,9 @@
                 <a v-if="user.picture" href="#"><img :src="user.picture | apiFile" alt=""></a>
               </div>
             </div>
-            <profile-info-btn-component
-                class="profile-info__btn-comp"
-                :info-type="infoType">
-            </profile-info-btn-component>
+              <profile-info-btn-component @click.native="infoBtnAction" :key="btnColor" class="profile-info__btn-comp" :color="btnColor">
+                {{  infoType  }}
+              </profile-info-btn-component>
           </div>
           <div class="profile-info__summary-wrapper_second">
             <div class="profile-info__followers">
@@ -24,7 +23,7 @@
                   @click="$emit('clicked-followers-btn')"
                   class="profile-info__followers-ref"
                   href="javascript:;">
-                Followers: <span>34</span>
+                Followers: <span>{{ user.followerCount }}</span>
               </a>
             </div>
             <div class="profile-info__following">
@@ -32,7 +31,7 @@
                   @click="$emit('clicked-following-btn')"
                   class="profile-info__following-ref"
                   href="javascript:;">
-                Following: <span>17</span>
+                Following: <span>{{ user.followingCount }}</span>
               </a>
             </div>
           </div>
@@ -52,8 +51,17 @@
 </template>
 
 <script>
+import FollowApi from "../../api/follow/FollowApi";
 import {mapState} from "vuex";
 import ProfileInfoBtnComponent from "./InfoBtn.vue";
+
+const EDIT_INFO_TYPE = "Edit";
+const FOLLOW_INFO_TYPE = "Follow";
+const UNFOLLOW_INFO_TYPE = "Unfollow";
+
+const EDIT_BTN_COLOR = "#308CBF";
+const FOLLOW_BTN_COLOR = "#FF3527";
+const UNFOLLOW_BTN_COLOR = "#BF3075";
 
 export default {
   components: {
@@ -65,8 +73,57 @@ export default {
       required: true
     }
   },
+  created() {
+    this.initInfo();
+  },
+  watch: {
+    infoType() {
+      this.initInfo();
+    }
+  },
+  data() {
+    return {
+      btnColor: null
+    }
+  },
+  methods: {
+    initInfo() {
+      switch (this.infoType) {
+        case EDIT_INFO_TYPE:
+          this.btnColor = EDIT_BTN_COLOR;
+          break;
+        case FOLLOW_INFO_TYPE:
+          this.btnColor = UNFOLLOW_BTN_COLOR;
+          break;
+        case UNFOLLOW_INFO_TYPE:
+          this.btnColor = FOLLOW_BTN_COLOR;
+          break;
+      }
+    },
+    infoBtnAction() {
+      switch (this.infoType) {
+        case EDIT_INFO_TYPE:
+          this.$router.push({name: 'editProfile', params: {id: this.$route.params.id}});
+          break;
+        case FOLLOW_INFO_TYPE:
+          FollowApi.follow({
+            id: this.$route.params.id
+          }).then(() => {
+            this.$emit('followed');
+          });
+          break;
+        case UNFOLLOW_INFO_TYPE:
+          FollowApi.unfollow({
+            id: this.$route.params.id
+          }).then(() => {
+            this.$emit('unfollowed');
+          });
+          break;
+      }
+    }
+  },
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user', 'authenticatedUser']),
   }
 }
 </script>

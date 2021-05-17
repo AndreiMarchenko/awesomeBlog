@@ -69,10 +69,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-header {
-  z-index: 1;
-}
+<style lang="scss" scoped>
 .search__wrapper {
   position: fixed;
   z-index: 1;

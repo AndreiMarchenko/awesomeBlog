@@ -1,15 +1,12 @@
 <template>
-  <router-view></router-view>
+  <router-view :key="$route.params.id"></router-view>
 </template>
 
 <script>
 export default {
   created() {
-    this.$store.dispatch("setCurrentUser").then(() => {
-      this.$store.dispatch("setPosts", {
-        id: this.$store.state.user.id,
-      });
-    });
-  }
+    this.$store.dispatch("setAuthenticatedUser")
+         .catch(err => this.$router.go);
+  },
 }
 </script>
