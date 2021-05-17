@@ -19,17 +19,14 @@ class LikeController extends Controller
             ]);
         }
 
-        if (! $isLiked) {
-            Auth::user()->likes()->create([
-                'user_id' => Auth::id(),
-                'post_id' => $post->id
-            ]);
+        Auth::user()->likes()->create([
+            'post_id' => $post->id
+        ]);
 
-            return response()->json([
-                'currentState' => ! $isLiked,
-                'message' => 'liked'
-            ]);
-        }
+        return response()->json([
+            'currentState' => ! $isLiked,
+            'message' => 'liked'
+        ]);
 
     }
 

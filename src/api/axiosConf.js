@@ -29,6 +29,10 @@ api.interceptors.response.use((resp) => {
             });
         }
 
+        if (err.response.status === 500) {
+            Vue.toasted.error("Problems with server! Try later");
+        }
+
         for (let error in err.response.data.errors) {
             Vue.toasted.error(err.response.data.errors[error]);
         }

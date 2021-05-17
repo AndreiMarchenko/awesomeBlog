@@ -67,13 +67,20 @@
       <template v-for="(comment, i) in comments">
         <comment-item-component class="comment-item"
                                 :key="comment.id"
+                                :id="comment.id"
+                                :post-id="post.id"
+                                :post-owner-id="post.user_id"
                                 :author-name="comment.author"
                                 :author-id="comment.user_id"
                                 :picture="comment.picture"
                                 :text="comment.text"
                                 :ago="comment.created_at"
+                                @comment-deleted="deleteComment"
         ></comment-item-component>
       </template>
+      <div v-if="this.commentPage !== this.lastCommentPage" class="comments__load-more">
+        <a @click="loadMoreComments" class="comments__load-more-ref" href="javascript:;">Load more comments</a>
+      </div>
       <hr class="profile-post__line">
       <div class="new-comment">
         <div class="new-comment__title">
@@ -114,7 +121,11 @@ export default {
       ownerPictureSrc: null,
       ownerName: null,
       comments: [],
+      commentPage: 1,
+      lastCommentPage: null,
+      commentsPerPage: null,
       commentCount: null,
+      deletedCommentCount: 0,
       isLikeActive: false,
       isCommentsActive: false,
       commentText: null,
@@ -136,7 +147,6 @@ export default {
       req.then(resp => {
         this.post = resp.data.data;
         this.time = timeAgo(new Date(this.post.created_at));
-
         this.likeCount = resp.data.data.likeNumber;
         this.commentCount = resp.data.data.commentNumber;
         this.isLikeActive = resp.data.data.isLikedByAuth;
@@ -176,10 +186,23 @@ export default {
       });
 
       req.then(resp => {
-        this.comments = resp.data;
+        this.comments = resp.data.data;
+        this.lastCommentPage = resp.data.last_page;
+        this.commentsPerPage = resp.data.per_page;
         this.isCommentsActive = !this.isCommentsActive;
       });
 
+    },
+    loadMoreComments() {
+      let req = CommentApi.getAll({
+        id: this.post.id,
+        page: this.commentPage + 1
+      });
+
+      req.then(resp => {
+        this.comments.push(...resp.data.data);
+        this.commentPage++;
+      });
     },
     likeAction() {
       let req = LikeApi.likeAction({
@@ -195,6 +218,24 @@ export default {
         this.isLikeActive = !this.isLikeActive;
       });
     },
+    deleteComment(id) {
+      let commentIndex = this.comments.findIndex(comment => {
+        return comment.id === id;
+      });
+
+      this.comments.splice(commentIndex, 1);
+      this.commentCount--;
+
+      this.fixPagination();
+    },
+    fixPagination() {
+      this.deletedCommentCount++;
+      if (this.deletedCommentCount === this.commentsPerPage) {
+        this.commentPage--;
+        this.lastCommentPage--;
+        this.deletedCommentCount = 0;
+      }
+    }
   }
 }
 </script>
@@ -350,6 +391,18 @@ export default {
 
 .comments-wrapper {
   margin-top: 30px;
+}
+
+.comments__load-more {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+.comments__load-more-ref {
+  color: $mainColor;
+  text-decoration: underline;
 }
 
 .comment-item {

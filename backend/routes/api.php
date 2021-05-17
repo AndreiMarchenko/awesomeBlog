@@ -77,8 +77,6 @@ Route::group([
     'prefix' => 'like'
 ], function() {
     Route::post('/action/{post}', [LikeController::class, 'likeAction']);
-//    Route::get('/count/{post}', [LikeController::class, 'getLikeCount']);
-   // Route::get('/isactive/{post}', [LikeController::class, 'isActive']);
 });
 
 Route::group([
@@ -86,9 +84,8 @@ Route::group([
     'prefix' => 'comment'
 ], function() {
     Route::get('/all/{post}', [CommentController::class, 'index']);
-   // Route::get('/count/{post}', [CommentController::class, 'getCommentCount']);
-//    Route::post('/counts', [CommentController::class, 'getCommentCounts']);
-    Route::post('/add/{post}', [CommentController::class, 'addComment']);
+    Route::post('/add/{post}', [CommentController::class, 'create']);
+    Route::delete('/delete/{post}/{comment}', [CommentController::class, 'destroy']);
 });
 
 Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink'])->middleware('api');
