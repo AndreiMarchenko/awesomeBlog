@@ -12,7 +12,8 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     config.headers = {
         Authorization: "Bearer " + getCookie("Token"),
-        Accept: "application/json"
+        Accept: "application/json",
+        "X-Socket-Id": Echo.socketId()
     };
     return config;
 });

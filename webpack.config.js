@@ -51,6 +51,8 @@ module.exports = {
         new webpack.DefinePlugin({
             'env.API_LOCAL_ENDPOINT': '"' + process.env.API_LOCAL_ENDPOINT + '"',
             'env.API_ENDPOINT': '"' + process.env.API_ENDPOINT + '"',
+            'env.PUSHER_KEY': '"' + process.env.PUSHER_KEY + '"',
+            'env.BROADCASTER': '"' + process.env.BROADCASTER + '"'
         })
     ],
     devServer: {

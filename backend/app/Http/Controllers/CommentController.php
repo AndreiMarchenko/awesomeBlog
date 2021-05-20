@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Comment\CommentCountsRequest;
+use App\Events\AddedComment;
 use App\Http\Requests\Comment\CommentRequest;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Ramsey\Collection\Collection;
-use Ramsey\Uuid\Type\Integer;
 
 class CommentController extends Controller
 {
@@ -67,6 +62,8 @@ class CommentController extends Controller
             'post_id' => $post->id,
             'text' => $request->input('text')
         ]);
+
+        broadcast(new AddedComment($comment))->toOthers();
 
         return response()->json([
             'message' => 'Comment added successfully',

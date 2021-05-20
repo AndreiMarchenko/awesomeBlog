@@ -105,6 +105,11 @@ export default {
   },
   mounted() {
     this.initPost();
+
+    Echo.private('commentsChannel')
+        .listen('AddedComment', (e) => {
+
+        });
   },
   data() {
     return {
