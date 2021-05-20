@@ -15,6 +15,9 @@ class PostApi {
             }
         });
     }
+    static delete(id) {
+        return axios.delete('/post/delete/' + id);
+    }
     static get(data) {
         return axios.get("/post/" + data.id);
     }

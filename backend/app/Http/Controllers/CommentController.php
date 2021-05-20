@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\AddedComment;
 use App\Http\Requests\Comment\CommentRequest;
+use App\Http\Requests\Comment\DeleteCommentRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -17,36 +19,8 @@ class CommentController extends Controller
      * @return JsonResponse
      */
     public function index(Post $post) {
-        return response()->json($post->comments);
+        return response()->json($post->comments()->paginate(15));
     }
-
-    /**
-     * get post comment count
-     *
-     * @param Post $post
-     * @return JsonResponse
-     */
-//    public function getCommentCount(Post $post) {
-//        return response()->json($post->comments()->count());
-//    }
-
-    /**
-     * get many posts comment count
-     *
-     * @param CommentCountsRequest $request
-     * @return JsonResponse
-     */
-//    public function getCommentCounts(CommentCountsRequest $request) {
-//        $posts = Post::with('comments')->whereIn('id', $request->input('ids'))->get();
-//
-//        $commentCounts = [];
-//
-//        $posts->each(function($post) use (&$commentCounts) {
-//            $commentCounts = Arr::add($commentCounts, $post->id, count($post->comments));
-//        });
-//
-//        return response()->json($commentCounts);
-//    }
 
 
     /**
@@ -56,10 +30,9 @@ class CommentController extends Controller
      * @param CommentRequest $request
      * @return JsonResponse
      */
-    public function addComment(Post $post, CommentRequest $request) {
+    public function create(Post $post, CommentRequest $request) {
         $comment = $post->comments()->create([
             'user_id' => Auth::id(),
-            'post_id' => $post->id,
             'text' => $request->input('text')
         ]);
 
@@ -68,6 +41,21 @@ class CommentController extends Controller
         return response()->json([
             'message' => 'Comment added successfully',
             'comment' => $comment
+        ]);
+    }
+
+    /**
+     * delete comment
+     *
+     * @param Post $post
+     * @param Comment $comment
+     * @param DeleteCommentRequest $request
+     * @return JsonResponse
+     */
+    public function destroy(Post $post, Comment $comment, DeleteCommentRequest $request) {
+        $post->comments()->where('id', $comment->id)->delete();
+        return response()->json([
+            'message' => 'Comment deleted',
         ]);
     }
 

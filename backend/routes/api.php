@@ -67,6 +67,7 @@ Route::group([
 ], function() {
     Route::post('/create', [PostController::class, 'create']);
     Route::post('/edit/{post}', [PostController::class, 'update']);
+    Route::delete('/delete/{post}', [PostController::class, 'destroy']);
     Route::get('/all/{user}', [PostController::class, 'index'])
         ->whereNumber('user');
     Route::get('/{post}', [PostController::class, 'show']);
@@ -77,8 +78,6 @@ Route::group([
     'prefix' => 'like'
 ], function() {
     Route::post('/action/{post}', [LikeController::class, 'likeAction']);
-//    Route::get('/count/{post}', [LikeController::class, 'getLikeCount']);
-   // Route::get('/isactive/{post}', [LikeController::class, 'isActive']);
 });
 
 Route::group([
@@ -86,9 +85,8 @@ Route::group([
     'prefix' => 'comment'
 ], function() {
     Route::get('/all/{post}', [CommentController::class, 'index']);
-   // Route::get('/count/{post}', [CommentController::class, 'getCommentCount']);
-//    Route::post('/counts', [CommentController::class, 'getCommentCounts']);
-    Route::post('/add/{post}', [CommentController::class, 'addComment']);
+    Route::post('/add/{post}', [CommentController::class, 'create']);
+    Route::delete('/delete/{post}/{comment}', [CommentController::class, 'destroy']);
 });
 
 Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink'])->middleware('api');

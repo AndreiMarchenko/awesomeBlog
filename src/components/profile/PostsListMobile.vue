@@ -8,10 +8,12 @@
               @liked="handleLike"
               @unliked="handleUnlike"
               @commented="handleComment"
+              @deleted-comment="deleteComment"
               :key="'news-item' + post.id"
               :id="post.id"
               :text="post.text"
               :owner-name="user.name"
+              :owner-id="user.id"
               :owner-picture-src="user.picture | apiFile"
               :time="time(post.created_at)"
               :picture-src="post.picture | apiFile"
@@ -102,6 +104,14 @@ export default {
       });
 
       post.commentNumber++;
+      this.$store.commit('editPost', post);
+    },
+    deleteComment(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
+
+      post.commentNumber--;
       this.$store.commit('editPost', post);
     }
   }

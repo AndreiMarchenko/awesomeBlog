@@ -47,13 +47,20 @@
       <template  v-for="comment in comments">
         <comment-item-component
             :key="comment.id"
+            :id="comment.id"
+            :post-id="id"
+            :post-owner-id="ownerId"
             :author-name="comment.author"
             :author-id="comment.user_id"
             :picture="comment.picture"
             :text="comment.text"
             :ago="comment.created_at"
+            @comment-deleted="deleteComment"
         ></comment-item-component>
       </template>
+      <div v-if="this.commentPage !== this.lastCommentPage" class="comments__load-more">
+        <a @click="loadMoreComments" class="comments__load-more-ref" href="javascript:;">Load more comments</a>
+      </div>
       <hr class="profile-post__line">
       <div class="new-comment">
         <div class="new-comment__title">
@@ -90,6 +97,10 @@ export default {
       type: String,
       required: true
     },
+    ownerId: {
+      type: Number,
+      required: true
+    },
     ownerPictureSrc: {
       type: String,
       required: true
@@ -118,6 +129,10 @@ export default {
   data() {
     return {
       comments: [],
+      commentPage: 1,
+      deletedCommentCount: 0,
+      commentsPerPage: null,
+      lastCommentPage: null,
       commentText: null,
       isCommentsActive: false
     }
@@ -134,10 +149,23 @@ export default {
       });
 
       req.then(resp => {
-        this.comments = resp.data;
+        this.comments = resp.data.data;
+        this.lastCommentPage = resp.data.last_page;
+        this.commentsPerPage = resp.data.per_page;
         this.isCommentsActive = !this.isCommentsActive;
       });
 
+    },
+    loadMoreComments() {
+      let req = CommentApi.getAll({
+        id: this.id,
+        page: ++this.commentPage
+      });
+
+      req.then(resp => {
+        this.comments.push(...resp.data.data);
+        this.lastCommentPage = resp.data.last_page;
+      });
     },
     addComment() {
       let req = CommentApi.add({
@@ -150,6 +178,24 @@ export default {
         this.$emit('commented', this.id);
         this.commentText = null;
       });
+    },
+    deleteComment(id) {
+      let commentIndex = this.comments.findIndex(comment => {
+        return comment.id === id;
+      });
+
+      this.comments.splice(commentIndex, 1);
+      this.$emit('deleted-comment', this.id);
+
+      this.fixPagination();
+    },
+    fixPagination() {
+      this.deletedCommentCount++;
+      if (this.deletedCommentCount === this.commentsPerPage) {
+        this.commentPage--;
+        this.lastCommentPage--;
+        this.deletedCommentCount = 0;
+      }
     },
     likeAction() {
       let req = LikeApi.likeAction({
@@ -273,6 +319,18 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 0 20px;
+}
+
+.comments__load-more {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+.comments__load-more-ref {
+  color: $mainColor;
+  text-decoration: underline;
 }
 
 .new-comment__title {
