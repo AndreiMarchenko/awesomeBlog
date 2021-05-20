@@ -23,9 +23,12 @@
               </label>
             </div>
             <hr class="post-form__line">
-            <div class="post-form__submit-wrapper">
-              <label class="post-form__submit-label">
-                <input @click.prevent="editPost" class="post-form__submit submit-input" type="submit" value="Edit">
+            <div v-if="user.id" class="post-form__submit-wrapper">
+              <label class="post-form__edit-label">
+                <input @click.prevent="editPost" class="post-form__edit submit-input" type="submit" value="Edit">
+              </label>
+              <label class="post-form__delete-label">
+                <input @click.prevent="deletePost" class="post-form__delete submit-input" type="submit" value="Delete">
               </label>
             </div>
           </form>
@@ -82,6 +85,10 @@ export default {
 
         this.textAreaValue = this.post.text;
 
+        if (! this.user.id) {
+          this.$store.dispatch('setCurrentUser', this.post.user_id);
+        }
+
         this.$nextTick(() => {
           this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
           this.img = document.querySelector(IMG_SELECTOR);
@@ -121,6 +128,15 @@ export default {
         this.$store.commit('editPost', resp.data.post);
         this.$router.push({name: 'myPage', params: {id: this.user.id}});
         this.$toasted.success("Post edited successfully!");
+      });
+    },
+    deletePost() {
+      let req = PostApi.delete(this.post.id);
+
+      req.then((resp) => {
+        this.$store.commit('deletePost', resp.data.post);
+        this.$router.push({name: 'myPage', params: {id: this.user.id}});
+        this.$toasted.success("Post deleted successfully!");
       });
     }
   }
@@ -217,6 +233,16 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 30px;
+    margin-bottom: 5px;
+  }
+  &__delete {
+    margin-left: 10px;
+    color: red;
+    border-color: red;
+    &:hover {
+      background-color: red;
+      color: white
+    }
   }
 }
 @media (max-width: 880px) {

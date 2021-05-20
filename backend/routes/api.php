@@ -67,6 +67,7 @@ Route::group([
 ], function() {
     Route::post('/create', [PostController::class, 'create']);
     Route::post('/edit/{post}', [PostController::class, 'update']);
+    Route::delete('/delete/{post}', [PostController::class, 'destroy']);
     Route::get('/all/{user}', [PostController::class, 'index'])
         ->whereNumber('user');
     Route::get('/{post}', [PostController::class, 'show']);

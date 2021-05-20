@@ -32,6 +32,13 @@ export default {
             });
             state.posts.splice(postIndex, 1, post);
 
+        },
+        deletePost(state, post) {
+            let postIndex = state.posts.findIndex((item) => {
+                return item.id == post.id;
+            });
+
+            state.posts.splice(postIndex, 1);
         }
     },
     actions: {

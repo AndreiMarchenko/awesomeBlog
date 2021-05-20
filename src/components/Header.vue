@@ -46,7 +46,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['user', 'authenticatedUser'])
+    ...mapState(['authenticatedUser'])
   },
   props: {
     navItems: {
