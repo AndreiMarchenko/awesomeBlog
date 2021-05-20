@@ -126,6 +126,14 @@ export default {
       default: false
     }
   },
+  mounted() {
+    Echo.private('commentsChannel')
+        .listen('AddedComment', (e) => {
+          if (this.commentPage === this.lastCommentPage) {
+            this.comments.push(e.comment);
+          }
+        });
+  },
   data() {
     return {
       comments: [],
