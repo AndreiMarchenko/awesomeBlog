@@ -5,14 +5,21 @@
         <div v-if="posts.length > 0" class="posts-list-mobile__content">
           <news-item-component
               v-for="post in posts"
+              @liked="handleLike"
+              @unliked="handleUnlike"
+              @commented="handleComment"
+              @deleted-comment="deleteComment"
               :key="'news-item' + post.id"
               :id="post.id"
               :text="post.text"
               :owner-name="user.name"
+              :owner-id="user.id"
               :owner-picture-src="user.picture | apiFile"
               :time="time(post.created_at)"
               :picture-src="post.picture | apiFile"
-              :like-count="34"
+              :comment-count="post.commentNumber"
+              :like-count="post.likeNumber"
+              :is-like-active="post.isLikedByAuth"
               :comments="[]">
           </news-item-component>
         </div>
@@ -37,7 +44,7 @@ export default {
     return {
       page: 1,
       lastPage: Number.MAX_VALUE,
-      addedPost: true
+      addedPost: true,
     }
   },
   components: {
@@ -71,9 +78,42 @@ export default {
 
       return scrollLeft < SCROLL_LEFT_TRIGGER;
     },
-  },
-  beforeDestroy() {
+    handleLike(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
 
+      post.likeNumber++;
+      post.isLikedByAuth = true;
+
+      this.$store.commit('editPost', post);
+    },
+    handleUnlike(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
+
+      post.likeNumber--;
+      post.isLikedByAuth = false;
+
+      this.$store.commit('editPost', post);
+    },
+    handleComment(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
+
+      post.commentNumber++;
+      this.$store.commit('editPost', post);
+    },
+    deleteComment(postId) {
+      let post = this.posts.find(post => {
+        return post.id === postId;
+      });
+
+      post.commentNumber--;
+      this.$store.commit('editPost', post);
+    }
   }
 }
 </script>

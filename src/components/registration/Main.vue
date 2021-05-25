@@ -40,7 +40,7 @@ export default {
 
       req.then(resp => {
         if (resp.status === 201) {
-          this.$toasted.success("Registered successfully!");
+          this.$toasted.success("Registered successfully! Password sent to your email!");
           this.$router.push({name: "login"});
         }
       });

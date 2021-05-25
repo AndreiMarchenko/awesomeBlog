@@ -78,7 +78,7 @@ export default {
       });
 
       req.then(resp => {
-        this.post = resp.data;
+        this.post = resp.data.data;
 
         this.textAreaValue = this.post.text;
 
@@ -93,8 +93,10 @@ export default {
         return post.id === this.$route.params.id;
       });
       this.textAreaValue = this.post.text;
-      this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
-      this.img = document.querySelector(IMG_SELECTOR);
+      this.$nextTick(() => {
+        this.imgWrapper = document.querySelector(IMG_WRAPPER_SELECTOR);
+        this.img = document.querySelector(IMG_SELECTOR);
+      });
     },
     changePicture(event) {
       this.image = event.currentTarget.files[0];
@@ -156,15 +158,15 @@ export default {
   }
   &__textarea {
     font-size: 18px;
-    color: #525354;
+    color: $textareaColor;
     margin-top: 15px;
     height: 150px;
     width: 800px;
     padding: 5px;
     resize: none;
     border-radius: 10px;
-    border-color: #abb2cf;
-    background-color: #f2f2f5;
+    border-color: $textareaBorder;
+    background-color: $textareaBg;
   }
   &__textarea:focus {
     background-color: #faf9f5;

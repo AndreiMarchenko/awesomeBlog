@@ -71,6 +71,7 @@ const MOUSELEAVE_ACTIVE_CLASS = "profile-slider__button_mouseleave_active";
 const MOUSEDOWN_ACTIVE_CLASS = "profile-slider__button_mousedown_active";
 
 const MOVES_UNTIL_POST_ADD = 3;
+const SLIDER_ANIMATION_SPEED = 14;
 
 export default {
   mounted() {
@@ -108,6 +109,8 @@ export default {
       sliderMargin: null,
       sliderContentVisibleMaxWidth: null,
       sliderPairsVisibleNumber: null,
+      moveLeftAnimationFinished: true,
+      moveRightAnimationFinished: true
     }
   },
   methods: {
@@ -144,20 +147,74 @@ export default {
         this.sliderMoveCount--;
       }
 
-      let sliderContentStyles = window.getComputedStyle(this.sliderContent);
-      let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
-      if (sliderContentMarginLeft !== 0) {
-        this.sliderContent.style.marginLeft =  (sliderContentMarginLeft + this.sliderImgWidth + this.sliderMargin) + "px";
+      if(! this.sliderContent.style.marginLeft) {
+        return;
       }
+
+      if (parseInt(this.sliderContent.style.marginLeft) !== 0) {
+        this.moveLeftAnimation();
+      }
+    },
+    moveLeftAnimation() {
+      if (! this.moveLeftAnimationFinished) {
+        return;
+      }
+      this.moveLeftAnimationFinished = false;
+
+      let initialMargin = parseInt(this.sliderContent.style.marginLeft);
+      let slideWidth = this.sliderImgWidth + this.sliderMargin;
+
+      let animate = () => {
+        this.sliderContent.style.marginLeft = parseInt(this.sliderContent.style.marginLeft) + SLIDER_ANIMATION_SPEED + 'px';
+
+        if (parseInt(this.sliderContent.style.marginLeft) - initialMargin >= slideWidth) {
+          this.sliderContent.style.marginLeft = initialMargin + slideWidth + 'px';
+          cancelAnimationFrame(animationId);
+          this.moveLeftAnimationFinished = true;
+          return;
+        }
+        requestAnimationFrame(animate);
+      }
+
+      let animationId = requestAnimationFrame(animate);
     },
     moveRight() {
       this.sliderMoveCount++;
 
       let sliderContentStyles = window.getComputedStyle(this.sliderContent);
       let sliderContentMarginLeft = parseInt(sliderContentStyles.marginLeft);
-      if (sliderContentMarginLeft !== -(this.pairNumber - this.sliderPairsVisibleNumber)*(this.sliderImgWidth + this.sliderMargin)) {
-        this.sliderContent.style.marginLeft =  (sliderContentMarginLeft - this.sliderImgWidth - this.sliderMargin) + "px";
+
+      if (sliderContentMarginLeft !==
+          -(this.pairNumber - this.sliderPairsVisibleNumber)*(this.sliderImgWidth + this.sliderMargin)) {
+        this.moveRightAnimation();
       }
+    },
+    moveRightAnimation() {
+      if (! this.moveRightAnimationFinished) {
+        return;
+      }
+      this.moveRightAnimationFinished = false;
+
+      if (! this.sliderContent.style.marginLeft) {
+        this.sliderContent.style.marginLeft = 0 + 'px';
+      }
+
+      let initialMargin = parseInt(this.sliderContent.style.marginLeft);
+      let slideWidth = this.sliderImgWidth + this.sliderMargin;
+
+      let animate = () => {
+        this.sliderContent.style.marginLeft = parseInt(this.sliderContent.style.marginLeft) - SLIDER_ANIMATION_SPEED + 'px';
+
+        if (initialMargin - parseInt(this.sliderContent.style.marginLeft) >= slideWidth) {
+          this.sliderContent.style.marginLeft = initialMargin - slideWidth + 'px';
+          cancelAnimationFrame(animationId);
+          this.moveRightAnimationFinished = true;
+          return;
+        }
+        requestAnimationFrame(animate);
+      }
+
+      let animationId = requestAnimationFrame(animate);
     },
     mouseoverStyle(e) {
       if (! e.currentTarget.classList.contains(MOUSEDOWN_ACTIVE_CLASS)) {

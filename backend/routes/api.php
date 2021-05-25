@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
@@ -68,6 +70,22 @@ Route::group([
     Route::get('/all/{user}', [PostController::class, 'index'])
         ->whereNumber('user');
     Route::get('/{post}', [PostController::class, 'show']);
+});
+
+Route::group([
+    'middleware' => ['api', 'auth'],
+    'prefix' => 'like'
+], function() {
+    Route::post('/action/{post}', [LikeController::class, 'likeAction']);
+});
+
+Route::group([
+    'middleware' => ['api', 'auth'],
+    'prefix' => 'comment'
+], function() {
+    Route::get('/all/{post}', [CommentController::class, 'index']);
+    Route::post('/add/{post}', [CommentController::class, 'create']);
+    Route::delete('/delete/{post}/{comment}', [CommentController::class, 'destroy']);
 });
 
 Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink'])->middleware('api');
