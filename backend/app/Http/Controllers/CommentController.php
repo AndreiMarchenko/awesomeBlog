@@ -52,8 +52,8 @@ class CommentController extends Controller
      * @param DeleteCommentRequest $request
      * @return JsonResponse
      */
-    public function destroy(Post $post, Comment $comment, DeleteCommentRequest $request) {
-        $post->comments()->where('id', $comment->id)->delete();
+    public function destroy(Comment $comment, DeleteCommentRequest $request) {
+        $comment->delete();
         return response()->json([
             'message' => 'Comment deleted',
         ]);
