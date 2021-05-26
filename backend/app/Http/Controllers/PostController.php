@@ -78,7 +78,7 @@ class PostController extends Controller
      */
     public function destroy(DeletePostRequest $request, Post $post)
     {
-        Auth::user()->posts()->where('id', $post->id)->delete();
+        $post->delete();
 
         return response()->json([
             'message' => 'Post deleted successfully!',

@@ -86,7 +86,7 @@ Route::group([
 ], function() {
     Route::get('/all/{post}', [CommentController::class, 'index']);
     Route::post('/add/{post}', [CommentController::class, 'create']);
-    Route::delete('/delete/{post}/{comment}', [CommentController::class, 'destroy']);
+    Route::delete('/delete/{comment}', [CommentController::class, 'destroy']);
 });
 
 Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPasswordLink'])->middleware('api');

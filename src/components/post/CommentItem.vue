@@ -79,7 +79,6 @@ export default {
   methods: {
     deleteComment() {
       let req = CommentApi.delete({
-        postId: this.postId,
         commentId: this.id
       });
       this.$emit('comment-deleted', this.id);

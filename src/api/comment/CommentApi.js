@@ -12,7 +12,7 @@ class CommentApi {
     }
 
     static delete(data) {
-        return axios.delete("/comment/delete/" + data.postId + "/" + data.commentId);
+        return axios.delete("/comment/delete/" + data.commentId);
     }
 }
 

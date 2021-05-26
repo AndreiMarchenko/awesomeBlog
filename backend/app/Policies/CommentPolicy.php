@@ -11,6 +11,7 @@ class CommentPolicy
     use HandlesAuthorization;
 
     public function delete(User $user, Comment $comment) {
-        return $user->id === $comment->user_id;
+        return ($user->id === $comment->user_id) ||
+               ($user->posts()->where('id', $comment->post_id)->exists());
     }
 }
