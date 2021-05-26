@@ -18,7 +18,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('commentsChannel', function ($user) {
+Broadcast::channel('commentsChannel.{postId}', function ($user, $postId) {
     return Auth::check();
 });
 

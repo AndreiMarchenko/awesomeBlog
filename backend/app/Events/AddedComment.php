@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class AddedComment implements ShouldBroadcast
 {
@@ -34,6 +35,6 @@ class AddedComment implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('commentsChannel');
+        return new PrivateChannel('commentsChannel.' . $this->comment->post_id);
     }
 }

@@ -127,7 +127,7 @@ export default {
     }
   },
   mounted() {
-    Echo.private('commentsChannel')
+    Echo.private(`commentsChannel.${this.id}`)
         .listen('AddedComment', (e) => {
           if (this.commentPage === this.lastCommentPage) {
             this.comments.push(e.comment);
