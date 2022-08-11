@@ -112,6 +112,13 @@ export default {
   },
   mounted() {
     this.initPost();
+
+    Echo.private(`commentsChannel.${this.$route.params.id}`)
+        .listen('AddedComment', (e) => {
+          if (this.commentPage === this.lastCommentPage) {
+            this.comments.push(e.comment);
+          }
+        });
   },
   data() {
     return {
